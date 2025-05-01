@@ -83,24 +83,32 @@ export function Header() {
             {navLinks.map((link) => (
               link.hasDropdown ? (
                 <div key={link.href} className="relative" ref={solutionsRef}>
-                  <button 
-                    className={`menu-item font-medium ${
-                      location === link.href || location.startsWith(link.href + "/") ? "after:w-full" : ""
-                    } flex items-center gap-1`}
-                    onClick={() => setShowSolutionsDropdown(!showSolutionsDropdown)}
+                  <div className="flex items-center cursor-pointer"
                     onMouseEnter={() => setShowSolutionsDropdown(true)}
                   >
-                    {link.label}
-                    <svg 
-                      width="12" 
-                      height="12" 
-                      viewBox="0 0 12 12" 
-                      fill="none" 
-                      className={`transition-transform duration-200 ${showSolutionsDropdown ? 'rotate-180' : ''}`}
+                    <Link
+                      href={link.href}
+                      className={`menu-item font-medium ${
+                        location === link.href || location.startsWith(link.href + "/") ? "after:w-full" : ""
+                      }`}
                     >
-                      <path d="M2 4L6 8L10 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </button>
+                      {link.label}
+                    </Link>
+                    <button 
+                      className="ml-1 flex items-center focus:outline-none"
+                      onClick={() => setShowSolutionsDropdown(!showSolutionsDropdown)}
+                    >
+                      <svg 
+                        width="12" 
+                        height="12" 
+                        viewBox="0 0 12 12" 
+                        fill="none" 
+                        className={`transition-transform duration-200 ${showSolutionsDropdown ? 'rotate-180' : ''}`}
+                      >
+                        <path d="M2 4L6 8L10 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </button>
+                  </div>
                   
                   {/* Solutions Dropdown */}
                   <AnimatePresence>
@@ -193,21 +201,28 @@ export function Header() {
               {navLinks.map((link) => (
                 link.hasDropdown ? (
                   <div key={link.href} className="space-y-2">
-                    <button 
-                      className="text-cream font-medium py-2 px-4 w-full text-left flex justify-between items-center"
-                      onClick={() => setShowSolutionsDropdown(!showSolutionsDropdown)}
-                    >
-                      <span>{link.label}</span>
-                      <svg 
-                        width="12" 
-                        height="12" 
-                        viewBox="0 0 12 12" 
-                        fill="none" 
-                        className={`transition-transform duration-200 ${showSolutionsDropdown ? 'rotate-180' : ''}`}
+                    <div className="flex items-center justify-between">
+                      <Link 
+                        href={link.href}
+                        className="text-cream font-medium py-2 pl-4 text-left flex-grow"
                       >
-                        <path d="M2 4L6 8L10 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </button>
+                        {link.label}
+                      </Link>
+                      <button 
+                        className="text-cream font-medium py-2 px-4 flex items-center justify-center focus:outline-none"
+                        onClick={() => setShowSolutionsDropdown(!showSolutionsDropdown)}
+                      >
+                        <svg 
+                          width="12" 
+                          height="12" 
+                          viewBox="0 0 12 12" 
+                          fill="none" 
+                          className={`transition-transform duration-200 ${showSolutionsDropdown ? 'rotate-180' : ''}`}
+                        >
+                          <path d="M2 4L6 8L10 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </button>
+                    </div>
                     
                     {showSolutionsDropdown && (
                       <div className="pl-4 space-y-2">
