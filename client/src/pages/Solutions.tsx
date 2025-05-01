@@ -299,11 +299,13 @@ function ProductTabs({ products }: { products: Product[] }) {
   return (
     <div className="mb-12">
       {/* Tab Navigation */}
-      <div className={`grid ${products.length > 3 ? 'md:grid-cols-4 grid-cols-2' : 'grid-cols-2'} mb-6 overflow-hidden rounded-t-md shadow-sm`}>
+      <div className="flex flex-wrap overflow-hidden rounded-t-md shadow-sm mb-6 border-b border-gray-200">
         {products.map((product, index) => (
           <button
             key={index}
-            className={`py-3 px-4 font-medium text-center transition-colors ${index === safeActiveTab ? 'bg-forest text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+            className={`py-3 px-6 font-medium text-center transition-all ${index === safeActiveTab 
+              ? 'bg-white text-forest border-t-2 border-forest' 
+              : 'bg-gray-50 text-gray-700 hover:bg-gray-100'}`}
             onClick={() => setActiveTab(index)}
           >
             {product.name}
@@ -311,21 +313,83 @@ function ProductTabs({ products }: { products: Product[] }) {
         ))}
       </div>
 
-      {/* Tab Content */}
-      <div className="border border-gray-200 rounded-b-md p-6 bg-white shadow-sm">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Key Features */}
-          <div>
-            <h3 className="flex items-center font-condensed text-forest font-bold mb-4 uppercase text-sm tracking-wide">
+      {/* Product Image and Summary */}
+      <div className="mb-8 bg-white border border-gray-200 rounded-md p-6 shadow-sm">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-1 flex justify-center items-center bg-gray-50 rounded-md p-6 h-64">
+            <div className="text-center">
+              <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-navy/10 flex items-center justify-center">
+                <svg className="w-12 h-12 text-navy" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="6" width="20" height="12" rx="2" />
+                  <line x1="6" y1="10" x2="6" y2="10" />
+                  <line x1="10" y1="10" x2="10" y2="10" />
+                  <line x1="14" y1="10" x2="14" y2="10" />
+                  <line x1="18" y1="10" x2="18" y2="10" />
+                  <line x1="6" y1="14" x2="6" y2="14" />
+                  <line x1="10" y1="14" x2="10" y2="14" />
+                  <line x1="14" y1="14" x2="14" y2="14" />
+                  <line x1="18" y1="14" x2="18" y2="14" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-condensed font-bold text-navy">{products[safeActiveTab].name}</h3>
+            </div>
+          </div>
+          
+          <div className="lg:col-span-2">
+            {/* Key Features - Summary View */}
+            <h3 className="flex items-center font-condensed text-forest font-bold mb-3 uppercase text-sm tracking-wide">
               <svg className="mr-2 w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               </svg>
               Key Features
             </h3>
+            <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2 mb-6">
+              {products[safeActiveTab].features.slice(0, 4).map((feature: string, idx: number) => (
+                <li key={idx} className="flex items-start">
+                  <span className="text-forest shrink-0 mt-1 mr-2">•</span>
+                  <span className="text-charcoal/80 text-sm">{feature}</span>
+                </li>
+              ))}
+            </ul>
+            
+            <div className="flex flex-wrap gap-2">
+              <a href="#product-details" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md bg-forest text-white hover:bg-forest/90 transition-colors">
+                View Details
+                <svg className="ml-1 w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
+                </svg>
+              </a>
+              <a href="#" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md border border-forest text-forest hover:bg-forest/10 transition-colors">
+                Datasheet
+                <svg className="ml-1 w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="16" y1="13" x2="8" y2="13" />
+                  <line x1="16" y1="17" x2="8" y2="17" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Full Product Details */}
+      <div id="product-details" className="border border-gray-200 rounded-md p-6 bg-white shadow-sm">
+        <h3 className="text-xl font-condensed font-bold text-navy border-b border-gray-200 pb-4 mb-6">Product Details</h3>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+          {/* Full Features List */}
+          <div>
+            <h3 className="flex items-center font-condensed text-forest font-bold mb-4 uppercase text-sm tracking-wide">
+              <svg className="mr-2 w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+              Complete Feature Set
+            </h3>
             <ul className="space-y-2">
               {products[safeActiveTab].features.map((feature: string, idx: number) => (
                 <li key={idx} className="flex items-start">
-                  <span className="text-teal mr-2">•</span>
+                  <FaCheck className="text-forest shrink-0 mt-1 mr-2" />
                   <span className="text-charcoal/80">{feature}</span>
                 </li>
               ))}
@@ -344,33 +408,24 @@ function ProductTabs({ products }: { products: Product[] }) {
               </svg>
               Technical Specifications
             </h3>
-            <div className="space-y-3">
+            <div className="bg-gray-50 rounded-md p-4">
               {Object.entries(products[safeActiveTab].specs).map(([key, value]: [string, any], idx: number) => (
-                <div key={idx} className="grid grid-cols-2 gap-4">
-                  <div className="font-medium text-charcoal/80">{key}:</div>
-                  <div className="whitespace-pre-line">{value}</div>
+                <div key={idx} className="py-2 border-b border-gray-200 last:border-0">
+                  <div className="font-medium text-navy text-sm">{key}</div>
+                  <div className="text-charcoal/80 whitespace-pre-line">{value}</div>
                 </div>
               ))}
             </div>
           </div>
         </div>
         
-        <div className="flex justify-end mt-6">
+        <div className="flex justify-end mt-6 pt-4 border-t border-gray-200">
           <div className="flex space-x-2">
             <a href="#" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md bg-forest text-white hover:bg-forest/90 transition-colors">
-              Product Page
+              Request Quote
               <svg className="ml-1 w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M5 12h14" />
                 <path d="M12 5l7 7-7 7" />
-              </svg>
-            </a>
-            <a href="#" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md border border-forest text-forest hover:bg-forest/10 transition-colors">
-              Datasheet
-              <svg className="ml-1 w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                <polyline points="14 2 14 8 20 8" />
-                <line x1="16" y1="13" x2="8" y2="13" />
-                <line x1="16" y1="17" x2="8" y2="17" />
               </svg>
             </a>
           </div>
@@ -418,9 +473,24 @@ function SolutionDetail() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="text-4xl md:text-5xl font-bold mb-6 text-forest border-l-4 border-forest pl-4">
+                className={`text-4xl md:text-5xl font-bold mb-6 text-forest ${solution.id === "switches" ? "" : "border-l-4 border-forest pl-4"}`}>
                 {solution.id === "edge-ai" ? "Edge artificial intelligence" : solution.title}
               </motion.h1>
+              
+              {solution.id === "switches" && (
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {solution.certifications.slice(0, 3).map((cert, i) => (
+                    <span key={i} className="text-xs font-medium bg-forest/10 text-forest px-2 py-1 rounded-full">
+                      {cert}
+                    </span>
+                  ))}
+                  {solution.certifications.length > 3 && (
+                    <span className="text-xs font-medium bg-gray-200 text-gray-600 px-2 py-1 rounded-full">
+                      +{solution.certifications.length - 3} more
+                    </span>
+                  )}
+                </div>
+              )}
               
               <motion.p 
                 initial={{ opacity: 0, y: 20 }}
@@ -488,7 +558,7 @@ function SolutionDetail() {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5 }}
-                  className="military-card bg-white p-6 rounded-lg shadow-md sticky top-24">
+                  className={`military-card bg-white ${solution.id === "switches" ? "p-5" : "p-6"} rounded-lg shadow-md sticky top-24`}>
                   <div className="h-16 w-16 rounded-full bg-forest/10 flex items-center justify-center mb-4">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       {solution.id === "edge-ai" && <path d="M12 2v6m0 12v2M4.93 4.93l4.24 4.24m5.66 5.66l4.24 4.24M2 12h6m8 0h6M4.93 19.07l4.24-4.24m5.66-5.66l4.24-4.24"/>}
@@ -499,13 +569,29 @@ function SolutionDetail() {
                   <h3 className="text-xl font-bold mb-3 text-navy">{solution.title}</h3>
                   <p className="text-charcoal/80 mb-4">{solution.description}</p>
                   
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {solution.certifications.map((cert, i) => (
-                      <span key={i} className="text-xs font-medium bg-forest/10 text-forest px-2 py-1 rounded-full">
-                        {cert}
-                      </span>
-                    ))}
-                  </div>
+                  {solution.id !== "switches" && (
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {solution.certifications.map((cert, i) => (
+                        <span key={i} className="text-xs font-medium bg-forest/10 text-forest px-2 py-1 rounded-full">
+                          {cert}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  
+                  {solution.id === "switches" && (
+                    <div className="bg-gray-50 p-3 rounded-md mb-4">
+                      <h4 className="text-sm font-medium text-navy mb-2">Key applications:</h4>
+                      <ul className="text-sm space-y-1">
+                        {solution.applications.slice(0, 3).map((app, idx) => (
+                          <li key={idx} className="flex items-start">
+                            <span className="text-teal shrink-0 mr-1.5">•</span>
+                            <span className="text-charcoal/80">{app}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                   
                   <div className="border-t border-gray-200 pt-4 mt-4">
                     <h4 className="font-bold text-charcoal mb-2">Request Information</h4>
