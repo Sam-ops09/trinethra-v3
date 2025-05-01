@@ -239,6 +239,9 @@ function ProductTabs({ products }: { products: Product[] }) {
   const [activeTab, setActiveTab] = useState(0);
 
   if (!products || products.length === 0) return null;
+  
+  // Ensure activeTab is within bounds
+  const safeActiveTab = activeTab < products.length ? activeTab : 0;
 
   return (
     <div className="mb-12">
@@ -247,7 +250,7 @@ function ProductTabs({ products }: { products: Product[] }) {
         {products.map((product, index) => (
           <button
             key={index}
-            className={`py-3 px-4 font-medium text-center transition-colors ${index === activeTab ? 'bg-forest text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+            className={`py-3 px-4 font-medium text-center transition-colors ${index === safeActiveTab ? 'bg-forest text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
             onClick={() => setActiveTab(index)}
           >
             {product.name}
@@ -267,7 +270,7 @@ function ProductTabs({ products }: { products: Product[] }) {
               Key Features
             </h3>
             <ul className="space-y-2">
-              {products[activeTab].features.map((feature: string, idx: number) => (
+              {products[safeActiveTab].features.map((feature: string, idx: number) => (
                 <li key={idx} className="flex items-start">
                   <span className="text-teal mr-2">•</span>
                   <span className="text-charcoal/80">{feature}</span>
@@ -289,7 +292,7 @@ function ProductTabs({ products }: { products: Product[] }) {
               Technical Specifications
             </h3>
             <div className="space-y-3">
-              {Object.entries(products[activeTab].specs).map(([key, value]: [string, any], idx: number) => (
+              {Object.entries(products[safeActiveTab].specs).map(([key, value]: [string, any], idx: number) => (
                 <div key={idx} className="grid grid-cols-2 gap-4">
                   <div className="font-medium text-charcoal/80">{key}:</div>
                   <div className="whitespace-pre-line">{value}</div>
