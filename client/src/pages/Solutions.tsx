@@ -52,7 +52,7 @@ interface EdgeAISolution extends SolutionBase {
 type Solution = EdgeAISolution | SolutionBase;
 
 function isEdgeAISolution(solution: Solution): solution is EdgeAISolution {
-  return solution.id === "edge-ai" && 'products' in solution;
+  return (solution.id === "edge-ai" || solution.id === "data-storage") && 'products' in solution;
 }
 
 // Detailed data for solution pages
@@ -120,10 +120,10 @@ const solutionDetails: Record<string, Solution> = {
     id: "data-storage",
     title: "Rugged Data Storage",
     description: "Advanced capabilities for growing teams with secure, high-performance storage solutions.",
-    fullDescription: "Secure, high-capacity data storage solutions hardened against physical and electronic threats with multi-layer encryption.",
+    fullDescription: "Our rugged storage systems are designed to maintain data integrity in the most challenging environments and adverse conditions, from desert heat to arctic cold.",
     mainQuestion: "Is a rugged storage system right for you?",
     mainAnswer: "If you need secure, high-capacity data storage in extreme environments, our rugged storage systems offer unmatched reliability and protection.",
-    certifications: ["MIL-STD-461F", "AES-256"],
+    certifications: ["MIL-STD-461F", "AES-256", "DoD Security Standards"],
     imagePlaceholder: "Rugged Storage",
     features: [
       "IP68-rated enclosures",
@@ -137,6 +137,76 @@ const solutionDetails: Record<string, Solution> = {
       "Secure intelligence storage",
       "Remote operational bases",
       "Vehicle-mounted data systems"
+    ],
+    products: [
+      {
+        name: "FORTRESS-X1",
+        features: [
+          "Military-grade encrypted storage solution for mission-critical data",
+          "MIL-STD-810H certified",
+          "AES-256 bit encryption",
+          "Tamper-resistant hardware",
+          "Operational temperature: -40°C to +85°C"
+        ],
+        specs: {
+          "Certification": "MIL-STD-810H",
+          "Encryption": "AES-256 bit",
+          "Protection": "IP68 water and dust resistance",
+          "Temperature": "-40°C to +85°C",
+          "Security": "Tamper-resistant hardware"
+        }
+      },
+      {
+        name: "OUTPOST-S3",
+        features: [
+          "Field-deployable server rack with reinforced protection",
+          "Ruggedized aluminum chassis",
+          "Shock-mounted internal components",
+          "EMI/RFI shielding",
+          "Redundant power supplies"
+        ],
+        specs: {
+          "Chassis": "Ruggedized aluminum",
+          "Components": "Shock-mounted",
+          "Shielding": "EMI/RFI",
+          "Power": "Redundant supplies",
+          "Deployment": "Quick-deploy configuration"
+        }
+      },
+      {
+        name: "SENTINEL-D2",
+        features: [
+          "Secure distributed database solution for sensitive environments",
+          "Zero-trust architecture",
+          "Real-time replication",
+          "FIPS 140-2 compliant",
+          "Automatic failover capabilities"
+        ],
+        specs: {
+          "Architecture": "Zero-trust",
+          "Replication": "Real-time",
+          "Compliance": "FIPS 140-2",
+          "Failover": "Automatic capabilities",
+          "Monitoring": "24/7 with alert system"
+        }
+      },
+      {
+        name: "TERRAIN-HD4",
+        features: [
+          "Portable hardened drives for extreme field conditions",
+          "Drop tested from 3m height",
+          "Crush resistance up to 2000 lbs",
+          "Built-in hardware encryption",
+          "Secure erase capabilities"
+        ],
+        specs: {
+          "Drop Test": "3m height",
+          "Crush Resistance": "Up to 2000 lbs",
+          "Encryption": "Built-in hardware",
+          "Security": "Secure erase capabilities",
+          "Configurations": "Available in SSD and HDD"
+        }
+      }
     ]
   },
   "switches": {
@@ -173,7 +243,7 @@ function ProductTabs({ products }: { products: Product[] }) {
   return (
     <div className="mb-12">
       {/* Tab Navigation */}
-      <div className="grid grid-cols-2 mb-6 overflow-hidden rounded-t-md shadow-sm">
+      <div className={`grid ${products.length > 3 ? 'md:grid-cols-4 grid-cols-2' : 'grid-cols-2'} mb-6 overflow-hidden rounded-t-md shadow-sm`}>
         {products.map((product, index) => (
           <button
             key={index}
