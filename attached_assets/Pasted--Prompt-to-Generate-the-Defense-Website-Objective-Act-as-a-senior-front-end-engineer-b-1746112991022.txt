@@ -1,0 +1,71 @@
+## Prompt to Generate the Defense Website
+
+> **Objective:**  
+> Act as a senior front-end engineer building a Defense-grade website.  
+>
+> **Tech Stack Requirements:**  
+> - **Next.js** for server-side rendering and SEO optimization  
+> - **React** for component architecture  
+> - **SCSS** for global theming  
+> - **Tailwind CSS** for utility styling  
+> - **Framer Motion** for page transitions and micro-animations  
+> - **SEO best practices:** meta tags, Open Graph, structured data, optimized page load  
+>
+> **Color Palette:**  
+> - **Primary:** Deep Forest Green (#0D4114), Cream (#f8ecdf), Navy Blue (#1A2E4C), Steel Gray (#546A7B), Charcoal (#2F3640)  
+> - **Accents:** Alert Red (#C41E3A), Signal Orange (#FF6E40), Tactical Teal (#00838F)  
+>
+> **Site Architecture & Content Requirements:**  
+> 1. **Global Layout & Navigation**  
+>    - Responsive header with logo on the left and links: Home, About, Solutions, Offerings, Certifications  ([TRINETHRA DEFENTECH](https://trinethra-v2.vercel.app/))  
+>    - Use Deep Forest Green or Charcoal as navbar background; Cream text; hover state in Navy Blue or Steel Gray  ([TRINETHRA DEFENTECH](https://trinethra-v2.vercel.app/))  
+>    - Mobile hamburger menu toggled with Framer Motion animation  
+>
+> 2. **Home Page**  
+>    - **Hero Section:** Title “TRINETHRA DEFENTECH” with tagline “Tactical and strategic defense systems engineered for mission-critical environments”  ([TRINETHRA DEFENTECH](https://trinethra-v2.vercel.app/))  
+>    - **Feature Section:** “Mission-Critical Performance” heading and description: “We guarantee that our solution meets your shock, vibration, EMI, power, and environmental specifications…”  ([TRINETHRA DEFENTECH](https://trinethra-v2.vercel.app/))  
+>    - **Defense Capabilities Grid:** Three cards for:  
+>       - Edge artificial intelligence: “Advanced systems designed to detect, intercept, and counter enemy electronic signals.”  ([TRINETHRA DEFENTECH](https://trinethra-v2.vercel.app/))  
+>       - Rugged Data Storage: “Encrypted communication networks resistant to jamming and interception.”  ([TRINETHRA DEFENTECH](https://trinethra-v2.vercel.app/))  
+>       - Rugged Switches: “Field-ready equipment designed to withstand extreme operational environments.”  ([TRINETHRA DEFENTECH](https://trinethra-v2.vercel.app/))  
+>    - **Trusted By Section:** Logos or names: ADE-DRDO, CABS-DRDO, GTRE-DRDO, MTRDC-DRDO, HAL, ISRO  ([TRINETHRA DEFENTECH](https://trinethra-v2.vercel.app/))  
+>    - Call-to-Action button “Request Consultation” styled in Tactical Teal or Signal Orange  
+>
+> 3. **About Page**  
+>    - Header: “Defending Freedom Through Innovation” with intro paragraph on protecting personnel and infrastructure  ([Our Mission | Defense Solutions | TRINETHRA DEFENTECH](https://trinethra-v2.vercel.app/about))  
+>    - Subsection “Mission Critical Reliability”: detail engineering to withstand high-G impacts, EMI, temperature extremes, chemical exposure  ([Our Mission | Defense Solutions | TRINETHRA DEFENTECH](https://trinethra-v2.vercel.app/about))  
+>    - Subsection “Security Clearance Certified”: highlight top-level clearances and strict confidentiality protocols  ([Our Mission | Defense Solutions | TRINETHRA DEFENTECH](https://trinethra-v2.vercel.app/about))  
+>    - CTA “Contact Our Team” persistently available  
+>
+> 4. **Solutions Page**  
+>    - Title “Advanced data systems for national security applications”  ([TRINETHRA DEFENTECH](https://trinethra-v2.vercel.app/solutions))  
+>    - Highlight “TRINETHRA” rugged data recorders: features for aerospace, defense, maritime, and space, shock/vibration tolerance, FIPS 140, AES-256, NSA Type 1 encryption  ([TRINETHRA DEFENTECH](https://trinethra-v2.vercel.app/solutions))  
+>    - Product cards for Edge AI, Rugged Storage, Rugged Switches with MIL-SPEC badges  
+>
+> 5. **Offerings Page**  
+>    - “Strategic Offerings” heading with “Mission Overview” describing data recorders’ real-time encryption and integrity across platforms  ([Strategic Offerings | TRINETHRA Defense | TRINETHRA DEFENTECH](https://trinethra-v2.vercel.app/offerings))  
+>    - **Core Capabilities:** list at least six capabilities, each with title and brief description, in a responsive grid  
+>    - **Technical Specifications:** sections on Production Capacity, Compliance Standards, Research Capabilities  
+>    - CTA “Request Consultation” and link to “Download Capabilities” PDF  
+>
+> 6. **Certifications Page**  
+>    - Heading “Certifications” with professional qualifications list:  
+>       - AI Research Excellence (OpenAI Foundation, March 2024)  
+>       - Neural Network Architecture (Deep Learning Institute, January 2024)  
+>       - Open Source Contribution (Global OSS Alliance)  ([TRINETHRA DEFENTECH](https://trinethra-v2.vercel.app/certifications))  
+>    - “View All Certifications” link  
+>
+> **Styling & Theming:**  
+> - Define SCSS variables for palette and typography; wrap Tailwind with `@apply` utilities where appropriate  
+> - Use Framer Motion for entrance animations on sections and hover states  
+> - Ensure WCAG-compliant contrast ratios across all color combinations  
+>
+> **SEO Implementation:**  
+> - Next.js `<Head>` tags with title templating and open graph metadata  
+> - JSON-LD structured data for Organization and WebSite  
+> - Sitemap and robots.txt generation  
+>
+> **Deliverables:**  
+> - Complete Next.js project scaffold under `/pages`, `/components`, `/styles`  
+> - README with setup, build, and deployment instructions  
+> - Example `.env` placeholders for any API or analytics integration
