@@ -44,7 +44,8 @@ export function Header() {
     { href: "/about", label: "About" },
     { href: "/solutions", label: "Solutions", hasDropdown: true },
     { href: "/offerings", label: "Offerings" },
-    { href: "/certifications", label: "Certifications" }
+    { href: "/certifications", label: "Certifications" },
+    { href: "/contact", label: "Contact" }
   ];
 
   const solutionsOptions = [

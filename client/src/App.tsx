@@ -9,6 +9,7 @@ import About from "@/pages/About";
 import Solutions from "@/pages/Solutions";
 import Offerings from "@/pages/Offerings";
 import Certifications from "@/pages/Certifications";
+import Contact from "@/pages/Contact";
 import "@/styles/globals.scss";
 
 function Router() {
@@ -20,6 +21,7 @@ function Router() {
       <Route path="/solutions/:solutionId" component={Solutions} />
       <Route path="/offerings" component={Offerings} />
       <Route path="/certifications" component={Certifications} />
+      <Route path="/contact" component={Contact} />
       <Route component={NotFound} />
     </Switch>
   );
