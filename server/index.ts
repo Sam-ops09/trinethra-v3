@@ -1,6 +1,8 @@
+
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import { createServer } from "http";
 
 const app = express();
 app.use(express.json());
@@ -56,15 +58,30 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
 
-  // ALWAYS serve the app on port 5000
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
-  const port = 5000;
-  server.listen({
-    port,
-    host: "0.0.0.0",
-    reusePort: true,
-  }, () => {
-    log(`serving on port ${port}`);
-  });
+  // Get preferred port from environment variable or use 5000 as default
+  const preferredPort = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+
+  // Try to start the server on the preferred port, or find an available port
+  startServer(server, preferredPort);
 })();
+
+/**
+ * Tries to start the server on the preferred port. If that port is busy,
+ * it will increment the port number and try again up to maxRetries times.
+ */
+function startServer(server: any, port: number, maxRetries = 10) {
+  server.on('error', (e: NodeJS.ErrnoException) => {
+    if (e.code === 'EADDRINUSE' && maxRetries > 0) {
+      log(`Port ${port} is busy, trying port ${port + 1}...`);
+      // Try the next port
+      startServer(server, port + 1, maxRetries - 1);
+    } else {
+      console.error(`Failed to start server: ${e.message}`);
+      process.exit(1);
+    }
+  });
+
+  server.listen(port, "0.0.0.0", () => {
+    log(`Server started successfully on port ${port}`);
+  });
+}
