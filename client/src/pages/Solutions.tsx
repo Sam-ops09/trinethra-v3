@@ -613,9 +613,9 @@ function SolutionDetail() {
                   <h3 className="text-2xl font-bold mb-2">Ready to implement this solution?</h3>
                   <p className="mb-0 md:mb-0">Our specialists can help you deploy a customized version for your specific needs.</p>
                 </div>
-                <a href="#contact" className="mt-4 md:mt-0 bg-teal hover:bg-teal/90 text-white font-bold py-3 px-6 rounded shadow-lg transition-all duration-300">
+                <Link href="/contact" className="mt-4 md:mt-0 bg-teal hover:bg-teal/90 text-white font-bold py-3 px-6 rounded shadow-lg transition-all duration-300">
                   Request Consultation
-                </a>
+                </Link>
               </div>
             </motion.div>
           </div>

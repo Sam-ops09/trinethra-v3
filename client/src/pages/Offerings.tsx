@@ -231,7 +231,7 @@ export default function Offerings() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <Link href="#contact">
+              <Link href="/contact">
                 <Button className="bg-teal hover:bg-teal/90 text-white font-bold py-3 px-8 rounded shadow-lg transition-all duration-300 inline-flex items-center justify-center">
                   Request Consultation <FaArrowRight className="ml-2" />
                 </Button>
