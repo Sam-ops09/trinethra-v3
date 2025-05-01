@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap');
+
+:root {
+  /* Base colors */
+  --background: 0 0% 100%;
+  --foreground: 222 14% 22%;
+  
+  /* Custom defense colors */
+  --forest: 130 67% 15%;
+  --cream: 39 64% 92%;
+  --navy: 218 48% 21%;
+  --steel: 209 16% 41%;
+  --charcoal: 217 20% 21%;
+  --alert: 350 74% 44%;
+  --signal: 14 100% 62%;
+  --teal: 187 100% 28%;
+  
+  /* UI Colors */
+  --card: 0 0% 100%;
+  --card-foreground: 222 14% 22%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 14% 22%;
+  --primary: 130 67% 15%;
+  --primary-foreground: 39 64% 92%;
+  --secondary: 217 20% 21%;
+  --secondary-foreground: 210 20% 98%;
+  --muted: 210 20% 97%;
+  --muted-foreground: 215 14% 34%;
+  --accent: 187 100% 28%;
+  --accent-foreground: 210 20% 98%;
+  --destructive: 350 74% 44%;
+  --destructive-foreground: 210 20% 98%;
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 222 14% 22%;
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: 217 20% 21%;
+  --foreground: 0 0% 98%;
+  --card: 217 20% 21%;
+  --card-foreground: 0 0% 98%;
+  --popover: 217 20% 21%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 130 67% 15%;
+  --primary-foreground: 39 64% 92%;
+  --secondary: 218 48% 21%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 217 20% 16%;
+  --muted-foreground: 215 14% 64%;
+  --accent: 187 100% 28%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 350 74% 44%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 217 20% 30%;
+  --input: 217 20% 30%;
+  --ring: 215 14% 64%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-condensed font-bold tracking-wide;
+  }
+}
+
+@layer components {
+  .hero-pattern {
+    @apply relative text-cream;
+    background-image: linear-gradient(135deg, rgba(13, 65, 20, 0.97) 0%, rgba(26, 46, 76, 0.97) 100%);
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .menu-item {
+    @apply relative transition-colors duration-300;
+  }
+  
+  .menu-item::after {
+    content: '';
+    @apply absolute w-0 h-0.5 bg-cream left-0 -bottom-1 transition-all duration-300;
+  }
+  
+  .menu-item:hover::after {
+    @apply w-full;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-300;
+  }
+  
+  .card-hover:hover {
+    @apply -translate-y-1 shadow-lg;
+  }
+  
+  .certification-badge {
+    @apply relative overflow-hidden;
+  }
+  
+  .certification-badge::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-br from-teal/20 to-forest/20 opacity-0 transition-opacity duration-300;
+  }
+  
+  .certification-badge:hover::before {
+    @apply opacity-100;
+  }
+}
