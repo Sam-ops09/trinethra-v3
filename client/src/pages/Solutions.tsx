@@ -459,7 +459,7 @@ function SolutionDetail() {
       title={`${solution.title} | TRINETHRA DEFENTECH`}
       description={solution.description}
     >
-      <section className="bg-gray-50 py-32 px-6">
+      <section className="bg-gray-50 py-28 sm:py-32 responsive-px">
         <div className="container mx-auto">
           <div className="max-w-6xl mx-auto">
             <div className="mb-8">
@@ -473,7 +473,7 @@ function SolutionDetail() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className={`text-4xl md:text-5xl font-bold mb-6 text-forest ${solution.id === "switches" ? "" : "border-l-4 border-forest pl-4"}`}>
+                className={`text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-forest ${solution.id === "switches" ? "" : "border-l-4 border-forest pl-4"}`}>
                 {solution.id === "edge-ai" ? "Edge artificial intelligence" : solution.title}
               </motion.h1>
               
@@ -694,11 +694,11 @@ function SolutionList() {
       description="Advanced data systems for national security applications. Rugged, secure, and reliable defense technology."
     >
       {/* Hero Section */}
-      <section className="bg-navy py-24 px-6 md:py-32">
+      <section className="bg-navy py-16 sm:py-20 md:py-28 lg:py-32 responsive-px">
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto text-center">
             <motion.h1 
-              className="text-4xl md:text-5xl font-condensed font-bold mb-6 text-cream"
+              className="text-3xl sm:text-4xl md:text-5xl font-condensed font-bold mb-4 sm:mb-6 text-cream"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}

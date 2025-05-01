@@ -42,7 +42,7 @@ export default function Home() {
       description="Advanced defense systems engineered for mission-critical environments. Providing Edge AI, Rugged Data Storage, and Military-Grade Equipment."
     >
       {/* Hero Section */}
-      <section className="hero-pattern pt-32 pb-20 md:pt-40 md:pb-32 px-6">
+      <section className="hero-pattern pt-28 pb-16 sm:pt-32 md:pt-40 lg:pt-48 md:pb-24 lg:pb-32 responsive-px">
         <div className="absolute inset-0 z-0 overflow-hidden">
           <div className="absolute w-full h-full bg-gradient-to-br from-forest to-navy opacity-90"></div>
         </div>
@@ -55,13 +55,13 @@ export default function Home() {
             variants={staggerContainer}
           >
             <motion.h1 
-              className="text-4xl md:text-6xl font-condensed font-bold tracking-wide mb-4"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-condensed font-bold tracking-wide mb-4"
               variants={fadeInUp}
             >
               TRINETHRA DEFENTECH
             </motion.h1>
             <motion.p 
-              className="text-xl md:text-2xl font-medium mb-8 text-cream/90"
+              className="text-lg sm:text-xl md:text-2xl font-medium mb-6 md:mb-8 text-cream/90"
               variants={fadeInUp}
             >
               Tactical and strategic defense systems engineered for mission-critical environments
@@ -91,7 +91,7 @@ export default function Home() {
       </section>
       
       {/* Feature Section */}
-      <section className="bg-white py-16 md:py-24 px-6">
+      <section className="bg-white py-12 sm:py-16 md:py-20 lg:py-24 responsive-px">
         <div className="container mx-auto">
           <motion.div 
             className="max-w-3xl mx-auto text-center mb-12"

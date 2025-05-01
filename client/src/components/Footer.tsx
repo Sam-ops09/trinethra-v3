@@ -5,9 +5,9 @@ import { FaLinkedin, FaTwitter, FaEnvelope } from "react-icons/fa";
 
 export function Footer() {
   return (
-    <footer className="bg-charcoal text-cream pt-16 pb-8 px-6">
+    <footer className="bg-charcoal text-cream pt-12 sm:pt-16 pb-6 sm:pb-8 responsive-px">
       <div className="container mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8 sm:mb-12">
           <div>
             <div className="mb-6">
               <Logo />
@@ -123,9 +123,9 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-cream/20 pt-8 flex flex-col md:flex-row justify-between items-center text-cream/60 text-sm">
+        <div className="border-t border-cream/20 pt-6 sm:pt-8 flex flex-col md:flex-row justify-between items-center text-cream/60 text-sm">
           <div>© {new Date().getFullYear()} TRINETHRA DEFENTECH. All rights reserved.</div>
-          <div className="flex space-x-6 mt-4 md:mt-0">
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-6 mt-4 md:mt-0">
             <a href="#" className="hover:text-cream transition-colors">
               Privacy Policy
             </a>

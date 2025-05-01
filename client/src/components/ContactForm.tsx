@@ -62,15 +62,15 @@ export function ContactForm() {
   }
 
   return (
-    <section id="contact" className="bg-navy text-cream py-20 px-6">
+    <section id="contact" className="bg-navy text-cream py-12 sm:py-16 md:py-20 responsive-px">
       <div className="container mx-auto">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-condensed font-bold mb-4">Request a Consultation</h2>
-            <p className="text-cream/80">Our defense specialists are ready to discuss your mission-critical requirements</p>
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-condensed font-bold mb-3 sm:mb-4">Request a Consultation</h2>
+            <p className="text-cream/80 text-sm sm:text-base">Our defense specialists are ready to discuss your mission-critical requirements</p>
           </div>
 
-          <div className="bg-white p-8 rounded-lg shadow-lg">
+          <div className="bg-white p-4 sm:p-6 md:p-8 rounded-lg shadow-lg">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6 text-charcoal">
                 <FormField
