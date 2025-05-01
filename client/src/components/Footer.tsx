@@ -89,9 +89,9 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#contact" className="text-cream/70 hover:text-cream transition-colors">
+                <Link href="/contact" className="text-cream/70 hover:text-cream transition-colors">
                   Contact
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

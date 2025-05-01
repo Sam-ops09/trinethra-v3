@@ -70,7 +70,7 @@ export default function Home() {
               className="flex flex-col sm:flex-row gap-4"
               variants={fadeInUp}
             >
-              <Link href="#contact">
+              <Link href="/contact">
                 <Button
                   className="bg-teal hover:bg-teal/90 text-white font-bold py-3 px-8 rounded shadow-lg transition-all duration-300 inline-flex items-center justify-center"
                 >
