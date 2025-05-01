@@ -630,9 +630,11 @@ function SolutionList() {
   const productsData = Object.values(solutionDetails).map(solution => ({
     id: solution.id,
     title: solution.title,
-    description: solution.fullDescription,
+    description: solution.description,
+    fullDescription: solution.fullDescription.length > 180 ? solution.fullDescription.substring(0, 180) + '...' : solution.fullDescription,
     certifications: solution.certifications,
-    imagePlaceholder: solution.imagePlaceholder
+    imagePlaceholder: solution.imagePlaceholder,
+    features: solution.features.slice(0, 3)
   }));
 
   const features = {
@@ -656,115 +658,185 @@ function SolutionList() {
     ]
   };
 
+  // Icons for each solution category
+  const getSolutionIcon = (id: string) => {
+    switch(id) {
+      case 'edge-ai':
+        return (
+          <svg className="w-12 h-12 text-navy" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 2v6m0 12v2M4.93 4.93l4.24 4.24m5.66 5.66l4.24 4.24M2 12h6m8 0h6M4.93 19.07l4.24-4.24m5.66-5.66l4.24-4.24"/>
+          </svg>
+        );
+      case 'data-storage':
+        return (
+          <svg className="w-12 h-12 text-navy" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2" />
+            <path d="M6 8h.01M6 12h.01M6 16h.01M10 8h8M10 12h8M10 16h8" />
+          </svg>
+        );
+      case 'switches':
+        return (
+          <svg className="w-12 h-12 text-navy" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="2" y="2" width="20" height="8" rx="2" ry="2" />
+            <rect x="2" y="14" width="20" height="8" rx="2" ry="2" />
+            <line x1="6" y1="6" x2="6.01" y2="6" />
+            <line x1="6" y1="18" x2="6.01" y2="18" />
+          </svg>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <Layout
       title="Advanced Defense Solutions | TRINETHRA DEFENTECH"
       description="Advanced data systems for national security applications. Rugged, secure, and reliable defense technology."
     >
-      <section className="bg-white py-32 px-6">
+      {/* Hero Section */}
+      <section className="bg-navy py-24 px-6 md:py-32">
         <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-4xl mx-auto text-center">
+            <motion.h1 
+              className="text-4xl md:text-5xl font-condensed font-bold mb-6 text-cream"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              Advanced Defense-Grade Solutions
+            </motion.h1>
+            
+            <motion.p 
+              className="text-xl text-cream/90 mb-12"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              Engineered for mission-critical national security applications with 
+              military-grade reliability and performance.
+            </motion.p>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="flex flex-wrap justify-center gap-2">
+              {['MIL-STD-810', 'AES-256', 'FIPS 140-2', 'MIL-STD-461'].map((cert, i) => (
+                <span key={i} className="text-sm font-medium bg-cream/10 text-cream px-3 py-1 rounded-full">
+                  {cert}
+                </span>
+              ))}
+            </motion.div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Solutions Grid */}
+      <section className="bg-white py-16 px-6 md:py-24">
+        <div className="container mx-auto">
+          <div className="max-w-6xl mx-auto">
             <motion.div 
               className="text-center mb-16"
-              initial="hidden"
-              animate="visible"
-              variants={staggerContainer}
-            >
-              <motion.h1 
-                className="text-4xl md:text-5xl font-condensed font-bold mb-6 text-navy"
-                variants={fadeInUp}
-              >
-                Advanced Data Systems for National Security Applications
-              </motion.h1>
-              <motion.p 
-                className="text-lg text-charcoal/80"
-                variants={fadeInUp}
-              >
-                Engineered solutions that integrate seamlessly into tactical operations 
-                while meeting the highest standards for reliability, security, and performance.
-              </motion.p>
-            </motion.div>
-            
-            <motion.div 
-              className="bg-gray-50 rounded-xl p-8 mb-16 shadow-md"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <div className="flex flex-col md:flex-row gap-8">
-                <div className="md:w-1/3">
-                  <div className="rounded-lg shadow-md w-full h-56 bg-navy/10 flex items-center justify-center mb-4">
-                    <p className="text-navy font-medium">TRINETHRA rugged data recorder</p>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="text-xs font-medium bg-teal/10 text-teal px-2 py-1 rounded-full">AES-256</span>
-                    <span className="text-xs font-medium bg-teal/10 text-teal px-2 py-1 rounded-full">FIPS 140</span>
-                    <span className="text-xs font-medium bg-teal/10 text-teal px-2 py-1 rounded-full">MIL-SPEC</span>
-                  </div>
-                </div>
-                <div className="md:w-2/3">
-                  <h2 className="text-2xl font-condensed font-bold mb-4 text-navy">TRINETHRA Rugged Data Recorders</h2>
-                  <p className="text-charcoal/80 mb-4">
-                    Our flagship rugged data recording systems deliver unparalleled performance across aerospace, 
-                    defense, maritime, and space applications. Designed to operate in the most extreme environments, 
-                    they maintain complete data integrity while providing real-time encryption.
-                  </p>
-                  <ul className="text-charcoal/80 space-y-2">
-                    {features["data-storage"].map((feature: string, index: number) => (
-                      <li key={index} className="flex items-start">
-                        <FaCheck className="text-forest mt-1 mr-2" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+              <h2 className="text-3xl md:text-4xl font-condensed font-bold mb-6 text-navy inline-block border-b-2 border-forest pb-2">
+                Our Defense Technology Solutions
+              </h2>
+              <p className="text-lg text-charcoal/80 max-w-3xl mx-auto">
+                Explore our portfolio of advanced, rugged, and secure solutions designed for 
+                the most demanding defense and national security applications.
+              </p>
             </motion.div>
             
-            {/* Product Cards */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={staggerContainer}
-            >
-              <h2 className="text-2xl font-condensed font-bold mb-8 text-navy">Defense Technology Solutions</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {productsData.map((product) => (
-                  <motion.div key={product.id} variants={fadeInUp}>
-                    <Card className="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden card-hover h-full">
-                      <div className="w-full h-48 bg-navy/10 flex items-center justify-center">
-                        <p className="text-navy font-medium">{product.imagePlaceholder}</p>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+              {productsData.map((product, index) => (
+                <motion.div 
+                  key={product.id} 
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="flex flex-col h-full"
+                >
+                  <div className="bg-white border-t border-x border-gray-200 rounded-t-xl p-6 flex-grow">
+                    <div className="flex justify-center items-center h-32 mb-6 bg-gray-50 rounded-lg">
+                      <div className="w-20 h-20 rounded-full bg-forest/10 flex items-center justify-center">
+                        {getSolutionIcon(product.id)}
                       </div>
-                      <CardContent className="p-6 flex flex-col h-full">
-                        <h3 className="text-xl font-condensed font-bold mb-3 text-navy">{product.title}</h3>
-                        <p className="text-charcoal/80 mb-4">{product.description}</p>
-                        <ul className="text-charcoal/80 space-y-2 mb-4 flex-grow">
-                          {features[product.id as keyof typeof features].slice(0, 2).map((feature: string, idx: number) => (
-                            <li key={idx} className="flex items-start text-sm">
-                              <FaCheck className="text-forest shrink-0 mt-1 mr-2" />
-                              <span>{feature}</span>
-                            </li>
-                          ))}
-                        </ul>
-                        <div className="flex flex-wrap gap-2 mb-4">
-                          {product.certifications.slice(0, 2).map((cert, i) => (
-                            <span key={i} className="text-xs font-medium bg-forest/10 text-forest px-2 py-1 rounded-full">
-                              {cert}
-                            </span>
-                          ))}
+                    </div>
+                    
+                    <h3 className="text-2xl font-condensed font-bold mb-3 text-navy text-center">
+                      {product.title}
+                    </h3>
+                    
+                    <p className="text-charcoal/80 mb-6 text-center">
+                      {product.description}
+                    </p>
+                    
+                    <div className="space-y-3 mb-8">
+                      {product.features.map((feature, idx) => (
+                        <div key={idx} className="flex items-start">
+                          <FaCheck className="text-forest mt-1 mr-3 shrink-0" />
+                          <span className="text-charcoal/80">{feature}</span>
                         </div>
-                        <Link 
-                          to={`/solutions/${product.id}`}
-                          className="inline-flex items-center text-teal font-medium hover:text-teal/80 transition-colors"
-                        >
-                          Learn more <FaChevronRight className="ml-1 text-xs" />
-                        </Link>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div className="border border-gray-200 bg-gray-50 rounded-b-xl p-6">
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {product.certifications.slice(0, 2).map((cert, i) => (
+                        <span key={i} className="text-xs font-medium bg-forest/10 text-forest px-2 py-1 rounded-full">
+                          {cert}
+                        </span>
+                      ))}
+                      {product.certifications.length > 2 && (
+                        <span className="text-xs font-medium bg-gray-200 text-gray-600 px-2 py-1 rounded-full">
+                          +{product.certifications.length - 2} more
+                        </span>
+                      )}
+                    </div>
+                    
+                    <Link 
+                      to={`/solutions/${product.id}`}
+                      className="w-full block text-center bg-forest text-white font-medium py-2.5 px-4 rounded-md hover:bg-forest/90 transition-colors"
+                    >
+                      Explore Solution
+                    </Link>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* CTA Section */}
+      <section className="bg-gray-50 py-16 md:py-24 px-6">
+        <div className="container mx-auto">
+          <div className="max-w-5xl mx-auto">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="flex flex-col md:flex-row md:items-center gap-8 md:gap-16 bg-white p-8 md:p-12 rounded-xl shadow-md border border-gray-200"
+            >
+              <div className="md:w-2/3">
+                <h2 className="text-2xl md:text-3xl font-bold mb-4 text-navy">Need a Custom Defense Solution?</h2>
+                <p className="text-charcoal/80 mb-0">
+                  Our team of defense technology experts can help you design and implement 
+                  custom solutions that meet your specific mission requirements and security standards.
+                </p>
+              </div>
+              
+              <div className="md:w-1/3 flex justify-center md:justify-end">
+                <a href="#contact" className="inline-flex items-center justify-center bg-navy hover:bg-navy/90 text-white font-bold py-3 px-6 rounded-md shadow-md transition-colors w-full md:w-auto">
+                  Contact Our Team
+                </a>
               </div>
             </motion.div>
           </div>
