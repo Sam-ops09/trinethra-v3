@@ -549,12 +549,26 @@ function SolutionList() {
     imagePlaceholder: solution.imagePlaceholder
   }));
 
-  const features = [
-    "Shock/vibration tolerance exceeding MIL-STD-810 requirements",
-    "FIPS 140-2 validated cryptographic modules",
-    "AES-256 encryption with NSA Type 1 compatibility",
-    "Seamless integration with existing tactical networks"
-  ];
+  const features = {
+    "edge-ai": [
+      "Low-latency inference engines for real-time processing",
+      "Ruggedized hardware for extreme battlefield conditions",
+      "Military-grade encryption for data security",
+      "Offline operation capabilities for disconnected environments"
+    ],
+    "data-storage": [
+      "IP68-rated enclosures for complete dust/water protection",
+      "MIL-STD-810 compliant for shock and environmental resistance",
+      "AES-256 hardware encryption for secure data storage",
+      "Temperature resistant from -40°C to +85°C for all environments"
+    ],
+    "switches": [
+      "Enhanced Security Protocols with military-grade encryption",
+      "Ruggedized Design for extreme environmental conditions",
+      "Tactical Network Integration with existing defense systems",
+      "Rapid Deployment with quick setup for time-critical missions"
+    ]
+  };
 
   return (
     <Layout
@@ -611,7 +625,7 @@ function SolutionList() {
                     they maintain complete data integrity while providing real-time encryption.
                   </p>
                   <ul className="text-charcoal/80 space-y-2">
-                    {features.map((feature, index) => (
+                    {features["data-storage"].map((feature: string, index: number) => (
                       <li key={index} className="flex items-start">
                         <FaCheck className="text-forest mt-1 mr-2" />
                         <span>{feature}</span>
@@ -639,9 +653,17 @@ function SolutionList() {
                       </div>
                       <CardContent className="p-6 flex flex-col h-full">
                         <h3 className="text-xl font-condensed font-bold mb-3 text-navy">{product.title}</h3>
-                        <p className="text-charcoal/80 mb-4 flex-grow">{product.description}</p>
+                        <p className="text-charcoal/80 mb-4">{product.description}</p>
+                        <ul className="text-charcoal/80 space-y-2 mb-4 flex-grow">
+                          {features[product.id as keyof typeof features].slice(0, 2).map((feature: string, idx: number) => (
+                            <li key={idx} className="flex items-start text-sm">
+                              <FaCheck className="text-forest shrink-0 mt-1 mr-2" />
+                              <span>{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
                         <div className="flex flex-wrap gap-2 mb-4">
-                          {product.certifications.map((cert, i) => (
+                          {product.certifications.slice(0, 2).map((cert, i) => (
                             <span key={i} className="text-xs font-medium bg-forest/10 text-forest px-2 py-1 rounded-full">
                               {cert}
                             </span>
