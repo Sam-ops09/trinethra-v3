@@ -48,31 +48,23 @@ export function Footer() {
             <h3 className="text-lg font-condensed font-bold mb-4">Solutions</h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/solutions">
-                  <a className="text-cream/70 hover:text-cream transition-colors">
-                    Edge AI Systems
-                  </a>
+                <Link href="/solutions" className="text-cream/70 hover:text-cream transition-colors">
+                  Edge AI Systems
                 </Link>
               </li>
               <li>
-                <Link href="/solutions">
-                  <a className="text-cream/70 hover:text-cream transition-colors">
-                    Rugged Data Storage
-                  </a>
+                <Link href="/solutions" className="text-cream/70 hover:text-cream transition-colors">
+                  Rugged Data Storage
                 </Link>
               </li>
               <li>
-                <Link href="/solutions">
-                  <a className="text-cream/70 hover:text-cream transition-colors">
-                    Tactical Network Switches
-                  </a>
+                <Link href="/solutions" className="text-cream/70 hover:text-cream transition-colors">
+                  Tactical Network Switches
                 </Link>
               </li>
               <li>
-                <Link href="/solutions">
-                  <a className="text-cream/70 hover:text-cream transition-colors">
-                    Custom Solutions
-                  </a>
+                <Link href="/solutions" className="text-cream/70 hover:text-cream transition-colors">
+                  Custom Solutions
                 </Link>
               </li>
             </ul>
@@ -82,17 +74,13 @@ export function Footer() {
             <h3 className="text-lg font-condensed font-bold mb-4">Company</h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/about">
-                  <a className="text-cream/70 hover:text-cream transition-colors">
-                    About Us
-                  </a>
+                <Link href="/about" className="text-cream/70 hover:text-cream transition-colors">
+                  About Us
                 </Link>
               </li>
               <li>
-                <Link href="/certifications">
-                  <a className="text-cream/70 hover:text-cream transition-colors">
-                    Certifications
-                  </a>
+                <Link href="/certifications" className="text-cream/70 hover:text-cream transition-colors">
+                  Certifications
                 </Link>
               </li>
               <li>
