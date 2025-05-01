@@ -297,13 +297,13 @@ function ProductTabs({ products }: { products: Product[] }) {
   const safeActiveTab = activeTab < products.length ? activeTab : 0;
 
   return (
-    <div className="mb-12">
+    <div className="mb-8 sm:mb-12">
       {/* Tab Navigation */}
-      <div className="flex flex-wrap overflow-hidden rounded-t-md shadow-sm mb-6 border-b border-gray-200">
+      <div className="flex flex-wrap overflow-hidden rounded-t-md shadow-sm mb-4 sm:mb-6 border-b border-gray-200">
         {products.map((product, index) => (
           <button
             key={index}
-            className={`py-3 px-6 font-medium text-center transition-all ${index === safeActiveTab 
+            className={`py-2 sm:py-3 px-3 sm:px-6 font-medium text-center text-sm sm:text-base transition-all w-1/2 sm:w-auto ${index === safeActiveTab 
               ? 'bg-white text-forest border-t-2 border-forest' 
               : 'bg-gray-50 text-gray-700 hover:bg-gray-100'}`}
             onClick={() => setActiveTab(index)}
@@ -314,8 +314,8 @@ function ProductTabs({ products }: { products: Product[] }) {
       </div>
 
       {/* Product Image and Summary */}
-      <div className="mb-8 bg-white border border-gray-200 rounded-md p-6 shadow-sm">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="mb-6 sm:mb-8 bg-white border border-gray-200 rounded-md p-4 sm:p-6 shadow-sm">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
           <div className="lg:col-span-1 flex justify-center items-center bg-gray-50 rounded-md p-6 h-64">
             <div className="text-center">
               <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-navy/10 flex items-center justify-center">
@@ -374,8 +374,8 @@ function ProductTabs({ products }: { products: Product[] }) {
       </div>
 
       {/* Full Product Details */}
-      <div id="product-details" className="border border-gray-200 rounded-md p-6 bg-white shadow-sm">
-        <h3 className="text-xl font-condensed font-bold text-navy border-b border-gray-200 pb-4 mb-6">Product Details</h3>
+      <div id="product-details" className="border border-gray-200 rounded-md p-4 sm:p-6 bg-white shadow-sm">
+        <h3 className="text-lg sm:text-xl font-condensed font-bold text-navy border-b border-gray-200 pb-3 sm:pb-4 mb-4 sm:mb-6">Product Details</h3>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
           {/* Full Features List */}
@@ -513,9 +513,9 @@ function SolutionDetail() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
-                    className="bg-gray-100 p-6 rounded-lg border-l-4 border-forest mb-8">
-                    <h2 className="text-xl font-bold mb-2 text-forest">{solution.mainQuestion}</h2>
-                    <p className="text-charcoal/80">{solution.mainAnswer}</p>
+                    className="bg-gray-100 p-4 sm:p-6 rounded-lg border-l-4 border-forest mb-6 sm:mb-8">
+                    <h2 className="text-lg sm:text-xl font-bold mb-2 text-forest">{solution.mainQuestion}</h2>
+                    <p className="text-charcoal/80 text-sm sm:text-base">{solution.mainAnswer}</p>
                   </motion.div>
                 )}
 
@@ -523,7 +523,7 @@ function SolutionDetail() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.3 }}>
-                  <h2 className="text-2xl font-condensed font-bold mb-4 text-navy">Key Features</h2>
+                  <h2 className="text-xl sm:text-2xl font-condensed font-bold mb-3 sm:mb-4 text-navy">Key Features</h2>
                   <ul className="space-y-3 mb-6 text-charcoal/80">
                     {solution.features.map((feature, index) => (
                       <li key={index} className="flex items-start">
@@ -732,7 +732,7 @@ function SolutionList() {
       </section>
       
       {/* Solutions Grid */}
-      <section className="bg-white py-16 px-6 md:py-24">
+      <section className="bg-white py-12 sm:py-16 md:py-20 lg:py-24 responsive-px">
         <div className="container mx-auto">
           <div className="max-w-6xl mx-auto">
             <motion.div 
@@ -801,7 +801,7 @@ function SolutionList() {
                     </div>
                     
                     <Link 
-                      to={`/solutions/${product.id}`}
+                      href={`/solutions/${product.id}`}
                       className="w-full block text-center bg-forest text-white font-medium py-2.5 px-4 rounded-md hover:bg-forest/90 transition-colors"
                     >
                       Explore Solution
@@ -815,7 +815,7 @@ function SolutionList() {
       </section>
       
       {/* CTA Section */}
-      <section className="bg-gray-50 py-16 md:py-24 px-6">
+      <section className="bg-gray-50 py-12 sm:py-16 md:py-20 lg:py-24 responsive-px">
         <div className="container mx-auto">
           <div className="max-w-5xl mx-auto">
             <motion.div 
