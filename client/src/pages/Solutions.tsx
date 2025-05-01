@@ -595,9 +595,9 @@ function SolutionDetail() {
                   
                   <div className="border-t border-gray-200 pt-4 mt-4">
                     <h4 className="font-bold text-charcoal mb-2">Request Information</h4>
-                    <a href="#contact" className="w-full block text-center bg-forest text-white font-medium py-2 px-4 rounded hover:bg-forest/90 transition-colors mt-4">
+                    <Link href="/contact" className="w-full block text-center bg-forest text-white font-medium py-2 px-4 rounded hover:bg-forest/90 transition-colors mt-4">
                       Contact Us
-                    </a>
+                    </Link>
                   </div>
                 </motion.div>
               </div>
@@ -834,9 +834,9 @@ function SolutionList() {
               </div>
               
               <div className="md:w-1/3 flex justify-center md:justify-end">
-                <a href="#contact" className="inline-flex items-center justify-center bg-navy hover:bg-navy/90 text-white font-bold py-3 px-6 rounded-md shadow-md transition-colors w-full md:w-auto">
+                <Link href="/contact" className="inline-flex items-center justify-center bg-navy hover:bg-navy/90 text-white font-bold py-3 px-6 rounded-md shadow-md transition-colors w-full md:w-auto">
                   Contact Our Team
-                </a>
+                </Link>
               </div>
             </motion.div>
           </div>
