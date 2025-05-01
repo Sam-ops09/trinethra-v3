@@ -454,10 +454,43 @@ function SolutionDetail() {
     );
   }
   
+  // Enhanced SEO for the specific solution detail page
+  const solutionDetailStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: solution.title,
+    description: solution.fullDescription,
+    brand: {
+      '@type': 'Brand',
+      name: 'TRINETHRA DEFENTECH'
+    },
+    category: 'Defense Technology',
+    manufacturer: {
+      '@type': 'Organization',
+      name: 'TRINETHRA DEFENTECH'
+    },
+    offers: {
+      '@type': 'Offer',
+      url: `https://trinethra-defentech.com/contact`,
+      availability: 'https://schema.org/InStock'
+    },
+    additionalProperty: solution.features.map(feature => ({
+      '@type': 'PropertyValue',
+      name: 'Feature',
+      value: feature
+    }))
+  };
+  
   return (
     <Layout
-      title={`${solution.title} | TRINETHRA DEFENTECH`}
-      description={solution.description}
+      title={`${solution.title} | TRINETHRA DEFENTECH Advanced Defense Technology`}
+      description={`${solution.fullDescription.substring(0, 150)}... Engineered for mission-critical defense and security operations.`}
+      keywords={`${solution.title}, TRINETHRA DEFENTECH, ${solution.certifications.join(', ')}, defense technology, military-grade solutions`}
+      ogType="product"
+      structuredData={JSON.stringify(solutionDetailStructuredData)}
+      pageType="solution"
+      solutionName={solution.title}
+      solutionCategory="Defense Technology"
     >
       <section className="bg-gray-50 py-28 sm:py-32 responsive-px">
         <div className="container mx-auto">
@@ -688,10 +721,33 @@ function SolutionList() {
     }
   };
 
+  // Enhanced SEO for Solutions page
+  const solutionsStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'TRINETHRA DEFENTECH Defense Technology Solutions',
+    description: 'Our portfolio of advanced, rugged, and secure defense technology solutions designed for the most demanding defense and national security applications.',
+    itemListElement: productsData.map((product, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'Product',
+        name: product.title,
+        description: product.description,
+        url: `https://trinethra-defentech.com/solutions/${product.id}`,
+        category: 'Defense Technology'
+      }
+    }))
+  };
+
   return (
     <Layout
       title="Advanced Defense Solutions | TRINETHRA DEFENTECH"
-      description="Advanced data systems for national security applications. Rugged, secure, and reliable defense technology."
+      description="Explore our portfolio of military-grade defense technology solutions including Edge AI, Rugged Data Storage, and Tactical Switches engineered for mission-critical environments."
+      keywords="defense solutions, military technology, TRINETHRA DEFENTECH, edge AI solutions, rugged data storage, tactical switches, defense-grade systems"
+      ogType="website"
+      structuredData={JSON.stringify(solutionsStructuredData)}
+      pageType="solutions"
     >
       {/* Hero Section */}
       <section className="bg-navy py-16 sm:py-20 md:py-28 lg:py-32 responsive-px">

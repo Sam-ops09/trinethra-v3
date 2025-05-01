@@ -35,11 +35,35 @@ export default function Home() {
     "ADE-DRDO", "CABS-DRDO", "GTRE-DRDO", 
     "MTRDC-DRDO", "HAL", "ISRO"
   ];
+  
+  // Enhanced SEO for home page with structured data
+  const homePageStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'TRINETHRA DEFENTECH - Advanced Defense Technology Solutions',
+    description: 'Leading provider of military-grade defense technology including Edge AI systems, rugged data storage, and tactical network switches for defense and security operations.',
+    keywords: 'TRINETHRA DEFENTECH, defense technology, military systems, tactical equipment, edge AI, rugged data storage, defense-grade solutions, secure network switches',
+    inLanguage: 'en-US',
+    mainEntity: {
+      '@type': 'Organization',
+      name: 'TRINETHRA DEFENTECH',
+      url: 'https://trinethra-defentech.com',
+      logo: 'https://trinethra-defentech.com/logo.png',
+      description: 'Premier provider of advanced defense technology solutions engineered for mission-critical environments.',
+      sameAs: [
+        'https://linkedin.com/company/trinethra-defentech',
+        'https://twitter.com/trinethra_def'
+      ]
+    }
+  };
 
   return (
     <Layout
-      title="TRINETHRA DEFENTECH | Tactical and Strategic Defense Systems"
-      description="Advanced defense systems engineered for mission-critical environments. Providing Edge AI, Rugged Data Storage, and Military-Grade Equipment."
+      title="TRINETHRA DEFENTECH | Advanced Defense Technology Solutions"
+      description="Leading provider of military-grade Edge AI systems, rugged data storage, and tactical network switches for defense and security operations. Engineered for mission-critical environments."
+      ogType="website"
+      keywords="TRINETHRA DEFENTECH, defense technology, military systems, tactical equipment, edge AI, rugged switches, defense contractors"
+      structuredData={JSON.stringify(homePageStructuredData)}
     >
       {/* Hero Section */}
       <section className="hero-pattern pt-28 pb-16 sm:pt-32 md:pt-40 lg:pt-48 md:pb-24 lg:pb-32 responsive-px">

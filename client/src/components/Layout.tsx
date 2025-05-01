@@ -9,18 +9,50 @@ interface LayoutProps {
   children: React.ReactNode;
   title?: string;
   description?: string;
+  canonicalUrl?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article' | 'product';
+  twitterCard?: 'summary' | 'summary_large_image';
+  keywords?: string;
+  imageAlt?: string;
+  structuredData?: string;
+  pageType?: 'home' | 'about' | 'solutions' | 'solution' | 'certifications' | 'contact';
+  solutionName?: string;
+  solutionCategory?: string;
+  applicationAreas?: string[];
   withContact?: boolean;
 }
 
 export function Layout({
   children,
-  title = "TRINETHRA DEFENTECH | Tactical and Strategic Defense Systems",
-  description = "Advanced defense systems engineered for mission-critical environments. Providing Edge AI, Rugged Data Storage, and Military-Grade Equipment.",
+  title = "TRINETHRA DEFENTECH | Advanced Defense Technology Systems",
+  description = "Leading provider of military-grade Edge AI systems, rugged data storage, and tactical network switches for defense and security operations.",
+  canonicalUrl,
+  ogImage,
+  ogType,
+  twitterCard,
+  keywords,
+  imageAlt,
+  structuredData,
+  pageType,
+  solutionName,
+  solutionCategory,
+  applicationAreas,
   withContact = true
 }: LayoutProps) {
   return (
     <>
-      <Head title={title} description={description} />
+      <Head 
+        title={title} 
+        description={description}
+        canonicalUrl={canonicalUrl}
+        ogImage={ogImage}
+        ogType={ogType}
+        twitterCard={twitterCard}
+        keywords={keywords}
+        imageAlt={imageAlt}
+        structuredData={structuredData}
+      />
       <div className="flex flex-col min-h-screen">
         <Header />
         <motion.main

@@ -6,7 +6,7 @@ interface HeadProps {
   description?: string;
   canonicalUrl?: string;
   ogImage?: string;
-  ogType?: 'website' | 'article';
+  ogType?: 'website' | 'article' | 'product';
   twitterCard?: 'summary' | 'summary_large_image';
   keywords?: string;
   imageAlt?: string;

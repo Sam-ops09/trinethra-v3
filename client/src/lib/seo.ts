@@ -5,7 +5,7 @@ interface SEOProps {
   description?: string;
   canonicalUrl?: string;
   ogImage?: string;
-  ogType?: 'website' | 'article';
+  ogType?: 'website' | 'article' | 'product';
   twitterCard?: 'summary' | 'summary_large_image';
   pageType?: 'home' | 'about' | 'solutions' | 'solution' | 'certifications' | 'contact';
   solutionName?: string;
@@ -160,7 +160,17 @@ export function generateSEO(props: SEOProps = {}) {
     };
   }
   
-  const jsonLdData = {
+  // Create JSON-LD data with proper typing
+  interface JsonLdData {
+    organization: string;
+    website: string;
+    product?: string;
+    service?: string;
+    breadcrumb?: string;
+    [key: string]: string | undefined;
+  }
+  
+  const jsonLdData: JsonLdData = {
     organization: JSON.stringify(organizationJsonLd),
     website: JSON.stringify(websiteJsonLd)
   };
