@@ -52,7 +52,7 @@ interface EdgeAISolution extends SolutionBase {
 type Solution = EdgeAISolution | SolutionBase;
 
 function isEdgeAISolution(solution: Solution): solution is EdgeAISolution {
-  return (solution.id === "edge-ai" || solution.id === "data-storage") && 'products' in solution;
+  return (solution.id === "edge-ai" || solution.id === "data-storage" || solution.id === "switches") && 'products' in solution;
 }
 
 // Detailed data for solution pages
@@ -216,20 +216,73 @@ const solutionDetails: Record<string, Solution> = {
     fullDescription: "Battlefield-ready networking equipment designed for secure, reliable communications in contested electromagnetic environments.",
     mainQuestion: "Is a rugged switch right for you?",
     mainAnswer: "If you need networking equipment that can survive the harshest field conditions while maintaining security and reliability, our rugged switches deliver uncompromising performance.",
-    certifications: ["MIL-STD-1275E", "IP67"],
+    certifications: ["MIL-STD-461G", "MIL-STD-810G", "MIL-STD-1275E", "NIST FIPS 140-2", "Common Criteria EAL4+"],
     imagePlaceholder: "Rugged Switches",
     features: [
-      "Vibration and shock resistant",
-      "Extended temperature range",
-      "Network isolation features",
-      "EMI/EMP shielding",
-      "Redundant power systems"
+      "Enhanced Security Protocols",
+      "Ruggedized Design",
+      "Tactical Network Integration",
+      "Rapid Deployment",
+      "Military-grade encryption"
     ],
     applications: [
       "Tactical field networks",
       "Mobile command vehicles",
       "Forward operating bases",
       "Naval vessel communications"
+    ],
+    products: [
+      {
+        name: "Tactical XR-7",
+        features: [
+          "Military-grade switch for battlefield communications",
+          "Enhanced Security Protocols",
+          "Military-grade encryption and secure boot capabilities",
+          "Seamlessly integrates with existing defense infrastructure",
+          "Quick setup and configuration for time-critical missions"
+        ],
+        specs: {
+          "Operating Temperature": "-40°C to +85°C",
+          "Power Input": "9-36V DC with surge protection",
+          "Encryption": "AES-256, FIPS 140-2 compliant",
+          "Ports": "8x 1G/10G SFP+, 2x 40G QSFP+",
+          "Environmental Rating": "IP67, MIL-STD-810G"
+        }
+      },
+      {
+        name: "SecureNet Pro",
+        features: [
+          "Encrypted network switch for command centers",
+          "Advanced AES-256 encryption for all traffic",
+          "Integrated intrusion detection and prevention",
+          "Zero-trust network architecture support",
+          "Hardware-based security modules"
+        ],
+        specs: {
+          "Operating Temperature": "-40°C to +85°C",
+          "Power Input": "9-36V DC with surge protection",
+          "Encryption": "AES-256, FIPS 140-2 compliant",
+          "Ports": "8x 1G/10G SFP+, 2x 40G QSFP+",
+          "Security Certification": "Common Criteria EAL4+"
+        }
+      },
+      {
+        name: "FieldOps Switch",
+        features: [
+          "Ruggedized for extreme environmental conditions",
+          "Built to withstand extreme temperatures, shock, and vibration",
+          "EMI/RFI shielding for electromagnetic interference protection",
+          "Dust and waterproof enclosure (IP67 rated)",
+          "Redundant power supplies with hot-swap capability"
+        ],
+        specs: {
+          "Operating Temperature": "-40°C to +85°C",
+          "Power Input": "9-36V DC with surge protection",
+          "Protection": "EMI/EMC MIL-STD-461G compliant",
+          "Vibration/Shock": "MIL-STD-810G certified",
+          "Environmental Rating": "IP67 waterproof"
+        }
+      }
     ]
   }
 };
@@ -378,7 +431,7 @@ function SolutionDetail() {
               </motion.p>
             </div>
 
-            {/* Product Tabs for Edge AI */}
+            {/* Product Tabs */}
             {isEdgeAISolution(solution) && (
               <ProductTabs products={solution.products} />
             )}
