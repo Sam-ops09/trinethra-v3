@@ -1,7 +1,5 @@
-import { users, type User, type InsertUser, type ContactSubmission, type InsertContactSubmission } from "@shared/schema";
-
-// modify the interface with any CRUD methods
-// you might need
+import { supabase } from './supabase.ts';
+import { type User, type InsertUser, type ContactSubmission, type InsertContactSubmission } from "@shared/schema";
 
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
@@ -11,63 +9,59 @@ export interface IStorage {
   getAllContactSubmissions(): Promise<ContactSubmission[]>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<number, User>;
-  private contactSubmissions: Map<number, ContactSubmission>;
-  userCurrentId: number;
-  contactCurrentId: number;
-
-  constructor() {
-    this.users = new Map();
-    this.contactSubmissions = new Map();
-    this.userCurrentId = 1;
-    this.contactCurrentId = 1;
-  }
-
+export class SupabaseStorage implements IStorage {
   async getUser(id: number): Promise<User | undefined> {
-    return this.users.get(id);
+    const { data } = await supabase
+        .from('users_trinethra')
+        .select()
+        .eq('id', id)
+        .single();
+    return data || undefined;
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
+    const { data } = await supabase
+        .from('users_trinethra')
+        .select()
+        .eq('username', username)
+        .single();
+    return data || undefined;
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
-    const id = this.userCurrentId++;
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
-    return user;
+    const { data, error } = await supabase
+        .from('users_trinethra')
+        .insert(insertUser)
+        .select()
+        .single();
+
+    if (error) throw error;
+    return data;
   }
-  
+
   async createContactSubmission(submission: InsertContactSubmission): Promise<ContactSubmission> {
-    const id = this.contactCurrentId++;
-    const now = new Date();
-    
-    const contactSubmission: ContactSubmission = {
-      ...submission,
-      id,
-      submittedAt: now,
-      // Handle optional fields
-      phone: submission.phone || null,
-      confidential: submission.confidential || false
-    };
-    
-    this.contactSubmissions.set(id, contactSubmission);
-    return contactSubmission;
+    const { data, error } = await supabase
+        .from('contact_submissions_trinethra')
+        .insert({
+          ...submission,
+          submitted_at: new Date().toISOString()
+        })
+        .select()
+        .single();
+
+    if (error) throw error;
+    return data;
   }
-  
+
   async getAllContactSubmissions(): Promise<ContactSubmission[]> {
-    return Array.from(this.contactSubmissions.values()).sort(
-      (a, b) => {
-        // Handle the possibility of null dates (though this shouldn't happen in our implementation)
-        const dateA = a.submittedAt ? a.submittedAt.getTime() : 0;
-        const dateB = b.submittedAt ? b.submittedAt.getTime() : 0;
-        return dateB - dateA;
-      }
-    );
+    const { data, error } = await supabase
+        .from('contact_submissions_trinethra')
+        .select()
+        .order('submitted_at', { ascending: false });
+
+    if (error) throw error;
+    return data || [];
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new SupabaseStorage();

@@ -63,7 +63,7 @@ export function Layout({
           className="flex-grow"
         >
           {children}
-          {withContact && <ContactForm />}
+          {/*{withContact && <ContactForm />}*/}
         </motion.main>
         <Footer />
       </div>
