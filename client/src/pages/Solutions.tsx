@@ -640,7 +640,7 @@ function SolutionDetail() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.6 }}
-              className="bg-navy text-cream rounded-lg p-8 shadow-lg mt-12">
+              className="bg-[#0D4114] text-cream rounded-lg p-8 shadow-lg mt-12">
               <div className="flex flex-col md:flex-row items-center justify-between">
                 <div>
                   <h3 className="text-2xl font-bold mb-2">Ready to implement this solution?</h3>
@@ -750,7 +750,7 @@ function SolutionList() {
       pageType="solutions"
     >
       {/* Hero Section */}
-      <section className="bg-navy py-16 sm:py-20 md:py-28 lg:py-32 responsive-px">
+      <section className="bg-[#0D4114] py-16 sm:py-20 md:py-28 lg:py-32 responsive-px">
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto text-center">
             <motion.h1 
