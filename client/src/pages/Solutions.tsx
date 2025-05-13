@@ -750,7 +750,7 @@ function SolutionList() {
       pageType="solutions"
     >
       {/* Hero Section */}
-      <section className="bg-[#0D4114] py-16 sm:py-20 md:py-28 lg:py-32 responsive-px">
+      <section className="bg-[#0D4114] py-20 sm:py-20 md:py-28 lg:py-32 responsive-px">
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto text-center">
             <motion.h1 

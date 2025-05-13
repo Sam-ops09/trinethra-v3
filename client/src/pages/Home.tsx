@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "wouter";
 import { Layout } from "@/components/Layout";
+import { HeroCarousel } from "@/components/HeroCarousel";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -68,9 +69,10 @@ export default function Home() {
           structuredData={JSON.stringify(homePageStructuredData)}
       >
         {/* Hero Section */}
-        <section className="hero-pattern pt-28 pb-16 sm:pt-32 md:pt-40 lg:pt-48 md:pb-24 lg:pb-32 responsive-px">
+        <section className="pt-28 pb-20 sm:pt-32 md:pt-40 lg:pt-28 md:pb-24 lg:pb-32 responsive-px bg-[#0D4114]">
+          <HeroCarousel />
           <div className="absolute inset-0 z-0 overflow-hidden">
-            <div className="absolute w-full h-full bg-[#0D4114] opacity-90"></div>
+            <div className="absolute w-full h-full opacity-90"></div>
           </div>
 
           <div className="container mx-auto relative z-10">
@@ -81,7 +83,7 @@ export default function Home() {
                 variants={staggerContainer}
             >
               <motion.h1
-                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-condensed font-bold tracking-wide mb-4"
+                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-condensed font-bold tracking-wide mb-4 text-white"
                   variants={fadeInUp}
               >
                 TRINETHRA DEFENTECH
