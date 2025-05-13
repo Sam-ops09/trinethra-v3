@@ -137,7 +137,7 @@ export default function Contact() {
       </section>
 
       {/* Contact Form Section */}
-      <ContactForm />
+      {/*<ContactForm />*/}
     </Layout>
   );
 }
