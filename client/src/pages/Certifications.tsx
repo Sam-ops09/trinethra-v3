@@ -126,17 +126,17 @@ export default function Certifications() {
               </div>
             </motion.div>
             
-            <motion.div 
-              className="mt-12 text-center"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-            >
-              <a href="#" className="inline-flex items-center text-teal font-medium text-lg">
-                View All Certifications <FaArrowRight className="ml-2" />
-              </a>
-            </motion.div>
+            {/*<motion.div */}
+            {/*  className="mt-12 text-center"*/}
+            {/*  initial={{ opacity: 0 }}*/}
+            {/*  whileInView={{ opacity: 1 }}*/}
+            {/*  viewport={{ once: true }}*/}
+            {/*  transition={{ duration: 0.6, delay: 0.3 }}*/}
+            {/*>*/}
+            {/*  <a href="#" className="inline-flex items-center text-teal font-medium text-lg">*/}
+            {/*    View All Certifications <FaArrowRight className="ml-2" />*/}
+            {/*  </a>*/}
+            {/*</motion.div>*/}
           </div>
         </div>
       </section>

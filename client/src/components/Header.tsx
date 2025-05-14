@@ -109,7 +109,7 @@ export function Header() {
                           </Link>
                           <ChevronDown
                               size={16}
-                              className={`ml-1 transition-transform duration-200 ${
+                              className={`ml-1 transition-transform duration-200 text-white ${
                                   showSolutionsDropdown ? 'rotate-180' : ''
                               }`}
                               onClick={() => setShowSolutionsDropdown(!showSolutionsDropdown)}

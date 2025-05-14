@@ -154,7 +154,7 @@ export default function Offerings() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex items-start">
                   <div className="rounded w-full h-64 bg-navy/10 flex items-center justify-center">
-                    <p className="text-navy font-medium">Defense system in action</p>
+                    <p className="text-navy font-medium">Image can be added here</p>
                   </div>
                 </div>
                 <div>

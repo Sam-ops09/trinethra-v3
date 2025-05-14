@@ -331,7 +331,8 @@ function ProductTabs({ products }: { products: Product[] }) {
                   <line x1="18" y1="14" x2="18" y2="14" />
                 </svg>
               </div>
-              <h3 className="text-xl font-condensed font-bold text-navy">{products[safeActiveTab].name}</h3>
+              <h3 className="text-xl font-condensed font-bold text-navy">{'Image can be added here'}</h3>
+              {/*products[safeActiveTab].name*/}
             </div>
           </div>
           
@@ -819,9 +820,10 @@ function SolutionList() {
                 >
                   <div className="bg-white border-t border-x border-gray-200 rounded-t-xl p-6 flex-grow">
                     <div className="flex justify-center items-center h-32 mb-6 bg-gray-50 rounded-lg">
-                      <div className="w-20 h-20 rounded-full bg-forest/10 flex items-center justify-center">
-                        {getSolutionIcon(product.id)}
-                      </div>
+                      {/*<div className="w-20 h-20 rounded-full bg-forest/10 flex items-center justify-center">*/}
+                        {'Image can be added here'}
+                        {/*{getSolutionIcon(product.id)}*/}
+                      {/*</div>*/}
                     </div>
                     
                     <h3 className="text-2xl font-condensed font-bold mb-3 text-navy text-center">
