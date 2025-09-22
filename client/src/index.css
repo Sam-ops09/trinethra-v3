@@ -139,4 +139,74 @@
   .certification-badge:hover::before {
     @apply opacity-100;
   }
+  
+  /* New dynamic utility classes */
+  .heading-clamp-1 { /* h1 style */
+    font-size: clamp(2.25rem, 5vw + 1rem, 3.75rem);
+    line-height: 1.1;
+  }
+  .heading-clamp-2 { /* h2 style */
+    font-size: clamp(1.75rem, 3.5vw + 0.5rem, 2.75rem);
+    line-height: 1.15;
+  }
+  .heading-clamp-3 { /* h3 style */
+    font-size: clamp(1.35rem, 2.5vw + 0.5rem, 2rem);
+    line-height: 1.2;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .section-container {
+    @apply max-w-7xl mx-auto w-full;
+  }
+  .section-spacing {
+    @apply py-16 md:py-24 lg:py-28;
+  }
+  .subtle-border {
+    @apply border border-cream/20 rounded-lg;
+  }
+  .focus-ring {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2;
+  }
+  /* Partner marquee animation (mobile) */
+  @keyframes partner-marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .partner-marquee-wrapper {
+    @apply overflow-hidden relative w-full;
+  }
+  .partner-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: partner-marquee 18s linear infinite;
+  }
+  .reduce-motion .partner-marquee-track {
+    animation: none;
+  }
+  /* Skeleton */
+  .skeleton {
+    @apply animate-pulse bg-cream/30;
+  }
+  /* Skip link */
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-teal focus:text-white focus:px-4 focus:py-2 focus:rounded-md;
+  }
+}
+
+@layer utilities {
+  .dvh-min-h { min-height: 100vh; }
+  @supports (min-height: 100dvh) { .dvh-min-h { min-height: 100dvh; } }
+  @media (max-width: 360px) {
+    .heading-clamp-1 { font-size: clamp(1.9rem, 7vw + 0.8rem, 2.6rem); }
+    .heading-clamp-2 { font-size: clamp(1.4rem, 5vw + 0.6rem, 2.1rem); }
+    .heading-clamp-3 { font-size: clamp(1.15rem, 4vw + 0.5rem, 1.55rem); }
+    body { font-size: 15px; }
+  }
+  @media (orientation: landscape) and (max-height: 480px) {
+    .heading-clamp-1 { font-size: clamp(1.6rem, 4vw + 0.8rem, 2.2rem); }
+    .heading-clamp-2 { font-size: clamp(1.2rem, 3vw + 0.6rem, 1.8rem); }
+  }
+  .safe-bottom { padding-bottom: max(0.75rem, env(safe-area-inset-bottom)); }
+  .overflow-mask-x { -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%); }
 }

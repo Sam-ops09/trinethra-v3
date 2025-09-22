@@ -1,7 +1,6 @@
 import React from "react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
-import { ContactForm } from "./ContactForm";
 import { motion } from "framer-motion";
 import Head from "@/components/Head";
 
@@ -26,7 +25,7 @@ interface LayoutProps {
 export function Layout({
                          children,
                          title = "TRINETHRA DEFENTECH | Advanced Defense Technology Systems",
-                         description = "Leading provider of military-grade Edge AI systems, rugged data storage, and tactical network switches for defense and security operations.",
+                         description = "Leading provider of military-grade cable harness systems, rugged storage solutions, edge server compute platforms, and panel PCs for defense and security operations.",
                          canonicalUrl,
                          ogImage,
                          ogType,
@@ -34,11 +33,11 @@ export function Layout({
                          keywords,
                          imageAlt,
                          structuredData,
-                         pageType,
-                         solutionName,
-                         solutionCategory,
-                         applicationAreas,
-                         withContact = true
+                         pageType: _pageType,
+                         solutionName: _solutionName,
+                         solutionCategory: _solutionCategory,
+                         applicationAreas: _applicationAreas,
+                         withContact: _withContact = true
                        }: LayoutProps) {
   React.useEffect(() => {
     window.scrollTo(0, 0);
@@ -57,9 +56,12 @@ export function Layout({
             imageAlt={imageAlt}
             structuredData={structuredData}
         />
+        {/* Skip link for accessibility */}
+        <a href="#main-content" className="skip-link">Skip to main content</a>
         <div className="flex flex-col min-h-screen">
           <Header />
           <motion.main
+              id="main-content"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}

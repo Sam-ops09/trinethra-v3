@@ -145,9 +145,10 @@ export function ContactForm() {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="edge-ai">Edge AI Systems</SelectItem>
-                          <SelectItem value="data-storage">Rugged Data Storage</SelectItem>
-                          <SelectItem value="switches">Tactical Network Switches</SelectItem>
+                          <SelectItem value="cable-harness">Cable Harness</SelectItem>
+                          <SelectItem value="storage-solutions">Storage Solutions</SelectItem>
+                          <SelectItem value="server">Server</SelectItem>
+                          <SelectItem value="panel-pc">Panel PC</SelectItem>
                           <SelectItem value="custom">Custom Solution</SelectItem>
                         </SelectContent>
                       </Select>

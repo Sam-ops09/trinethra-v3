@@ -113,23 +113,24 @@ export default function Offerings() {
       title="Strategic Offerings | TRINETHRA Defense | TRINETHRA DEFENTECH"
       description="Our defense technology portfolio delivers mission-critical capabilities with uncompromising reliability and security."
     >
-      <section className="bg-gray-50 py-32 px-6">
-        <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto">
-            <motion.div 
-              className="text-center mb-16"
+      <section className="bg-gray-50 section-spacing" aria-labelledby="offerings-heading">
+        <div className="section-container px-4 sm:px-6 md:px-8">
+          <div className="max-w-5xl mx-auto">
+            <motion.div
+              className="text-center mb-12 md:mb-16"
               initial="hidden"
               animate="visible"
               variants={staggerContainer}
             >
               <motion.h1 
-                className="text-4xl md:text-5xl font-condensed font-bold mb-6 text-navy"
+                id="offerings-heading"
+                className="heading-clamp-1 font-condensed font-bold mb-6 text-navy text-balance"
                 variants={fadeInUp}
               >
                 Strategic Offerings
               </motion.h1>
               <motion.p 
-                className="text-lg text-charcoal/80"
+                className="text-lg text-charcoal/80 text-balance max-w-3xl mx-auto"
                 variants={fadeInUp}
               >
                 Our defense technology portfolio delivers mission-critical capabilities 
@@ -138,32 +139,32 @@ export default function Offerings() {
             </motion.div>
             
             <motion.div 
-              className="bg-white rounded-xl p-8 mb-16 shadow-md"
+              className="bg-white rounded-xl p-6 sm:p-8 md:p-10 mb-16 shadow-md subtle-border"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="text-2xl font-condensed font-bold mb-4 text-navy">Mission Overview</h2>
-              <p className="text-charcoal/80 mb-6">
-                TRINETHRA data recorders provide real-time encryption and data integrity across air, land, sea, 
-                and space platforms. Our systems integrate seamlessly with existing infrastructure while 
+              <h2 className="heading-clamp-3 font-condensed font-bold mb-4 text-navy">Mission Overview</h2>
+              <p className="text-charcoal/80 mb-6 text-balance">
+                TRINETHRA data recorders provide real-time encryption and data integrity across air, land,
+                sea and space platforms. Our systems integrate seamlessly with existing infrastructure while
                 maintaining the highest levels of security certification.
               </p>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="flex items-start">
-                  <div className="rounded w-full h-64 bg-navy/10 flex items-center justify-center">
-                    <p className="text-navy font-medium">Image can be added here</p>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10">
+                <div className="flex items-start order-2 lg:order-1">
+                  <div className="rounded w-full h-56 sm:h-64 bg-navy/10 flex items-center justify-center rounded-lg">
+                    <p className="text-navy font-medium text-sm sm:text-base">Image can be added here</p>
                   </div>
                 </div>
-                <div>
+                <div className="order-1 lg:order-2">
                   <h3 className="text-xl font-condensed font-bold mb-3 text-navy">Deployment Scenarios</h3>
                   <ul className="text-charcoal/80 space-y-3">
                     {deploymentScenarios.map((scenario, index) => (
                       <li key={index} className="flex items-start">
                         <FaCheckCircle className="text-forest mt-1 mr-2" />
-                        <span>{scenario}</span>
+                        <span className="text-sm sm:text-base text-balance">{scenario}</span>
                       </li>
                     ))}
                   </ul>
@@ -175,21 +176,21 @@ export default function Offerings() {
             <motion.div
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-40px' }}
               variants={staggerContainer}
             >
-              <h2 className="text-2xl font-condensed font-bold mb-8 text-navy">Core Capabilities</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+              <h2 className="heading-clamp-3 font-condensed font-bold mb-8 text-navy">Core Capabilities</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 mb-16">
                 {capabilities.map((capability, index) => (
                   <motion.div key={index} variants={fadeInUp}>
-                    <Card className="bg-white p-6 rounded-lg shadow-sm h-full">
+                    <Card className="bg-white p-6 rounded-lg shadow-sm h-full transition-shadow hover:shadow-md focus-within:shadow-md">
                       <div className="flex items-center mb-4">
-                        <div className="bg-forest/10 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                        <div className="bg-forest/10 rounded-full w-12 h-12 flex items-center justify-center mr-4 text-forest">
                           {capability.icon}
                         </div>
-                        <h3 className="text-xl font-condensed font-bold text-navy">{capability.title}</h3>
+                        <h3 className="text-lg font-condensed font-bold text-navy">{capability.title}</h3>
                       </div>
-                      <p className="text-charcoal/80">{capability.description}</p>
+                      <p className="text-charcoal/80 text-sm sm:text-base text-balance">{capability.description}</p>
                     </Card>
                   </motion.div>
                 ))}
@@ -200,20 +201,20 @@ export default function Offerings() {
             <motion.div
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-40px' }}
               variants={staggerContainer}
             >
-              <h2 className="text-2xl font-condensed font-bold mb-8 text-navy">Technical Specifications</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+              <h2 className="heading-clamp-3 font-condensed font-bold mb-8 text-navy">Technical Specifications</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-16">
                 {specifications.map((spec, index) => (
                   <motion.div key={index} variants={fadeInUp}>
                     <Card className="bg-white p-6 rounded-lg shadow-sm h-full">
-                      <h3 className="text-xl font-condensed font-bold mb-4 text-navy">{spec.title}</h3>
+                      <h3 className="text-lg font-condensed font-bold mb-4 text-navy">{spec.title}</h3>
                       <ul className="text-charcoal/80 space-y-2">
                         {spec.items.map((item, i) => (
                           <li key={i} className="flex items-start">
-                            <FaCircle className="text-xs text-forest mt-1.5 mr-2" />
-                            <span>{item}</span>
+                            <FaCircle className="text-[6px] text-forest mt-2 mr-3" />
+                            <span className="text-sm sm:text-base text-balance">{item}</span>
                           </li>
                         ))}
                       </ul>
@@ -228,17 +229,17 @@ export default function Offerings() {
               className="flex flex-col sm:flex-row gap-4 justify-center"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.6 }}
             >
               <Link href="/contact">
-                <Button className="bg-teal hover:bg-teal/90 text-white font-bold py-3 px-8 rounded shadow-lg transition-all duration-300 inline-flex items-center justify-center">
+                <Button className="bg-teal hover:bg-teal/90 text-white font-bold py-3 px-8 rounded shadow-lg transition-all duration-300 inline-flex items-center justify-center focus-ring">
                   Request Consultation <FaArrowRight className="ml-2" />
                 </Button>
               </Link>
               <Button 
                 variant="outline"
-                className="bg-transparent hover:bg-navy/5 border-2 border-navy text-navy font-bold py-3 px-8 rounded transition-all duration-300 inline-flex items-center justify-center"
+                className="bg-transparent hover:bg-navy/5 border-2 border-navy text-navy font-bold py-3 px-8 rounded transition-all duration-300 inline-flex items-center justify-center focus-ring"
               >
                 Download Capabilities <FaDownload className="ml-2" />
               </Button>
