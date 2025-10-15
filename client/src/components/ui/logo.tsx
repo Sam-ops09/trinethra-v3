@@ -1,6 +1,6 @@
 
 import React from "react";
-import tridentLogo from "../../assets/trident.svg";
+import tridentLogo from "../../assets/Trident.svg";
 
 interface LogoProps {
     variant?: "light" | "dark";
