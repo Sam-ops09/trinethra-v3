@@ -41,25 +41,25 @@
 }
 
 .dark {
-  --background: 217 20% 21%;
-  --foreground: 0 0% 98%;
-  --card: 217 20% 21%;
-  --card-foreground: 0 0% 98%;
-  --popover: 217 20% 21%;
-  --popover-foreground: 0 0% 98%;
-  --primary: 130 67% 15%;
-  --primary-foreground: 39 64% 92%;
-  --secondary: 218 48% 21%;
-  --secondary-foreground: 0 0% 98%;
-  --muted: 217 20% 16%;
-  --muted-foreground: 215 14% 64%;
-  --accent: 187 100% 28%;
-  --accent-foreground: 0 0% 98%;
-  --destructive: 350 74% 44%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 217 20% 30%;
-  --input: 217 20% 30%;
-  --ring: 215 14% 64%;
+  --background: 217 20% 21%; /* charcoal */
+  --foreground: 39 64% 92%; /* cream */
+  --card: 218 48% 21%; /* navy */
+  --card-foreground: 39 64% 92%;
+  --popover: 218 48% 21%;
+  --popover-foreground: 39 64% 92%;
+  --primary: 187 100% 28%; /* teal */
+  --primary-foreground: 217 20% 21%;
+  --secondary: 218 48% 21%; /* navy */
+  --secondary-foreground: 39 64% 92%;
+  --muted: 209 16% 41%; /* steel */
+  --muted-foreground: 39 64% 92%;
+  --accent: 14 100% 62%; /* signal */
+  --accent-foreground: 217 20% 21%;
+  --destructive: 350 74% 44%; /* alert */
+  --destructive-foreground: 39 64% 92%;
+  --border: 209 16% 41%;
+  --input: 209 16% 41%;
+  --ring: 187 100% 28%;
 }
 
 @layer base {
@@ -77,11 +77,28 @@
 }
 
 @layer components {
-  .hero-pattern {
-    @apply relative text-cream;
-    background-image: linear-gradient(135deg, rgba(13, 65, 20, 0.97) 0%, rgba(26, 46, 76, 0.97) 100%);
-    background-size: cover;
-    background-position: center;
+  /* Grid overlay pattern */
+  .grid-overlay {
+    background-image: 
+      linear-gradient(hsl(var(--steel) / 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--steel) / 0.05) 1px, transparent 1px);
+    background-size: 120px 120px;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  
+  /* Modern minimalist sections */
+  .section-light {
+    @apply bg-white;
+  }
+  
+  .section-accent {
+    background: linear-gradient(135deg, hsl(var(--cream)) 0%, hsl(var(--cream) / 0.5) 100%);
+  }
+  
+  .section-dark {
+    @apply bg-charcoal text-cream;
   }
   
   /* Responsive text utilities */
@@ -106,38 +123,67 @@
     @apply py-8 md:py-12 lg:py-16;
   }
   
+  /* Institutional menu design */
   .menu-item {
-    @apply relative transition-colors duration-300;
+    @apply relative font-light tracking-wider text-sm uppercase transition-all duration-500;
+    color: hsl(var(--steel));
   }
   
   .menu-item::after {
     content: '';
-    @apply absolute w-0 h-0.5 bg-cream left-0 -bottom-1 transition-all duration-300;
+    position: absolute;
+    width: 0;
+    height: 1px;
+    background: hsl(var(--teal));
+    left: 0;
+    bottom: -2px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .menu-item:hover {
+    color: hsl(var(--charcoal));
   }
   
   .menu-item:hover::after {
-    @apply w-full;
+    width: 100%;
   }
   
-  .card-hover {
-    @apply transition-all duration-300;
+  /* Ultra-sleek card design */
+  .institutional-card {
+    @apply transition-all duration-700 bg-white;
+    border: 1px solid hsl(var(--border) / 0.5);
+    box-shadow: 0 1px 3px hsl(var(--charcoal) / 0.05);
   }
   
-  .card-hover:hover {
-    @apply -translate-y-1 shadow-lg;
+  .institutional-card:hover {
+    @apply -translate-y-0.5;
+    border-color: hsl(var(--teal) / 0.3);
+    box-shadow: 0 10px 40px -15px hsl(var(--navy) / 0.15);
   }
   
+  /* Dark mode card */
+  .dark .institutional-card {
+    @apply bg-navy;
+    border: 1px solid hsl(var(--steel) / 0.3);
+  }
+  
+  /* Military-style badges */
   .certification-badge {
     @apply relative overflow-hidden;
+    border: 1px solid var(--olive);
   }
   
   .certification-badge::before {
     content: '';
-    @apply absolute inset-0 bg-gradient-to-br from-teal/20 to-forest/20 opacity-0 transition-opacity duration-300;
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(107, 142, 35, 0.1) 0%, rgba(50, 133, 64, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
   
   .certification-badge:hover::before {
-    @apply opacity-100;
+    opacity: 1;
   }
   
   /* New dynamic utility classes */
@@ -188,9 +234,129 @@
   .skeleton {
     @apply animate-pulse bg-cream/30;
   }
+  /* Shimmer animation for image loading */
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+  .animate-shimmer {
+    animation: shimmer 2s infinite;
+  }
   /* Skip link */
   .skip-link {
     @apply sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-teal focus:text-white focus:px-4 focus:py-2 focus:rounded-md;
+  }
+  
+  /* Institutional button design */
+  .btn-primary {
+    @apply relative overflow-hidden bg-forest text-cream px-8 py-3;
+    @apply font-light text-sm tracking-[0.2em] uppercase;
+    @apply transition-all duration-500;
+    border: 1px solid hsl(var(--forest));
+  }
+  
+  .btn-primary:hover {
+    @apply bg-teal;
+    border-color: hsl(var(--teal));
+    box-shadow: 0 4px 20px -5px hsl(var(--teal) / 0.3);
+  }
+  
+  .btn-secondary {
+    @apply relative bg-transparent text-charcoal px-8 py-3;
+    @apply font-light text-sm tracking-[0.2em] uppercase;
+    @apply transition-all duration-500;
+    border: 1px solid hsl(var(--steel) / 0.3);
+  }
+  
+  .btn-secondary:hover {
+    @apply bg-charcoal text-cream;
+    border-color: hsl(var(--charcoal));
+  }
+  
+  /* Minimal focus states */
+  .btn-primary:focus-visible,
+  .btn-secondary:focus-visible {
+    @apply outline-none ring-2 ring-teal ring-offset-2 ring-offset-background;
+  }
+  
+  /* HUD-style corners */
+  .hud-corner {
+    position: relative;
+  }
+  
+  .hud-corner::before,
+  .hud-corner::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--nvg);
+  }
+  
+  .hud-corner::before {
+    top: 0;
+    left: 0;
+    border-right: none;
+    border-bottom: none;
+  }
+  
+  .hud-corner::after {
+    bottom: 0;
+    right: 0;
+    border-left: none;
+    border-top: none;
+  }
+  
+  /* Radar pulse animation */
+  @keyframes radar-pulse {
+    0% {
+      transform: scale(0.8);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(2);
+      opacity: 0;
+    }
+  }
+  
+  .radar-dot {
+    position: relative;
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--nvg);
+    border-radius: 50%;
+  }
+  
+  .radar-dot::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: var(--nvg);
+    transform: translate(-50%, -50%);
+    animation: radar-pulse 2s ease-out infinite;
+  }
+  
+  /* Tactical data display */
+  .data-display {
+    background: rgba(11, 14, 12, 0.8);
+    border: 1px solid var(--gunmetal);
+    backdrop-filter: blur(10px);
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 0.05em;
+  }
+  
+  .data-display-header {
+    background: var(--brand-900);
+    color: var(--nvg);
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.875rem;
   }
 }
 
@@ -209,4 +375,13 @@
   }
   .safe-bottom { padding-bottom: max(0.75rem, env(safe-area-inset-bottom)); }
   .overflow-mask-x { -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%); }
+  
+  /* Hide scrollbar */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }

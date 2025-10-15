@@ -1,8 +1,14 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Layout } from "@/components/Layout";
 import { motion, useReducedMotion } from "framer-motion";
-import { FaCheck, FaArrowLeft, FaSearch } from "react-icons/fa";
+import { FaCheck, FaArrowLeft, FaSearch, FaFilter, FaTimes } from "react-icons/fa";
 import { Link, useRoute } from "wouter";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge as UIBadge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 
 /**
  * TRINETHRA DEFENTECH — Solutions (Segmented Chips + Compare with Mobile Sheet)
@@ -242,18 +248,19 @@ const solutionDetails: Record<string, Solution> = {
 };
 
 /* ---------------- UI primitives ---------------- */
-const Badge = ({ children }: { children: React.ReactNode }) => (
-    <span className="text-[11px] sm:text-xs font-medium bg-forest/10 text-forest px-2 py-1 rounded-full whitespace-nowrap">
-    {children}
-  </span>
+const Badge = ({ children, variant = "secondary", className }: { children: React.ReactNode; variant?: "default" | "secondary" | "destructive" | "outline"; className?: string }) => (
+    <UIBadge variant={variant} className={`text-[11px] sm:text-xs font-medium bg-forest/10 text-forest whitespace-nowrap ${className}`}>
+        {children}
+    </UIBadge>
 );
-const Divider = () => <div className="h-px w-full bg-gray-200 my-6" aria-hidden="true" />;
+
 const KeyValue = ({ k, v }: { k: string; v: string }) => (
     <div className="py-2 border-b border-gray-200 last:border-0 min-w-0">
         <div className="font-medium text-navy text-[10px] sm:text-[11px] uppercase tracking-wide mb-0.5">{k}</div>
         <div className="text-charcoal/80 whitespace-pre-line text-sm">{v}</div>
     </div>
 );
+
 const Section = ({ id, title, children }: { id: string; title?: string; children: React.ReactNode }) => (
     <section id={id} className="scroll-mt-[88px] lg:scroll-mt-[112px] min-w-0">
         {title && (
@@ -265,253 +272,244 @@ const Section = ({ id, title, children }: { id: string; title?: string; children
     </section>
 );
 
-/* ---------------- Segmented Chips + Compare (with Mobile Sheet) ---------------- */
+/* ---------------- Enhanced Product Tabs with Better Mobile UX ---------------- */
 function ProductTabs({ products }: { products: Product[] }) {
-    const [active, setActive] = useState(0);
     const [compareMode, setCompareMode] = useState(false);
-    const [second, setSecond] = useState<number | null>(null);
+    const [selectedProducts, setSelectedProducts] = useState<number[]>([0]);
+    const [compareSheetOpen, setCompareSheetOpen] = useState(false);
 
     // viewport helper (sm breakpoint)
     const [isMobile, setIsMobile] = useState<boolean>(() =>
-        typeof window !== "undefined" ? window.matchMedia("(max-width: 639.98px)").matches : false
+        typeof window !== "undefined" ? window.matchMedia("(max-width: 768px)").matches : false
     );
+    
     useEffect(() => {
-        const mq = window.matchMedia("(max-width: 639.98px)");
+        const mq = window.matchMedia("(max-width: 768px)");
         const handler = (e: MediaQueryListEvent | MediaQueryList) =>
             setIsMobile("matches" in e ? (e as MediaQueryListEvent).matches : (e as MediaQueryList).matches);
-        // initial sync and subscribe
         handler(mq);
         mq.addEventListener?.("change", handler as (e: MediaQueryListEvent) => void);
         return () => mq.removeEventListener?.("change", handler as (e: MediaQueryListEvent) => void);
     }, []);
 
-    const inCompare = compareMode && second !== null;
-
-    // mobile sheet state
-    const [mobileSheetOpen, setMobileSheetOpen] = useState(false);
-    const [mobileIdx, setMobileIdx] = useState<0 | 1>(0);
-    const firstFocusRef = useRef<HTMLButtonElement | null>(null);
-
-    // open/close sheet based on mode/device
-    useEffect(() => {
-        if (isMobile && inCompare) {
-            setMobileSheetOpen(true);
-            setTimeout(() => firstFocusRef.current?.focus(), 0);
-            document.body.style.overflow = "hidden";
-        } else {
-            setMobileSheetOpen(false);
-            document.body.style.overflow = "";
-        }
-        return () => { document.body.style.overflow = ""; };
-    }, [isMobile, inCompare]);
-
-    const handlePick = (i: number) => {
+    const handleProductSelect = (index: number) => {
         if (!compareMode) {
-            setActive(i);
+            setSelectedProducts([index]);
             return;
         }
-        if (i === active) return;
-        setSecond((prev) => (prev === i ? null : i));
+        
+        setSelectedProducts(prev => {
+            if (prev.includes(index)) {
+                return prev.filter(i => i !== index);
+            } else if (prev.length < 2) {
+                return [...prev, index];
+            } else {
+                return [prev[1], index]; // Replace first with new selection
+            }
+        });
     };
 
-    // keyboard nav for chips
-    const onKeyDown = (i: number, e: React.KeyboardEvent) => {
-        const n = products.length;
-        const go = (j: number) => {
-            const next = (j + n) % n;
-            if (!compareMode) setActive(next);
-            else handlePick(next);
-            (document.getElementById(`chip-${next}`) as HTMLButtonElement | null)?.focus();
-        };
-        switch (e.key) {
-            case "ArrowRight": e.preventDefault(); go(i + 1); break;
-            case "ArrowLeft":  e.preventDefault(); go(i - 1); break;
-            case "Home":       e.preventDefault(); go(0); break;
-            case "End":        e.preventDefault(); go(n - 1); break;
+    const toggleCompareMode = () => {
+        setCompareMode(!compareMode);
+        if (!compareMode) {
+            setSelectedProducts([0]); // Reset to first product when entering compare mode
+        } else {
+            setSelectedProducts([0]); // Reset to single selection when exiting
         }
+        setCompareSheetOpen(false);
     };
 
-    const primary = products[active];
-    const secondary = second !== null ? products[second] : null;
+    const canCompare = compareMode && selectedProducts.length === 2;
+    const primaryProduct = products[selectedProducts[0]];
+    const secondaryProduct = selectedProducts[1] !== undefined ? products[selectedProducts[1]] : null;
 
-    // shared product panel
-    const ProductPanel = ({ prod }: { prod: Product }) => (
-        <div className="bg-white border border-gray-200 rounded-md p-4 sm:p-6 shadow-sm">
-            <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] gap-6 sm:gap-8">
-                {/* Media */}
-                <div className="flex justify-center items-center bg-gray-50 rounded-md p-4 sm:p-6">
-                    <div className="relative w-full max-w-md">
-                        <div className="aspect-[4/3] sm:aspect-[16/9] bg-navy/5 rounded-lg grid place-items-center">
+    // Enhanced product panel using Card components
+    const ProductPanel = ({ prod, isComparison = false }: { prod: Product; isComparison?: boolean }) => (
+        <Card className="h-full">
+            <CardHeader className="pb-4">
+                <div className="flex justify-center items-center bg-gray-50 rounded-lg p-6 mb-4">
+                    <div className="relative w-full max-w-sm">
+                        <div className="aspect-[4/3] bg-navy/5 rounded-lg grid place-items-center">
                             <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-navy/10 grid place-items-center">
                                 <svg className="w-8 h-8 sm:w-10 sm:h-10 text-navy" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                                     <rect x="2" y="6" width="20" height="12" rx="2"/>
                                 </svg>
                             </div>
                         </div>
-                        <h4 className="mt-3 text-center text-[clamp(0.95rem,2.5vw,1.05rem)] font-condensed font-bold text-navy">
-                            Image Placeholder
-                        </h4>
                     </div>
                 </div>
-
-                {/* Text */}
-                <div className="min-w-0">
-                    <h5 className="font-condensed text-forest font-bold mb-3 uppercase text-[11px] tracking-wide">Key Features</h5>
-                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2 mb-6" aria-label="Key product features">
-                        {prod.features.slice(0, 6).map((f, idx) => (
-                            <li key={idx} className="flex items-start text-[clamp(0.9rem,2.4vw,1rem)]">
-                                <span className="text-forest mt-1 mr-2">•</span>
+                <CardTitle className="text-center text-lg font-condensed font-bold text-navy">
+                    {prod.name}
+                </CardTitle>
+            </CardHeader>
+            
+            <CardContent className="space-y-6">
+                <div>
+                    <h5 className="font-condensed text-forest font-bold mb-3 uppercase text-xs tracking-wide">Key Features</h5>
+                    <ul className="space-y-2" aria-label="Key product features">
+                        {prod.features.slice(0, isComparison ? 4 : 6).map((f, idx) => (
+                            <li key={idx} className="flex items-start text-sm">
+                                <FaCheck className="text-forest mt-1 mr-2 shrink-0 text-xs" />
                                 <span className="text-charcoal/80">{f}</span>
                             </li>
                         ))}
                     </ul>
-                    <div className="bg-gray-50 rounded-md p-4">
+                </div>
+                
+                <Separator />
+                
+                <div>
+                    <h5 className="font-condensed text-forest font-bold mb-3 uppercase text-xs tracking-wide">Specifications</h5>
+                    <div className="space-y-3">
                         {Object.entries(prod.specs).map(([k, v]) => (
-                            <div key={k} className="py-2 border-b border-gray-200 last:border-0">
-                                <div className="font-medium text-[11px] uppercase tracking-wide text-navy">{k}</div>
-                                <div className="text-sm text-charcoal/80 whitespace-pre-line">{v}</div>
+                            <div key={k} className="grid grid-cols-3 gap-2 text-sm">
+                                <div className="font-medium text-navy text-xs uppercase tracking-wide col-span-1">{k}</div>
+                                <div className="text-charcoal/80 whitespace-pre-line col-span-2">{v}</div>
                             </div>
                         ))}
                     </div>
                 </div>
-            </div>
-        </div>
+            </CardContent>
+        </Card>
     );
 
     return (
         <div className="mb-10 md:mb-14">
-            {/* Header + toggle */}
-            <div className="flex items-center justify-between gap-3 mb-3 sm:mb-4">
-                <h3 className="font-semibold text-navy text-[clamp(1rem,2.6vw,1.125rem)]">Products</h3>
-                <label className="inline-flex items-center gap-2 text-sm text-gray-700 select-none">
-                    <input
-                        type="checkbox"
-                        className="accent-forest h-4 w-4"
-                        checked={compareMode}
-                        onChange={(e) => { setCompareMode(e.target.checked); setSecond(null); }}
-                    />
-                    Quick compare
-                </label>
+            {/* Header with improved mobile layout */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <h3 className="font-semibold text-navy text-xl">Products</h3>
+                <div className="flex items-center gap-3">
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={toggleCompareMode}
+                        className={compareMode ? "bg-forest text-white hover:bg-forest/90" : ""}
+                    >
+                        {compareMode ? "Exit Compare" : "Compare Products"}
+                    </Button>
+                    {canCompare && (
+                        <Button
+                            variant="default"
+                            size="sm"
+                            onClick={() => setCompareSheetOpen(true)}
+                            className="bg-forest hover:bg-forest/90"
+                        >
+                            View Comparison
+                        </Button>
+                    )}
+                </div>
             </div>
 
-            {/* Segmented chips (auto-wrap) */}
-            <div
-                role={compareMode ? "toolbar" : "tablist"}
-                aria-label="Choose product"
-                className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-2 sm:gap-3 mb-4 sm:mb-6"
-            >
-                {products.map((p, i) => {
-                    const selected = !compareMode ? i === active : (i === active || i === second);
-                    return (
-                        <button
-                            key={i}
-                            id={`chip-${i}`}
-                            role={compareMode ? undefined : "tab"}
-                            aria-selected={!compareMode ? i === active : undefined}
-                            aria-pressed={compareMode ? selected : undefined}
-                            tabIndex={!compareMode ? (i === active ? 0 : -1) : 0}
-                            onKeyDown={(e) => onKeyDown(i, e)}
-                            onClick={() => handlePick(i)}
-                            className={`px-3 py-2.5 rounded-full text-sm font-medium transition
-                inline-flex items-center justify-center gap-2 w-full
-                ${selected ? "bg-forest text-white shadow-sm" : "bg-gray-100 text-gray-800 hover:bg-gray-200"}
-              `}
-                            title={p.name}
-                        >
-                            {compareMode && (
-                                <span
-                                    className={`h-2.5 w-2.5 rounded-full border ${selected ? "bg-white/90 border-white/90" : "border-gray-400"}`}
-                                    aria-hidden
-                                />
-                            )}
-                            <span className="truncate">{p.name}</span>
-                        </button>
-                    );
-                })}
-            </div>
-
-            {/* Panels */}
-            {!compareMode && (
-                <ProductPanel prod={primary} />
-            )}
-
-            {/* Desktop/tablet compare: two-up */}
-            {compareMode && inCompare && !isMobile && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <ProductPanel prod={primary} />
-                    <div className="relative">
-                        <button
-                            onClick={() => { setActive(second!); setSecond(active); }}
-                            className="absolute right-2 top-2 text-xs px-2 py-1 rounded border border-gray-300 bg-white/90 hover:bg-gray-100"
-                            aria-label={`Swap ${products[second!].name} with ${products[active].name}`}
-                        >
-                            Swap
-                        </button>
-                        <ProductPanel prod={secondary!} />
+            {/* Product selection using Tabs for single mode, buttons for compare mode */}
+            {!compareMode ? (
+                <Tabs value={selectedProducts[0].toString()} onValueChange={(value) => handleProductSelect(parseInt(value))}>
+                    <TabsList className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 h-auto p-1 bg-gray-100">
+                        {products.map((product, index) => (
+                            <TabsTrigger
+                                key={index}
+                                value={index.toString()}
+                                className="data-[state=active]:bg-forest data-[state=active]:text-white text-sm py-3 px-4 rounded-md"
+                            >
+                                {product.name}
+                            </TabsTrigger>
+                        ))}
+                    </TabsList>
+                    <TabsContent value={selectedProducts[0].toString()} className="mt-6">
+                        <ProductPanel prod={primaryProduct} />
+                    </TabsContent>
+                </Tabs>
+            ) : (
+                <div className="space-y-6">
+                    {/* Compare mode product selection */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        {products.map((product, index) => {
+                            const isSelected = selectedProducts.includes(index);
+                            return (
+                                <Button
+                                    key={index}
+                                    variant={isSelected ? "default" : "outline"}
+                                    onClick={() => handleProductSelect(index)}
+                                    className={`h-auto p-4 justify-start ${
+                                        isSelected 
+                                            ? "bg-forest text-white hover:bg-forest/90" 
+                                            : "hover:bg-gray-50"
+                                    }`}
+                                    disabled={!isSelected && selectedProducts.length >= 2}
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <div className={`w-4 h-4 rounded-full border-2 ${
+                                            isSelected 
+                                                ? "bg-white border-white" 
+                                                : "border-gray-300"
+                                        }`} />
+                                        <span className="font-medium">{product.name}</span>
+                                    </div>
+                                </Button>
+                            );
+                        })}
                     </div>
+
+                    {/* Selected products preview */}
+                    {selectedProducts.length > 0 && (
+                        <div className="bg-gray-50 rounded-lg p-4">
+                            <h4 className="font-medium text-navy mb-2">
+                                Selected for comparison ({selectedProducts.length}/2):
+                            </h4>
+                            <div className="flex flex-wrap gap-2">
+                                {selectedProducts.map((index) => (
+                                    <Badge key={index} variant="default">
+                                        {products[index].name}
+                                        <button
+                                            onClick={() => handleProductSelect(index)}
+                                            className="ml-2 hover:bg-white/20 rounded-full p-0.5"
+                                            aria-label={`Remove ${products[index].name} from comparison`}
+                                        >
+                                            <FaTimes className="w-3 h-3" />
+                                        </button>
+                                    </Badge>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Desktop comparison view */}
+                    {canCompare && !isMobile && (
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <ProductPanel prod={primaryProduct} isComparison />
+                            <ProductPanel prod={secondaryProduct!} isComparison />
+                        </div>
+                    )}
                 </div>
             )}
 
-            {/* Mobile compare: bottom sheet (same page) */}
-            {compareMode && inCompare && isMobile && mobileSheetOpen && (
-                <div role="dialog" aria-modal="true" aria-label="Compare products" className="fixed inset-0 z-40">
-                    {/* Backdrop */}
-                    <button
-                        aria-label="Close compare"
-                        className="absolute inset-0 bg-black/40"
-                        onClick={() => setMobileSheetOpen(false)}
-                    />
-                    {/* Sheet */}
-                    <div className="absolute inset-x-0 bottom-0 z-50 rounded-t-2xl bg-white border-t border-gray-200 shadow-xl max-h-[88vh] overflow-auto">
-                        {/* Header */}
-                        <div className="sticky top-0 z-10 bg-white/95 backdrop-blur border-b border-gray-200 px-4 py-3 flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                                <button
-                                    ref={firstFocusRef}
-                                    onClick={() => setMobileSheetOpen(false)}
-                                    className="rounded-md border border-gray-300 px-3 py-1.5 text-sm hover:bg-gray-100"
-                                >
-                                    Close
-                                </button>
-                                <div className="ml-1 text-sm text-gray-700">Quick compare</div>
-                            </div>
-                            <div className="inline-flex bg-gray-100 p-1 rounded-full">
-                                <button
-                                    className={`px-3 py-1.5 text-sm rounded-full ${mobileIdx === 0 ? "bg-white shadow" : "opacity-70"}`}
-                                    onClick={() => setMobileIdx(0)}
-                                    aria-pressed={mobileIdx === 0}
-                                >
-                                    {primary.name}
-                                </button>
-                                <button
-                                    className={`px-3 py-1.5 text-sm rounded-full ${mobileIdx === 1 ? "bg-white shadow" : "opacity-70"}`}
-                                    onClick={() => setMobileIdx(1)}
-                                    aria-pressed={mobileIdx === 1}
-                                >
-                                    {secondary!.name}
-                                </button>
-                            </div>
+            {/* Mobile comparison sheet */}
+            <Sheet open={compareSheetOpen} onOpenChange={setCompareSheetOpen}>
+                <SheetContent side="bottom" className="h-[90vh]">
+                    <SheetHeader>
+                        <SheetTitle>Product Comparison</SheetTitle>
+                        <SheetDescription>
+                            Compare {primaryProduct.name} and {secondaryProduct?.name}
+                        </SheetDescription>
+                    </SheetHeader>
+                    
+                    {canCompare && (
+                        <div className="mt-6">
+                            <Tabs defaultValue="0" className="w-full">
+                                <TabsList className="grid w-full grid-cols-2">
+                                    <TabsTrigger value="0">{primaryProduct.name}</TabsTrigger>
+                                    <TabsTrigger value="1">{secondaryProduct!.name}</TabsTrigger>
+                                </TabsList>
+                                <TabsContent value="0" className="mt-4">
+                                    <ProductPanel prod={primaryProduct} isComparison />
+                                </TabsContent>
+                                <TabsContent value="1" className="mt-4">
+                                    <ProductPanel prod={secondaryProduct!} isComparison />
+                                </TabsContent>
+                            </Tabs>
                         </div>
-
-                        <div className="p-4">
-                            {mobileIdx === 0 ? (
-                                <ProductPanel prod={primary} />
-                            ) : (
-                                <div className="relative">
-                                    <button
-                                        onClick={() => { setActive(second!); setSecond(active); setMobileIdx(0); }}
-                                        className="absolute right-3 top-3 text-xs px-2 py-1 rounded border border-gray-300 bg-white/90 hover:bg-gray-100"
-                                        aria-label={`Make ${secondary!.name} primary`}
-                                    >
-                                        Make primary
-                                    </button>
-                                    <ProductPanel prod={secondary!} />
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
-            )}
+                    )}
+                </SheetContent>
+            </Sheet>
         </div>
     );
 }
@@ -646,7 +644,7 @@ function SolutionDetail() {
                                     </motion.p>
                                 </div>
 
-                                <Divider />
+                                <Separator />
 
                                 <Section id="features" title="Key Features">
                                     <ul className="space-y-3 mb-8 text-charcoal/80">
@@ -681,39 +679,53 @@ function SolutionDetail() {
 
                                 <motion.div
                                     initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.25 }} variants={fade}
-                                    className="bg-[#0D4114] text-cream rounded-lg p-6 sm:p-8 shadow-lg mt-12"
+                                    className="mt-12"
                                 >
-                                    <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
-                                        <div className="min-w-0">
-                                            <h3 className="text-[clamp(1.1rem,3vw,1.5rem)] font-bold mb-2 [text-wrap:balance]">
-                                                Ready to implement this solution?
-                                            </h3>
-                                            <p className="text-sm md:text-base mb-0">
-                                                Our specialists can help you deploy a customized version for your specific needs.
-                                            </p>
-                                        </div>
-                                        <Link href="/contact" className="bg-teal hover:bg-teal/90 text-white font-bold py-3 px-6 rounded shadow-lg transition-all inline-flex items-center justify-center">
-                                            Request Consultation
-                                        </Link>
-                                    </div>
+                                    <Card className="bg-[#0D4114] text-cream border-0 shadow-lg">
+                                        <CardContent className="p-6 sm:p-8">
+                                            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+                                                <div className="min-w-0">
+                                                    <CardTitle className="text-xl lg:text-2xl font-bold mb-2 text-cream">
+                                                        Ready to implement this solution?
+                                                    </CardTitle>
+                                                    <CardDescription className="text-sm md:text-base mb-0 text-cream/90">
+                                                        Our specialists can help you deploy a customized version for your specific needs.
+                                                    </CardDescription>
+                                                </div>
+                                                <Button asChild size="lg" className="bg-teal hover:bg-teal/90 text-white shrink-0">
+                                                    <Link href="/contact">
+                                                        Request Consultation
+                                                    </Link>
+                                                </Button>
+                                            </div>
+                                        </CardContent>
+                                    </Card>
                                 </motion.div>
                             </div>
 
                             {/* Right rail */}
                             <aside className="w-full order-first lg:order-none min-w-0">
                                 <StickyTOC sections={toc} />
-                                <div className="bg-white p-6 rounded-lg shadow-md border border-black/5 mt-6 min-w-0">
-                                    <div className="h-16 w-16 rounded-full bg-forest/10 flex items-center justify-center mb-4">
-                                        <svg className="h-8 w-8 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                                            <rect x="3" y="4" width="18" height="14" rx="2" />
-                                        </svg>
-                                    </div>
-                                    <h3 className="text-[clamp(1.1rem,2.8vw,1.25rem)] font-bold mb-3 text-navy">{solution.title}</h3>
-                                    <p className="text-charcoal/80 mb-4 text-sm sm:text-base [text-wrap:pretty]">{solution.description}</p>
-                                    <div className="flex flex-wrap gap-2 mb-0">
-                                        {solution.certifications.map((c, i) => <Badge key={i}>{c}</Badge>)}
-                                    </div>
-                                </div>
+                                <Card className="mt-6 sticky top-28">
+                                    <CardHeader>
+                                        <div className="h-16 w-16 rounded-full bg-forest/10 flex items-center justify-center mb-4">
+                                            <svg className="h-8 w-8 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                                <rect x="3" y="4" width="18" height="14" rx="2" />
+                                            </svg>
+                                        </div>
+                                        <CardTitle className="text-xl font-bold text-navy">{solution.title}</CardTitle>
+                                        <CardDescription className="text-sm sm:text-base text-charcoal/80">
+                                            {solution.description}
+                                        </CardDescription>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <div className="flex flex-wrap gap-2">
+                                            {solution.certifications.map((c, i) => (
+                                                <Badge key={i} variant="secondary">{c}</Badge>
+                                            ))}
+                                        </div>
+                                    </CardContent>
+                                </Card>
                             </aside>
                         </div>
                     </div>
@@ -730,20 +742,50 @@ function SolutionList() {
             Object.values(solutionDetails).map((s) => ({
                 id: s.id, title: s.title, description: s.description,
                 fullDescription: s.fullDescription.length > 180 ? s.fullDescription.substring(0, 180) + "..." : s.fullDescription,
-                certifications: s.certifications, imagePlaceholder: s.imagePlaceholder, features: s.features.slice(0, 3),
+                certifications: s.certifications, imagePlaceholder: s.imagePlaceholder, features: s.features.slice(0, 4),
             })),
         []
     );
 
+    // New: category mapping for redesigned filters
+    const categoryMap: Record<string, string> = {
+        server: "Edge Compute",
+        "storage-solutions": "Storage",
+        "cable-harness": "Connectivity",
+        "panel-pc": "HMI / Operator",
+    };
+
+    const categories = Array.from(
+        new Set(Object.values(base).map((b) => categoryMap[b.id] || "Other"))
+    );
+
     const [query, setQuery] = useState("");
+    const [activeCats, setActiveCats] = useState<Set<string>>(new Set());
+    const [view, setView] = useState<"grid" | "list">("grid");
+
+    const toggleCategory = (c: string) => {
+        setActiveCats((prev) => {
+            const next = new Set(prev);
+            if (next.has(c)) next.delete(c); else next.add(c);
+            return next;
+        });
+    };
+    const clearFilters = () => setActiveCats(new Set());
+
     const q = query.trim().toLowerCase();
-    const results = useMemo(() => {
-        if (!q) return base;
-        return base.filter((p) => {
+    const filtered = useMemo(() => {
+        let items = base;
+        if (activeCats.size) {
+            items = items.filter((p) => activeCats.has(categoryMap[p.id] || "Other"));
+        }
+        if (!q) return items;
+        return items.filter((p) => {
             const hay = [p.title, p.description, p.fullDescription, ...p.features, ...p.certifications].join(" ").toLowerCase();
             return hay.includes(q);
         });
-    }, [q, base]);
+    }, [q, base, activeCats]);
+
+    const results = filtered;
 
     const schema = {
         "@context": "https://schema.org",
@@ -764,6 +806,9 @@ function SolutionList() {
         </svg>
     );
 
+    // Accessible label helpers
+    const resultsLabel = `${results.length} solution${results.length === 1 ? "" : "s"}`;
+
     return (
         <Layout
             title="Advanced Defense Solutions | TRINETHRA DEFENTECH"
@@ -773,23 +818,24 @@ function SolutionList() {
             structuredData={JSON.stringify(schema)}
             pageType="solutions"
         >
-            {/* Hero */}
-            <section className="bg-[#0D4114] py-16 sm:py-20 lg:py-28 px-4 sm:px-6">
-                <div className="max-w-5xl mx-auto text-center">
+            {/* Redesigned Hero */}
+            <section className="relative overflow-hidden bg-gradient-to-b from-[#0D4114] via-[#0D4114] to-[#06220A] py-20 sm:py-24 lg:py-32 px-4 sm:px-6">
+                <div className="absolute inset-0 pointer-events-none opacity-[0.12] bg-[radial-gradient(circle_at_30%_30%,#16a34a_0%,transparent_60%)]" aria-hidden />
+                <div className="max-w-6xl mx-auto text-center relative">
                     <motion.h1
-                        className="text-[clamp(1.6rem,6vw,2.8rem)] font-condensed font-bold mb-4 sm:mb-6 text-cream"
-                        initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
+                        className="text-[clamp(1.75rem,6vw,3rem)] font-condensed font-bold mb-5 text-cream tracking-tight"
+                        initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65 }}
                     >
-                        Advanced Defense-Grade Solutions
+                        Mission-Grade Technology Solutions
                     </motion.h1>
                     <motion.p
-                        className="text-[clamp(1rem,2.8vw,1.25rem)] text-cream/90 mb-8 sm:mb-12"
-                        initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.15 }}
+                        className="text-[clamp(1rem,2.4vw,1.25rem)] text-cream/85 max-w-3xl mx-auto mb-8 sm:mb-10 [text-wrap:pretty]"
+                        initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, delay: 0.15 }}
                     >
-                        Engineered for mission-critical national security applications with military-grade reliability and performance.
+                        Rugged edge compute, secure storage, resilient connectivity and hardened operator interfaces engineered for deployed defense environments.
                     </motion.p>
                     <motion.div
-                        initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.25 }}
+                        initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, delay: 0.25 }}
                         className="flex flex-wrap justify-center gap-2"
                     >
                         {["MIL-STD-810", "AES-256", "FIPS 140-2", "MIL-STD-461"].map((c, i) => <Badge key={i}>{c}</Badge>)}
@@ -797,97 +843,368 @@ function SolutionList() {
                 </div>
             </section>
 
-            {/* Search & Cards */}
+            {/* Filters + Results */}
             <section className="bg-white py-10 sm:py-16 lg:py-20 px-4 sm:px-6">
-                <div className="max-w-6xl mx-auto min-w-0">
-                    <div className="mb-6 sm:mb-8 flex items-center gap-3">
-                        <div className="relative w-full">
-                            <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-                            <input
-                                type="search" value={query} onChange={(e) => setQuery(e.target.value)}
-                                placeholder="Search solutions, features, or certifications..."
-                                className="w-full pl-9 pr-4 py-2.5 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-forest-600 focus:border-transparent"
-                                aria-label="Search solutions"
-                            />
+                <div className="max-w-7xl mx-auto">
+                    {/* Mobile Filters Sheet */}
+                    <div className="lg:hidden mb-6">
+                        <div className="flex gap-3 mb-4">
+                            <div className="relative flex-1">
+                                <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                                <input
+                                    type="search"
+                                    value={query}
+                                    onChange={(e) => setQuery(e.target.value)}
+                                    placeholder="Search solutions..."
+                                    className="w-full pl-9 pr-3 py-2.5 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-forest focus:border-transparent text-sm"
+                                    aria-label="Search solutions"
+                                />
+                            </div>
+                            <Sheet>
+                                <SheetTrigger asChild>
+                                    <Button variant="outline" size="sm" className="shrink-0">
+                                        <FaFilter className="w-4 h-4 mr-2" />
+                                        Filters
+                                        {activeCats.size > 0 && (
+                                            <Badge variant="secondary" className="ml-2 bg-forest text-white">
+                                                {activeCats.size}
+                                            </Badge>
+                                        )}
+                                    </Button>
+                                </SheetTrigger>
+                                <SheetContent side="right" className="w-80">
+                                    <SheetHeader>
+                                        <SheetTitle>Filter Solutions</SheetTitle>
+                                        <SheetDescription>
+                                            Narrow down solutions by category
+                                        </SheetDescription>
+                                    </SheetHeader>
+                                    <div className="mt-6 space-y-6">
+                                        <div>
+                                            <h3 className="text-sm font-semibold text-navy mb-3 uppercase tracking-wide">Categories</h3>
+                                            <div className="space-y-2">
+                                                {categories.map((c) => {
+                                                    const active = activeCats.has(c);
+                                                    return (
+                                                        <Button
+                                                            key={c}
+                                                            variant={active ? "default" : "outline"}
+                                                            size="sm"
+                                                            onClick={() => toggleCategory(c)}
+                                                            className={`w-full justify-start ${
+                                                                active ? "bg-forest text-white hover:bg-forest/90" : ""
+                                                            }`}
+                                                        >
+                                                            {c}
+                                                        </Button>
+                                                    );
+                                                })}
+                                            </div>
+                                            {activeCats.size > 0 && (
+                                                <Button
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    onClick={clearFilters}
+                                                    className="w-full mt-3 text-red-600 hover:text-red-700 hover:bg-red-50"
+                                                >
+                                                    Clear all filters
+                                                </Button>
+                                            )}
+                                        </div>
+                                        <Card className="p-4">
+                                            <CardContent className="p-0">
+                                                <p className="text-sm text-gray-600">
+                                                    <strong>Tip:</strong> Combine category filters with keyword search to quickly find specific solutions.
+                                                </p>
+                                            </CardContent>
+                                        </Card>
+                                    </div>
+                                </SheetContent>
+                            </Sheet>
                         </div>
                     </div>
 
-                    <motion.div
-                        className="text-center mb-8 sm:mb-12"
-                        initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.25 }} transition={{ duration: 0.6 }}
-                    >
-                        <h2 className="text-[clamp(1.4rem,4.5vw,2.25rem)] font-condensed font-bold mb-4 text-navy inline-block border-b-2 border-forest pb-2">
-                            Our Defense Technology Solutions
-                        </h2>
-                        <p className="text-[clamp(1rem,2.6vw,1.125rem)] text-charcoal/80 max-w-3xl mx-auto">
-                            Explore our portfolio of advanced, rugged, and secure solutions designed for the most demanding defense and national security applications.
-                        </p>
-                    </motion.div>
+                    <div className="grid grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)] gap-10">
+                        {/* Desktop Sidebar Filters */}
+                        <aside className="hidden lg:block">
+                            <Card className="sticky top-24">
+                                <CardHeader>
+                                    <CardTitle className="text-lg">Filter Solutions</CardTitle>
+                                </CardHeader>
+                                <CardContent className="space-y-6">
+                                    <div>
+                                        <h3 className="text-sm font-semibold text-navy mb-3 uppercase tracking-wide">Search</h3>
+                                        <div className="relative">
+                                            <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                                            <input
+                                                type="search"
+                                                value={query}
+                                                onChange={(e) => setQuery(e.target.value)}
+                                                placeholder="Search solutions..."
+                                                className="w-full pl-9 pr-3 py-2.5 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-forest focus:border-transparent text-sm"
+                                                aria-label="Search solutions"
+                                            />
+                                        </div>
+                                    </div>
+                                    <Separator />
+                                    <div>
+                                        <h3 className="text-sm font-semibold text-navy mb-3 uppercase tracking-wide">Categories</h3>
+                                        <div className="space-y-2">
+                                            {categories.map((c) => {
+                                                const active = activeCats.has(c);
+                                                return (
+                                                    <Button
+                                                        key={c}
+                                                        variant={active ? "default" : "outline"}
+                                                        size="sm"
+                                                        onClick={() => toggleCategory(c)}
+                                                        className={`w-full justify-start ${
+                                                            active ? "bg-forest text-white hover:bg-forest/90" : ""
+                                                        }`}
+                                                    >
+                                                        {c}
+                                                    </Button>
+                                                );
+                                            })}
+                                        </div>
+                                        {activeCats.size > 0 && (
+                                            <Button
+                                                variant="ghost"
+                                                size="sm"
+                                                onClick={clearFilters}
+                                                className="w-full mt-3 text-red-600 hover:text-red-700 hover:bg-red-50"
+                                            >
+                                                Clear all filters
+                                            </Button>
+                                        )}
+                                    </div>
+                                    <Separator />
+                                    <div className="bg-gray-50 rounded-md p-3 text-sm">
+                                        <p className="font-medium text-navy mb-2">How to use</p>
+                                        <p className="text-gray-600 text-xs leading-relaxed">
+                                            Combine category filters with keyword search to quickly narrow down solutions.
+                                        </p>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </aside>
 
-                    {results.length === 0 ? (
-                        <div className="text-center text-gray-600">No matching solutions. Try another keyword.</div>
-                    ) : (
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
-                            {results.map((p, i) => (
-                                <motion.div
-                                    key={p.id}
-                                    initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true, amount: 0.25 }} transition={{ duration: 0.5, delay: i * 0.06 }}
-                                    className="flex flex-col h-full min-w-0"
-                                >
-                                    <div className="bg-white border border-gray-200 rounded-t-xl p-6 flex-grow min-w-0">
-                                        <div className="flex flex-col items-center justify-center h-auto aspect-[16/9] mb-6 bg-gray-50 rounded-lg">
-                                            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-forest/10 flex items-center justify-center">
-                                                {getIcon(p.id)}
-                                            </div>
-                                        </div>
-                                        <h3 className="text-[clamp(1.15rem,3vw,1.35rem)] font-condensed font-bold mb-3 text-navy text-center">{p.title}</h3>
-                                        <p className="text-charcoal/80 mb-6 text-center">{p.description}</p>
-                                        <div className="space-y-3 mb-8">
-                                            {p.features.map((f, idx) => (
-                                                <div key={idx} className="flex items-start min-w-0">
-                                                    <FaCheck className="text-forest mt-1 mr-3 shrink-0" />
-                                                    <span className="text-charcoal/80">{f}</span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                    <div className="border border-gray-200 bg-gray-50 rounded-b-xl p-6">
-                                        <div className="flex flex-wrap gap-2 mb-4">
-                                            {p.certifications.slice(0, 2).map((c, j) => <Badge key={j}>{c}</Badge>)}
-                                            {p.certifications.length > 2 && (
-                                                <span className="text-xs font-medium bg-gray-200 text-gray-600 px-2 py-1 rounded-full">+{p.certifications.length - 2} more</span>
-                                            )}
-                                        </div>
-                                        <Link href={`/solutions/${p.id}`} className="w-full block text-center bg-forest text-white font-medium py-2.5 px-4 rounded-md hover:bg-forest/90 transition-colors">
-                                            Explore Solution
-                                        </Link>
-                                    </div>
-                                </motion.div>
-                            ))}
+                        {/* Main content */}
+                        <div className="min-w-0">
+
+                        {/* Header Row */}
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+                            <div>
+                                <h2 className="text-[clamp(1.4rem,4vw,2.2rem)] font-condensed font-bold text-navy leading-tight mb-2">
+                                    Our Defense Technology Solutions
+                                </h2>
+                                <p className="text-sm text-charcoal/70">{resultsLabel}{activeCats.size ? ` • Filtered` : ""}{q ? ` • Matching '${query}'` : ""}</p>
+                            </div>
+                            <div className="flex items-center gap-3 self-start sm:self-auto">
+                                <div className="inline-flex rounded-md border border-gray-300 overflow-hidden" role="group" aria-label="Change results view">
+                                    <button
+                                        onClick={() => setView("grid")}
+                                        className={`px-3 py-2 text-xs font-medium tracking-wide ${view === "grid" ? "bg-forest text-white" : "bg-white text-gray-700 hover:bg-gray-100"}`}
+                                        aria-pressed={view === "grid"}
+                                    >Grid</button>
+                                    <button
+                                        onClick={() => setView("list")}
+                                        className={`px-3 py-2 text-xs font-medium tracking-wide border-l border-gray-300 ${view === "list" ? "bg-forest text-white" : "bg-white text-gray-700 hover:bg-gray-100"}`}
+                                        aria-pressed={view === "list"}
+                                    >List</button>
+                                </div>
+                            </div>
                         </div>
-                    )}
+
+                        {/* Empty State */}
+                        {results.length === 0 && (
+                            <div className="text-center bg-gray-50 border border-gray-200 rounded-lg p-10">
+                                <p className="text-navy font-medium mb-2">No matching solutions</p>
+                                <p className="text-sm text-charcoal/70 mb-6 max-w-md mx-auto">Try different keywords or remove some category filters to broaden the results.</p>
+                                {activeCats.size > 0 || q ? (
+                                    <button onClick={() => { clearFilters(); setQuery(""); }} className="bg-forest text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-forest/90">Reset Search</button>
+                                ) : null}
+                            </div>
+                        )}
+
+                        {/* Grid Results */}
+                        {results.length > 0 && view === "grid" && (
+                            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                                {results.map((p, i) => (
+                                    <motion.div
+                                        key={p.id}
+                                        initial={{ opacity: 0, y: 24 }} 
+                                        whileInView={{ opacity: 1, y: 0 }} 
+                                        viewport={{ once: true, amount: 0.2 }} 
+                                        transition={{ duration: 0.55, delay: i * 0.05 }}
+                                    >
+                                        <Card className="group h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                                            <CardHeader className="pb-4">
+                                                <div className="aspect-[16/9] mb-4 rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 grid place-items-center relative overflow-hidden">
+                                                    <div className="w-16 h-16 rounded-full bg-forest/10 flex items-center justify-center">
+                                                        {getIcon(p.id)}
+                                                    </div>
+                                                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-[radial-gradient(circle_at_70%_30%,rgba(13,65,20,0.08),transparent_70%)]" aria-hidden />
+                                                </div>
+                                                <CardTitle className="text-lg font-condensed font-bold text-navy leading-tight">
+                                                    <Link 
+                                                        href={`/solutions/${p.id}`} 
+                                                        className="hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-forest rounded-sm"
+                                                    >
+                                                        {p.title}
+                                                    </Link>
+                                                </CardTitle>
+                                                <CardDescription className="text-sm text-charcoal/75 line-clamp-2">
+                                                    {p.description}
+                                                </CardDescription>
+                                            </CardHeader>
+                                            
+                                            <CardContent className="flex-grow">
+                                                <ul className="space-y-2 text-sm text-charcoal/80">
+                                                    {p.features.map((f, idx) => (
+                                                        <li key={idx} className="flex items-start gap-2">
+                                                            <FaCheck className="text-forest mt-0.5 shrink-0 text-xs" />
+                                                            <span className="line-clamp-1">{f}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </CardContent>
+                                            
+                                            <CardFooter className="pt-4 flex items-center justify-between gap-4">
+                                                <div className="flex flex-wrap gap-1.5">
+                                                    {p.certifications.slice(0, 2).map((c, j) => (
+                                                        <Badge key={j} variant="secondary">{c}</Badge>
+                                                    ))}
+                                                    {p.certifications.length > 2 && (
+                                                        <Badge variant="outline" className="text-xs">
+                                                            +{p.certifications.length - 2}
+                                                        </Badge>
+                                                    )}
+                                                </div>
+                                                <Button asChild size="sm" className="bg-forest hover:bg-forest/90">
+                                                    <Link href={`/solutions/${p.id}`}>
+                                                        Explore
+                                                    </Link>
+                                                </Button>
+                                            </CardFooter>
+                                        </Card>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        )}
+
+                        {/* List Results */}
+                        {results.length > 0 && view === "list" && (
+                            <div className="space-y-6">
+                                {results.map((p, i) => (
+                                    <motion.div
+                                        key={p.id}
+                                        initial={{ opacity: 0, y: 20 }} 
+                                        whileInView={{ opacity: 1, y: 0 }} 
+                                        viewport={{ once: true, amount: 0.2 }} 
+                                        transition={{ duration: 0.5, delay: i * 0.04 }}
+                                    >
+                                        <Card className="hover:shadow-md transition-shadow">
+                                            <CardContent className="p-6 md:p-8">
+                                                <div className="flex flex-col md:flex-row gap-6 md:gap-8">
+                                                    {/* Left side - Image and badges */}
+                                                    <div className="md:w-48 shrink-0">
+                                                        <div className="aspect-square rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 grid place-items-center mb-4">
+                                                            <div className="w-16 h-16 rounded-full bg-forest/10 flex items-center justify-center">
+                                                                {getIcon(p.id)}
+                                                            </div>
+                                                        </div>
+                                                        <div className="flex flex-wrap gap-1.5">
+                                                            {p.certifications.slice(0, 3).map((c, j) => (
+                                                                <Badge key={j} variant="secondary">{c}</Badge>
+                                                            ))}
+                                                            {p.certifications.length > 3 && (
+                                                                <Badge variant="outline" className="text-xs">
+                                                                    +{p.certifications.length - 3}
+                                                                </Badge>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    {/* Right side - Content */}
+                                                    <div className="flex-grow min-w-0">
+                                                        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
+                                                            <div>
+                                                                <CardTitle className="text-xl font-condensed font-bold text-navy leading-tight mb-2">
+                                                                    <Link 
+                                                                        href={`/solutions/${p.id}`} 
+                                                                        className="hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-forest rounded-sm"
+                                                                    >
+                                                                        {p.title}
+                                                                    </Link>
+                                                                </CardTitle>
+                                                                <CardDescription className="text-sm md:text-base text-charcoal/80 max-w-3xl">
+                                                                    {p.fullDescription}
+                                                                </CardDescription>
+                                                            </div>
+                                                            <Button asChild className="bg-forest hover:bg-forest/90 shrink-0">
+                                                                <Link href={`/solutions/${p.id}`}>
+                                                                    View Details
+                                                                </Link>
+                                                            </Button>
+                                                        </div>
+                                                        
+                                                        <Separator className="my-4" />
+                                                        
+                                                        <div>
+                                                            <h4 className="font-medium text-navy mb-3 text-sm uppercase tracking-wide">Key Features</h4>
+                                                            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-sm text-charcoal/85">
+                                                                {p.features.map((f, idx) => (
+                                                                    <li key={idx} className="flex items-start gap-2">
+                                                                        <FaCheck className="text-forest mt-0.5 shrink-0 text-xs" />
+                                                                        <span>{f}</span>
+                                                                    </li>
+                                                                ))}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </CardContent>
+                                        </Card>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        )}
+                        </div>
+                    </div>
                 </div>
             </section>
 
+            {/* Enhanced CTA Section */}
             <section className="bg-gray-50 py-12 sm:py-16 lg:py-20 px-4 sm:px-6">
-                <div className="max-w-5xl mx-auto">
+                <div className="max-w-6xl mx-auto">
                     <motion.div
-                        initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.25 }}
+                        initial={{ opacity: 0, y: 18 }} 
+                        whileInView={{ opacity: 1, y: 0 }} 
+                        viewport={{ once: true, amount: 0.25 }} 
                         transition={{ duration: 0.6 }}
-                        className="flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-16 bg-white p-8 lg:p-12 rounded-xl shadow-md border border-gray-200"
                     >
-                        <div className="lg:w-2/3 min-w-0">
-                            <h2 className="text-[clamp(1.2rem,3.5vw,1.6rem)] font-bold mb-4 text-navy">Need a Custom Defense Solution?</h2>
-                            <p className="text-charcoal/80 mb-0">
-                                Our team of defense technology experts can help you design and implement custom solutions that meet your specific mission requirements and security standards.
-                            </p>
-                        </div>
-                        <div className="lg:w-1/3 flex justify-center lg:justify-end">
-                            <Link href="/contact" className="inline-flex items-center justify-center bg-navy hover:bg-navy/90 text-white font-bold py-3 px-6 rounded-md shadow-md transition-colors w-full lg:w-auto">
-                                Contact Our Team
-                            </Link>
-                        </div>
+                        <Card className="bg-white shadow-lg border-0">
+                            <CardContent className="p-8 lg:p-12">
+                                <div className="flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-14">
+                                    <div className="lg:w-2/3 min-w-0">
+                                        <CardTitle className="text-2xl lg:text-3xl font-bold mb-4 text-navy leading-tight">
+                                            Need a Custom Defense Solution?
+                                        </CardTitle>
+                                        <CardDescription className="text-base text-charcoal/80 mb-0">
+                                            Our engineers can help tailor rugged compute, storage, interconnect, or HMI platforms to your mission profile, environmental constraints, and accreditation requirements.
+                                        </CardDescription>
+                                    </div>
+                                    <div className="lg:w-1/3 flex justify-center lg:justify-end">
+                                        <Button asChild size="lg" className="bg-navy hover:bg-navy/90 w-full lg:w-auto">
+                                            <Link href="/contact">
+                                                Contact Our Team
+                                            </Link>
+                                        </Button>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
                     </motion.div>
                 </div>
             </section>

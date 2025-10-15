@@ -1,0 +1,79 @@
+{
+    "checksum": "0a66cd79530d2d58b698a5ca02bf9943e71e4994074eebdf64b03ea3100774fd",
+    "data": {
+    "id": "26265818-c08a-4c47-8a6a-67285fbfa494",
+    "createdAt": 1760278733772,
+    "updatedAt": 1760278733776,
+    "title": "redesign this HomePage completely with Ultra sl...",
+    "messages": [
+        {
+            "id": "c7c67915-7c55-4850-a888-1abdcadcd90d",
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "redesign this HomePage completely with Ultra sleek and high-tech and Formal and institutional design. keep the design modern and minimalistic. redesign the sections also. make sure its responsive to all types devices. index.tsx TrustedPartners.tsx home.ts HomeAssurance.tsx HomeCapabilities.tsx HomeProcess.tsx HomeSolutions.tsx HomeAssurance.tsx TrustedPartners.tsx HomeCTA.tsx Layout.tsx"
+                }
+            ],
+            "context": {
+                "currentFile": {
+                    "path": "client/src/pages/home/index.tsx",
+                    "fsPath": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/pages/home/index.tsx",
+                    "sources": [
+                        "opened_tab"
+                    ],
+                    "content": "import React from 'react';\nimport { Layout } from '@/components/Layout';\nimport { HomeHero } from './sections/HomeHero';\nimport { HomeCapabilities } from './sections/HomeCapabilities';\nimport { HomeProcess } from './sections/HomeProcess';\nimport { HomeSolutions } from './sections/HomeSolutions';\nimport { HomeAssurance } from './sections/HomeAssurance';\nimport { HomeCTA } from './sections/HomeCTA';\nimport { TrustedPartners } from '@/components/TrustedPartners';\nimport { Button } from '@/components/ui/button';\nimport { Link } from 'wouter';\nimport { FaArrowRight } from 'react-icons/fa';\nimport {\n  homeSeo,\n  homeStructuredData,\n  partners,\n  valueDrivers\n} from '@/content/home';\n\nexport const metadata = {\n  ...homeSeo\n};\n\nexport function HomePage() {\n  return (\n    <Layout\n      title={homeSeo.title}\n      description={homeSeo.description}\n      ogType={homeSeo.ogType}\n      keywords={homeSeo.keywords}\n      structuredData={JSON.stringify(homeStructuredData)}\n    >\n      <HomeHero />\n      <HomeCapabilities />\n      <HomeProcess />\n      <HomeSolutions />\n      <HomeAssurance />\n      <TrustedPartners\n        partners={partners}\n        heading=\"Trusted Across Strategic Missions\"\n        description=\"Defense and aerospace leaders rely on Trinethra platforms to execute decisive missions with resilience.\"\n        cta={(\n          <Link href=\"/about\">\n            <Button\n              variant=\"outline\"\n              className=\"bg-white hover:bg-teal hover:text-white border-2 border-teal text-navy font-bold py-3 px-6 rounded-lg transition-all duration-300 focus-ring\"\n            >\n              Learn More About Our Partnerships <FaArrowRight className=\"ml-2\" />\n            </Button>\n          </Link>\n        )}\n      />\n      <HomeCTA valueDrivers={valueDrivers} />\n    </Layout>\n  );\n}\n\nexport default HomePage;",
+                    "language": "typescript jsx"
+                },
+                "usedRules": [
+                    "zen-rules://user/custom",
+                    "zen-rules://repo/.zencoder/rules/repo.md"
+                ]
+            },
+            "createdAt": 1760278733776,
+            "isInternal": false,
+            "rawContent": {
+                "type": "doc",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": "redesign this HomePage completely with Ultra sleek and high-tech and Formal and institutional design. keep the design modern and minimalistic. redesign the sections also. make sure its responsive to all types devices. index.tsx TrustedPartners.tsx home.ts HomeAssurance.tsx HomeCapabilities.tsx HomeProcess.tsx HomeSolutions.tsx HomeAssurance.tsx TrustedPartners.tsx HomeCTA.tsx Layout.tsx "
+                            }
+                        ]
+                    }
+                ]
+            },
+            "autoAppliedRules": [
+                {
+                    "name": "User AI Instruction",
+                    "description": "User AI Instruction",
+                    "uri": "zen-rules://user/custom",
+                    "content": "•\tAlways provide original, creative website ideas with suggestions for distinguishing features, design concepts, and user experience improvements.\n\t•\tWhen asked for website code, give fully functional, modular, and well-commented code examples. Include suggestions for structuring files, libraries/frameworks to use, and explain why.\n\t•\tFor machine learning questions, summarize the key concepts, explain the logic/intuition behind algorithms, and when relevant, show well-documented code (preferably in Python, using popular frameworks like scikit-learn, TensorFlow, or PyTorch).\n\t•\tWhen requested, create small, complete project blueprints—detailing features, architectures, and step-by-step development plans.\n\t•\tOffer best practices, optimization tips, pros and cons, and potential pitfalls for any code or approach. Cite up-to-date resources when possible.\n\t•\tWhen asked about algorithms, clearly explain their time and space complexity, use cases, and potential improvements. Support explanations with pseudocode and real code.\n\t•\tNever generate generic or repetitive ideas; always provide at least one unique angle, novel feature, or application.\n\t•\tBefore giving any solution, clarify assumptions and suggest ideas for possible extensions or creative improvements.\n\t•\tGently point out edge cases and encourage testing and validation.\n\t•\tWhere helpful, summarize with bullet points or tables for clarity.\n\n Be innovative and think outside the box.",
+                    "alwaysApply": true
+                },
+                {
+                    "name": "Repository Information Overview",
+                    "description": "Repository Information Overview",
+                    "uri": "zen-rules://repo/.zencoder/rules/repo.md",
+                    "mimeType": "text/markdown",
+                    "content": "# Defense Solutions Web Application Information\n\n## Summary\nA modern web application for defense solutions built with React, Express, and TypeScript. The application features a client-side React frontend and a server-side Express backend, with Supabase integration for database operations.\n\n## Structure\n- `/client` - React frontend application with components, pages, and assets\n- `/server` - Express backend server with API routes and database integration\n- `/shared` - Shared types and database schemas using Drizzle ORM\n- `/api` - API route handlers for serverless deployment\n\n## Language & Runtime\n**Language**: TypeScript/JavaScript\n**Version**: TypeScript 5.6.3\n**Build System**: Vite 5.4.19\n**Package Manager**: pnpm (inferred from build commands)\n\n## Dependencies\n**Main Dependencies**:\n- React 18.3.1 - Frontend UI library\n- Express 4.21.2 - Backend server framework\n- Supabase - Backend as a service for database operations\n- Drizzle ORM - Database ORM with PostgreSQL support\n- TailwindCSS - Utility-first CSS framework\n- Wouter - Routing library for React\n- Tanstack Query - Data fetching library\n- Zod - Schema validation library\n\n**Development Dependencies**:\n- Vite - Build tool and development server\n- TypeScript - Static type checking\n- ESBuild - JavaScript bundler\n- Drizzle Kit - Database migration tools\n\n## Build & Installation\n```bash\n# Install dependencies\npnpm install\n\n# Development mode\npnpm dev\n\n# Production build\npnpm build\n\n# Start production server\npnpm start\n\n# Database schema push\npnpm db:push\n```\n\n## Database\n**Type**: PostgreSQL (via Supabase)\n**ORM**: Drizzle ORM\n**Schema**: Defined in `shared/schema.ts`\n**Tables**:\n- users - User authentication\n- contact_submissions - Contact form submissions\n\n## Deployment\n**Platform**: Vercel (configured via vercel.json)\n**Build Command**: `pnpm build`\n**Output Directory**: `dist/public`\n**Environment Variables**:\n- PORT - Server port (default: 3000)\n- DATABASE_URL - PostgreSQL connection string\n- SUPABASE_URL - Supabase project URL\n- SUPABASE_ANON_KEY - Supabase anonymous key\n\n## Client Application\n**Framework**: React with TypeScript\n**Routing**: Wouter\n**State Management**: React Query\n**UI Components**: Custom components with Radix UI primitives\n**Styling**: TailwindCSS with SCSS\n**Entry Point**: `client/src/main.tsx`\n\n## Server Application\n**Framework**: Express\n**API Routes**: RESTful endpoints in `/api` directory\n**Database Access**: Supabase client\n**Entry Point**: `server/index.ts`\n**Static Serving**: Production build serves static files from `dist/public`\n\n## Testing\n**Target Framework**: Playwright",
+                    "alwaysApply": true
+                }
+            ]
+        }
+    ],
+    "isAgent": true,
+    "isNameGenerated": true,
+    "isCustomAgent": false,
+    "isUnitTestsAgent": false,
+    "isE2EAgent": false,
+    "isWebDevAgent": false,
+    "isQnaAgent": false,
+    "isRepoInfoAgent": false,
+    "autoApply": false,
+    "model": "sonnet-4-5-think"
+}
+}

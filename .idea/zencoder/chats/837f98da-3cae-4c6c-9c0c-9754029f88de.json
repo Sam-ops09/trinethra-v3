@@ -1,0 +1,541 @@
+{
+    "checksum": "3518c95fa078fddf3f0b1de201983b012dbb43023490de3cb5b10ed9793c663f",
+    "data": {
+    "id": "837f98da-3cae-4c6c-9c0c-9754029f88de",
+    "createdAt": 1759858183993,
+    "updatedAt": 1759896898234,
+    "title": "Hero Section Image Redesign",
+    "messages": [
+        {
+            "id": "9e0f1a32-aab4-4773-bf55-2bcc584fbe45",
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "redesign this so that the images are displayed in a better manner. the image should be used as a background for the hero page"
+                },
+                {
+                    "type": "fileMention",
+                    "fileName": "Home.tsx",
+                    "path": "client/src/pages/Home.tsx",
+                    "fsPath": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/pages/Home.tsx"
+                },
+                {
+                    "type": "text",
+                    "text": " "
+                },
+                {
+                    "type": "fileMention",
+                    "fileName": "HeroCarousel.tsx",
+                    "path": "client/src/components/HeroCarousel.tsx",
+                    "fsPath": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/components/HeroCarousel.tsx"
+                }
+            ],
+            "context": {
+                "attachedFiles": [
+                    {
+                        "path": "client/src/pages/Home.tsx",
+                        "fsPath": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/pages/Home.tsx"
+                    },
+                    {
+                        "path": "client/src/components/HeroCarousel.tsx",
+                        "fsPath": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/components/HeroCarousel.tsx"
+                    }
+                ],
+                "currentFile": {
+                    "path": "client/src/components/HeroCarousel.tsx",
+                    "fsPath": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/components/HeroCarousel.tsx",
+                    "sources": [
+                        "opened_tab"
+                    ],
+                    "content": "import { useEffect, useState, useRef } from \"react\";\nimport {\n    Carousel,\n    CarouselContent,\n    CarouselItem,\n    CarouselNext,\n    CarouselPrevious,\n    type CarouselApi,\n} from \"@/components/ui/carousel\";\nimport { cn } from \"@/lib/utils\";\n\n// Sample carousel items with captions (could be externalized later)\nconst carouselItems = [\n    {\n        image: \"/assets/carousel1.jpg\",\n        alt: \"Defense technology engineering visualization\",\n        title: \"Mission-Ready Technology\",\n        description: \"Rugged, secure and high-performance systems engineered for extreme environments.\",\n    },\n    {\n        image: \"/assets/carousel2.png\",\n        alt: \"Edge compute and secure storage platforms showcase\",\n        title: \"Edge Compute & Secure Data\",\n        description: \"Enabling tactical superiority with modular AI inference and encrypted storage.\",\n    },\n];\n\ninterface HeroCarouselProps {\n    autoPlay?: boolean;\n    autoPlayInterval?: number;\n    showControls?: boolean;\n    showIndicators?: boolean;\n    showCaptions?: boolean;\n    className?: string;\n}\n\nexport function HeroCarousel({\n                                 autoPlay = true,\n                                 autoPlayInterval = 6000,\n                                 showControls = true,\n                                 showIndicators = true,\n                                 showCaptions = true,\n                                 className,\n                             }: HeroCarouselProps) {\n    const [api, setApi] = useState<CarouselApi>();\n    const [currentSlide, setCurrentSlide] = useState(0);\n    const prefersReducedMotion = usePrefersReducedMotion();\n    const intervalRef = useRef<number | null>(null);\n\n    // Auto-play logic respecting reduced motion\n    useEffect(() => {\n        if (!api || !autoPlay || prefersReducedMotion) return;\n        if (intervalRef.current) window.clearInterval(intervalRef.current);\n        intervalRef.current = window.setInterval(() => {\n            api.scrollNext();\n        }, autoPlayInterval);\n        return () => {\n            if (intervalRef.current) window.clearInterval(intervalRef.current);\n        };\n    }, [api, autoPlay, autoPlayInterval, prefersReducedMotion]);\n\n    // Track current slide\n    useEffect(() => {\n        if (!api) return;\n        const onSelect = () => setCurrentSlide(api.selectedScrollSnap());\n        api.on(\"select\", onSelect);\n        onSelect();\n        return () => { api.off(\"select\", onSelect); };\n    }, [api]);\n\n    const scrollToSlide = (index: number) => api?.scrollTo(index);\n\n    return (\n        <div\n            className={cn(\"relative\", className)}\n            role=\"region\"\n            aria-roledescription=\"carousel\"\n            aria-label=\"Featured technology solutions\"\n        >\n            <Carousel\n                className=\"w-full max-w-7xl mx-auto\"\n                setApi={setApi}\n                opts={{ align: \"center\", loop: true }}\n            >\n                <CarouselContent>\n                    {carouselItems.map((item, index) => (\n                        <CarouselItem key={index}>\n                            <div className=\"p-1\">\n                                <figure\n                                    className=\"relative aspect-[16/9] xs:aspect-[5/3] sm:aspect-[2/1] lg:aspect-[2.4/1] overflow-hidden rounded-xl group bg-gradient-to-br from-forest/40 via-navy/40 to-charcoal/30\"\n                                >\n                                    {/* Image with graceful loading */}\n                                    <ImageWithPlaceholder\n                                        src={item.image}\n                                        alt={item.alt}\n                                        priority={index === 0}\n                                    />\n                                    {showCaptions && (\n                                        <figcaption className=\"pointer-events-none absolute inset-0 flex flex-col justify-end p-6 sm:p-10 bg-gradient-to-t from-black/70 via-black/30 to-transparent text-white\">\n                                            <h2 className=\"heading-clamp-2 font-condensed font-bold mb-2 drop-shadow-sm text-balance\">\n                                                {item.title}\n                                            </h2>\n                                            <p className=\"max-w-2xl text-sm sm:text-base md:text-lg opacity-90 text-balance\">\n                                                {item.description}\n                                            </p>\n                                        </figcaption>\n                                    )}\n                                </figure>\n                            </div>\n                        </CarouselItem>\n                    ))}\n                </CarouselContent>\n\n                {showControls && (\n                    <>\n                        <CarouselPrevious className=\"hidden md:flex left-4 lg:left-6\" aria-label=\"Previous slide\" />\n                        <CarouselNext className=\"hidden md:flex right-4 lg:right-6\" aria-label=\"Next slide\" />\n                    </>\n                )}\n            </Carousel>\n\n            {/*{showIndicators && (*/}\n            {/*    <div className=\"flex justify-center gap-2 mt-4\" aria-label=\"Slide indicators\">*/}\n            {/*        {carouselItems.map((_, index) => {*/}\n            {/*            const active = currentSlide === index;*/}\n            {/*            return (*/}\n            {/*                <button*/}\n            {/*                    key={index}*/}\n            {/*                    onClick={() => scrollToSlide(index)}*/}\n            {/*                    className={cn(*/}\n            {/*                        \"h-2.5 rounded-full transition-all duration-300 focus-ring\",*/}\n            {/*                        active ? \"bg-teal w-6\" : \"bg-gray-300 hover:bg-gray-400 w-2.5\"*/}\n            {/*                    )}*/}\n            {/*                    aria-label={`Go to slide ${index + 1}`}*/}\n            {/*                    aria-current={active}*/}\n            {/*                />*/}\n            {/*            );*/}\n            {/*        })}*/}\n            {/*    </div>*/}\n            {/*)}*/}\n        </div>\n    );\n}\n\n/* Hook to detect prefers-reduced-motion */\nfunction usePrefersReducedMotion() {\n    const [prefers, setPrefers] = useState(false);\n    useEffect(() => {\n        const media = window.matchMedia('(prefers-reduced-motion: reduce)');\n        const update = () => setPrefers(media.matches);\n        update();\n        media.addEventListener('change', update);\n        return () => media.removeEventListener('change', update);\n    }, []);\n    return prefers;\n}\n\n/* Progressive image component */\ninterface ImgProps { src: string; alt: string; priority?: boolean; }\nfunction ImageWithPlaceholder({ src, alt, priority }: ImgProps) {\n    const [loaded, setLoaded] = useState(false);\n    return (\n        <>\n            <div className={cn(\"absolute inset-0 bg-cream/20 skeleton\", loaded && \"hidden\")}/>\n            <img\n                src={src}\n                alt={alt}\n                loading={priority ? 'eager' : 'lazy'}\n                onLoad={() => setLoaded(true)}\n                className={cn(\n                    \"w-full h-full object-cover transition-transform duration-[6000ms] ease-linear group-hover:scale-105\",\n                    loaded ? \"opacity-100\" : \"opacity-0\"\n                )}\n                draggable={false}\n            />\n        </>\n    );\n}",
+                    "language": "typescript jsx"
+                },
+                "codebaseEnabled": true,
+                "usedRules": [
+                    "zen-rules://repo/.zencoder/rules/repo.md"
+                ]
+            },
+            "createdAt": 1759858183998,
+            "isInternal": false,
+            "rawContent": {
+                "type": "doc",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": "redesign this so that the images are displayed in a better manner. the image should be used as a background for the hero page"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "paragraph",
+                        "content": [
+                            {
+                                "type": "mention",
+                                "attrs": {
+                                    "label": "Home.tsx",
+                                    "summary": null,
+                                    "description": null,
+                                    "type": "file",
+                                    "path": "client/src/pages/Home.tsx",
+                                    "fsPath": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/pages/Home.tsx",
+                                    "contentType": null,
+                                    "name": null,
+                                    "uri": null
+                                }
+                            },
+                            {
+                                "type": "text",
+                                "text": " "
+                            },
+                            {
+                                "type": "mention",
+                                "attrs": {
+                                    "label": "HeroCarousel.tsx",
+                                    "summary": null,
+                                    "description": null,
+                                    "type": "file",
+                                    "path": "client/src/components/HeroCarousel.tsx",
+                                    "fsPath": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/components/HeroCarousel.tsx",
+                                    "contentType": null,
+                                    "name": null,
+                                    "uri": null
+                                }
+                            },
+                            {
+                                "type": "text",
+                                "text": " "
+                            }
+                        ]
+                    }
+                ]
+            },
+            "isGhost": true,
+            "autoAppliedRules": [
+                {
+                    "name": "Repository Information Overview",
+                    "description": "Repository Information Overview",
+                    "uri": "zen-rules://repo/.zencoder/rules/repo.md",
+                    "mimeType": "text/markdown",
+                    "content": "# Defense Solutions Web Application Information\n\n## Summary\nA modern web application for defense solutions built with React, Express, and TypeScript. The application features a client-side React frontend and a server-side Express backend, with Supabase integration for database operations.\n\n## Structure\n- `/client` - React frontend application with components, pages, and assets\n- `/server` - Express backend server with API routes and database integration\n- `/shared` - Shared types and database schemas using Drizzle ORM\n- `/api` - API route handlers for serverless deployment\n\n## Language & Runtime\n**Language**: TypeScript/JavaScript\n**Version**: TypeScript 5.6.3\n**Build System**: Vite 5.4.19\n**Package Manager**: pnpm (inferred from build commands)\n\n## Dependencies\n**Main Dependencies**:\n- React 18.3.1 - Frontend UI library\n- Express 4.21.2 - Backend server framework\n- Supabase - Backend as a service for database operations\n- Drizzle ORM - Database ORM with PostgreSQL support\n- TailwindCSS - Utility-first CSS framework\n- Wouter - Routing library for React\n- Tanstack Query - Data fetching library\n- Zod - Schema validation library\n\n**Development Dependencies**:\n- Vite - Build tool and development server\n- TypeScript - Static type checking\n- ESBuild - JavaScript bundler\n- Drizzle Kit - Database migration tools\n\n## Build & Installation\n```bash\n# Install dependencies\npnpm install\n\n# Development mode\npnpm dev\n\n# Production build\npnpm build\n\n# Start production server\npnpm start\n\n# Database schema push\npnpm db:push\n```\n\n## Database\n**Type**: PostgreSQL (via Supabase)\n**ORM**: Drizzle ORM\n**Schema**: Defined in `shared/schema.ts`\n**Tables**:\n- users - User authentication\n- contact_submissions - Contact form submissions\n\n## Deployment\n**Platform**: Vercel (configured via vercel.json)\n**Build Command**: `pnpm build`\n**Output Directory**: `dist/public`\n**Environment Variables**:\n- PORT - Server port (default: 3000)\n- DATABASE_URL - PostgreSQL connection string\n- SUPABASE_URL - Supabase project URL\n- SUPABASE_ANON_KEY - Supabase anonymous key\n\n## Client Application\n**Framework**: React with TypeScript\n**Routing**: Wouter\n**State Management**: React Query\n**UI Components**: Custom components with Radix UI primitives\n**Styling**: TailwindCSS with SCSS\n**Entry Point**: `client/src/main.tsx`\n\n## Server Application\n**Framework**: Express\n**API Routes**: RESTful endpoints in `/api` directory\n**Database Access**: Supabase client\n**Entry Point**: `server/index.ts`\n**Static Serving**: Production build serves static files from `dist/public`\n\n## Testing\n**Target Framework**: Playwright",
+                    "alwaysApply": true
+                }
+            ]
+        },
+        {
+            "id": "2b5637d1-abeb-4157-8e08-aa31572d6daa",
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "thought",
+                    "text": "The user wants to redesign the Home page so that the images manner are displayed in a better specifically using images, as background for the hero page. Looking at the current structure:\n\n1. In Home.tsx, there's a HomeHero component being used\n2. There's also a HeroCarousel component that seems to contain carousel functionality with images\n\nThe user wants to improve how images are displayed and use them as backgrounds for the hero section. Let me first explore the current structure to understand how the HomeHero component works and then redesign it to use background images more effectively.\n\nLet me start by examining the current HomeHero component and the overall structure to understand what needs to be changed."
+                },
+                {
+                    "type": "text",
+                    "text": "I'll help you redesign the hero section to use images as backgrounds more effectively. Let me first examine the current structure to understand how the HomeHero component works."
+                },
+                {
+                    "type": "toolCall",
+                    "toolCallId": "toolu_vrtx_01QAD9SDQRt3mynF9ukfLo3t",
+                    "title": "File search",
+                    "statusText": "Done",
+                    "status": "SUCCESS",
+                    "isHidden": false
+                },
+                {
+                    "type": "toolCall",
+                    "toolCallId": "toolu_vrtx_0182i2hZRKwg2ZrC9SUvXmC6",
+                    "statusText": "Viewed file (lines 1:78)",
+                    "status": "SUCCESS",
+                    "context": {
+                        "files": [
+                            {
+                                "path": "client/src/components/home/HomeHero.tsx",
+                                "fsPath": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/components/home/HomeHero.tsx"
+                            }
+                        ]
+                    },
+                    "isHidden": false
+                },
+                {
+                    "type": "text",
+                    "text": "Now let me check what images are available in the carousel data and the public assets directory:"
+                },
+                {
+                    "type": "toolCall",
+                    "toolCallId": "toolu_vrtx_01V2SjpL7JHFFCHbTyoinfSC",
+                    "statusText": "Viewed directory",
+                    "status": "SUCCESS",
+                    "context": {
+                        "files": [
+                            {
+                                "path": "client/public/assets",
+                                "fsPath": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/public/assets"
+                            }
+                        ]
+                    },
+                    "isHidden": false
+                },
+                {
+                    "type": "toolCall",
+                    "toolCallId": "toolu_vrtx_01LgDqErnNLnxGJfzQshzweA",
+                    "statusText": "Viewed directory",
+                    "status": "SUCCESS",
+                    "context": {
+                        "files": [
+                            {
+                                "path": "client/public",
+                                "fsPath": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/public"
+                            }
+                        ]
+                    },
+                    "isHidden": false
+                },
+                {
+                    "type": "toolCall",
+                    "toolCallId": "toolu_vrtx_016HuZCvyP2xz3vbAtc7c3zc",
+                    "status": "IN_PROGRESS",
+                    "isHidden": true,
+                    "localResult": "{\"status\":\"SUCCESS\",\"exitCode\":0,\"output\":\"/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/public/assets/carousel2.png\\r\\n/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/public/assets/carousel1.jpg\\r\\n\"}"
+                },
+                {
+                    "type": "shellCommand",
+                    "command": "find /Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/public -name \"*.jpg\" -o -name \"*.png\" -o -name \"*.jpeg\" -o -name \"*.webp\" | head -10",
+                    "id": "e3e2b49e-b849-477c-b6c2-cc089b25397b",
+                    "status": "SUCCESS",
+                    "toolCallId": "toolu_vrtx_016HuZCvyP2xz3vbAtc7c3zc",
+                    "commandsRequiringConfirmation": [],
+                    "exitCode": 0,
+                    "output": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/public/assets/carousel2.png\r\n/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/public/assets/carousel1.jpg\r\n",
+                    "outputPath": "/var/folders/g4/dy8bzfgj1db9j2y88mfz5vbm0000gn/T/Zencoder-1ac9d8a9-ccd3-45b7-b2de-b049d864db3c8898452266334438695.log",
+                    "isBackground": false,
+                    "maxWaitTimeInSeconds": 240
+                }
+            ],
+            "context": {
+                "author": "Web Dev agent",
+                "operationId": "cee66d50-058a-444d-b48d-2dd13dadf1fa"
+            },
+            "createdAt": 1759858187996,
+            "isInternal": false,
+            "isGhost": true
+        },
+        {
+            "id": "696e15f9-a508-4118-9d76-26547b25495f",
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "Perfect! Now I understand the current structure. Let me redesign the hero section to use the carousel images as full-screen backgrounds with better visual integration. I'll modify both the HomeHero component and create an enhanced background hero design."
+                },
+                {
+                    "type": "toolCall",
+                    "toolCallId": "toolu_vrtx_01KggpLLB13DrVdVE5rwrmaf",
+                    "statusText": "Change generated",
+                    "status": "SUCCESS",
+                    "context": {
+                        "files": [
+                            {
+                                "path": "client/src/components/home/HomeHero.tsx",
+                                "fsPath": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/components/home/HomeHero.tsx"
+                            }
+                        ]
+                    },
+                    "isHidden": false
+                },
+                {
+                    "type": "codeHunk",
+                    "lineBasedDiff": "--- /Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/components/home/HomeHero.tsx\n+++ /Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/components/home/HomeHero.tsx\n@@ -1,10 +1,10 @@\n-import React from 'react';\n-import { motion } from 'framer-motion';\n+import React, { useState, useEffect } from 'react';\n+import { motion, AnimatePresence } from 'framer-motion';\n import { Link } from 'wouter';\n import { Button } from '@/components/ui/button';\n-import { HeroCarousel } from '@/components/HeroCarousel';\n import { heroStats } from '@/data/home';\n-import { FaArrowRight, FaShieldAlt } from 'react-icons/fa';\n+import { FaArrowRight, FaShieldAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';\n+import { cn } from '@/lib/utils';\n \n const fadeInUp = {\n   hidden: { opacity: 0, y: 30 },",
+                    "refToolCallId": "toolu_vrtx_01KggpLLB13DrVdVE5rwrmaf"
+                },
+                {
+                    "type": "toolCall",
+                    "toolCallId": "toolu_vrtx_0173BUUrCzspBwRuUzL4siJV",
+                    "statusText": "Change generated",
+                    "status": "SUCCESS",
+                    "context": {
+                        "files": [
+                            {
+                                "path": "client/src/components/home/HomeHero.tsx",
+                                "fsPath": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/components/home/HomeHero.tsx"
+                            }
+                        ]
+                    },
+                    "isHidden": false
+                },
+                {
+                    "type": "codeHunk",
+                    "lineBasedDiff": "--- /Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/components/home/HomeHero.tsx\n+++ /Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/components/home/HomeHero.tsx\n@@ -5,6 +5,22 @@\n import { heroStats } from '@/data/home';\n import { FaArrowRight, FaShieldAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';\n import { cn } from '@/lib/utils';\n+\n+// Hero carousel data\n+const heroSlides = [\n+  {\n+    image: \"/assets/carousel1.jpg\",\n+    alt: \"Defense technology engineering visualization\",\n+    title: \"Mission-Ready Technology\",\n+    description: \"Rugged, secure and high-performance systems engineered for extreme environments.\",\n+  },\n+  {\n+    image: \"/assets/carousel2.png\",\n+    alt: \"Edge compute and secure storage platforms showcase\",\n+    title: \"Edge Compute & Secure Data\",\n+    description: \"Enabling tactical superiority with modular AI inference and encrypted storage.\",\n+  },\n+];\n \n const fadeInUp = {\n   hidden: { opacity: 0, y: 30 },\n@@ -14,6 +30,12 @@\n const stagger = {\n   hidden: { opacity: 0 },\n   visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.1 } }\n+};\n+\n+const backgroundVariants = {\n+  enter: { opacity: 0, scale: 1.1 },\n+  center: { opacity: 1, scale: 1, transition: { duration: 1.2, ease: 'easeOut' } },\n+  exit: { opacity: 0, scale: 0.95, transition: { duration: 0.8 } }\n };\n \n export function HomeHero() {",
+                    "refToolCallId": "toolu_vrtx_0173BUUrCzspBwRuUzL4siJV"
+                },
+                {
+                    "type": "toolCall",
+                    "toolCallId": "toolu_vrtx_01AHqQRZHmPAqJ7nXirRZPAX",
+                    "statusText": "Change generated",
+                    "status": "SUCCESS",
+                    "context": {
+                        "files": [
+                            {
+                                "path": "client/src/components/home/HomeHero.tsx",
+                                "fsPath": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/components/home/HomeHero.tsx"
+                            }
+                        ]
+                    },
+                    "isHidden": false
+                },
+                {
+                    "type": "codeHunk",
+                    "lineBasedDiff": "--- /Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/components/home/HomeHero.tsx\n+++ /Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/components/home/HomeHero.tsx\n@@ -39,28 +39,107 @@\n };\n \n export function HomeHero() {\n+  const [currentSlide, setCurrentSlide] = useState(0);\n+  const [isLoaded, setIsLoaded] = useState(false);\n+\n+  // Auto-advance slides\n+  useEffect(() => {\n+    const interval = setInterval(() => {\n+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);\n+    }, 7000);\n+    return () => clearInterval(interval);\n+  }, []);\n+\n+  // Preload images\n+  useEffect(() => {\n+    const preloadImages = async () => {\n+      const imagePromises = heroSlides.map((slide) => {\n+        return new Promise((resolve, reject) => {\n+          const img = new Image();\n+          img.onload = resolve;\n+          img.onerror = reject;\n+          img.src = slide.image;\n+        });\n+      });\n+      \n+      try {\n+        await Promise.all(imagePromises);\n+        setIsLoaded(true);\n+      } catch (error) {\n+        console.warn('Some hero images failed to preload:', error);\n+        setIsLoaded(true); // Continue anyway\n+      }\n+    };\n+\n+    preloadImages();\n+  }, []);\n+\n+  const goToSlide = (index: number) => setCurrentSlide(index);\n+  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % heroSlides.length);\n+  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);\n+\n+  const currentSlideData = heroSlides[currentSlide];\n+\n   return (\n-    <section className=\"relative overflow-hidden\" aria-label=\"Hero\">\n-      <div className=\"absolute inset-0 bg-gradient-to-br from-[#02150A] via-[#071F17] to-[#0D4114]\">\n-        <div className=\"absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_1px_1px,#ffffff0d,transparent_1.6px)] [background-size:26px_26px]\" />\n-        <div className=\"absolute top-1/3 left-1/4 w-[38rem] h-[38rem] bg-teal/40 rounded-full blur-[200px]\" />\n-        <div className=\"absolute bottom-0 right-0 w-[28rem] h-[28rem] bg-forest/40 rounded-full blur-[180px]\" />\n+    <section className=\"relative overflow-hidden min-h-screen flex items-center\" aria-label=\"Hero\">\n+      {/* Background Images with AnimatePresence */}\n+      <div className=\"absolute inset-0\">\n+        <AnimatePresence mode=\"wait\">\n+          <motion.div\n+            key={currentSlide}\n+            variants={backgroundVariants}\n+            initial=\"enter\"\n+            animate=\"center\"\n+            exit=\"exit\"\n+            className=\"absolute inset-0\"\n+          >\n+            <div \n+              className=\"absolute inset-0 bg-cover bg-center bg-no-repeat\"\n+              style={{ backgroundImage: `url(${currentSlideData.image})` }}\n+            />\n+            {/* Multi-layered overlay for better text readability */}\n+            <div className=\"absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40\" />\n+            <div className=\"absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/60\" />\n+            <div className=\"absolute inset-0 bg-gradient-to-br from-[#02150A]/60 via-[#071F17]/40 to-[#0D4114]/60\" />\n+          </motion.div>\n+        </AnimatePresence>\n+        \n+        {/* Decorative Elements */}\n+        <div className=\"absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,#ffffff0d,transparent_1.6px)] [background-size:26px_26px]\" />\n+        <div className=\"absolute top-1/4 left-1/4 w-[30rem] h-[30rem] bg-teal/20 rounded-full blur-[180px]\" />\n+        <div className=\"absolute bottom-0 right-0 w-[25rem] h-[25rem] bg-forest/20 rounded-full blur-[160px]\" />\n       </div>\n+\n+      {/* Content */}\n       <div className=\"relative z-10 section-container px-4 sm:px-6 md:px-8 pt-28 pb-24 lg:pt-36 lg:pb-36\">\n-        <div className=\"grid lg:grid-cols-[1.05fr_0.95fr] gap-14 items-center\">\n-          {/* Text */}\n-          <motion.div initial=\"hidden\" animate=\"visible\" variants={stagger} className=\"space-y-10 text-white\">\n+        <div className=\"max-w-7xl mx-auto\">\n+          <motion.div initial=\"hidden\" animate=\"visible\" variants={stagger} className=\"max-w-4xl space-y-10 text-white\">\n             <motion.div variants={fadeInUp} className=\"inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-5 py-2 border border-white/10\">\n               <FaShieldAlt className=\"text-teal mr-2\" />\n               <span className=\"text-xs sm:text-sm font-medium tracking-wide uppercase\">Mission Proven Defense Engineering</span>\n             </motion.div>\n-            <motion.h1 variants={fadeInUp} className=\"text-4xl sm:text-5xl xl:text-6xl font-condensed font-bold leading-tight tracking-tight\">\n+\n+            <motion.h1 variants={fadeInUp} className=\"text-4xl sm:text-5xl xl:text-7xl font-condensed font-bold leading-tight tracking-tight\">\n               Engineered Superiority for <span className=\"text-teal\">Mission Success</span>\n             </motion.h1>\n-            <motion.p variants={fadeInUp} className=\"text-lg sm:text-xl text-white/80 max-w-2xl leading-relaxed\">\n+\n+            <motion.p variants={fadeInUp} className=\"text-lg sm:text-xl xl:text-2xl text-white/90 max-w-3xl leading-relaxed\">\n               Delivering ruggedized, cyber-resilient systems integrating compute, storage & edge intelligence for joint operations across land, sea, air & space.\n             </motion.p>\n-            <motion.div variants={fadeInUp} className=\"grid grid-cols-2 sm:grid-cols-4 gap-5\">\n+\n+            {/* Dynamic slide description */}\n+            <motion.div \n+              key={currentSlide}\n+              initial={{ opacity: 0, y: 20 }}\n+              animate={{ opacity: 1, y: 0 }}\n+              transition={{ duration: 0.6, delay: 0.2 }}\n+              className=\"bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 max-w-2xl\"\n+            >\n+              <h3 className=\"text-xl font-bold text-teal mb-2\">{currentSlideData.title}</h3>\n+              <p className=\"text-white/80\">{currentSlideData.description}</p>\n+            </motion.div>\n+\n+            <motion.div variants={fadeInUp} className=\"grid grid-cols-2 sm:grid-cols-4 gap-5 max-w-3xl\">\n               {heroStats.map((s) => (\n                 <div key={s.label} className=\"bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10\">\n                   <div className=\"text-2xl font-bold text-teal\">{s.value}</div>\n@@ -68,6 +147,7 @@\n                 </div>\n               ))}\n             </motion.div>\n+\n             <motion.div variants={fadeInUp} className=\"flex flex-col sm:flex-row gap-4\">\n               <Link href=\"/Solutions\">\n                 <Button className=\"bg-teal hover:bg-teal/90 text-white font-semibold py-4 px-8 rounded-lg shadow-2xl hover:shadow-teal/30 transition-all duration-300 inline-flex items-center justify-center text-base sm:text-lg focus-ring\">\n@@ -81,17 +161,42 @@\n               </Link>\n             </motion.div>\n           </motion.div>\n-          {/* Carousel */}\n-          <motion.div initial={{ opacity: 0, x: 60 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.9, delay: 0.2 }} className=\"relative\">\n-            <div className=\"rounded-3xl overflow-hidden border border-white/10 shadow-[0_20px_80px_rgba(0,0,0,0.35)]\">\n-              <HeroCarousel showIndicators showControls className=\"bg-black/50\" />\n-            </div>\n-            {/*<div className=\"absolute -bottom-8 -right-10 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 w-64 hidden lg:block\">*/}\n-            {/*  <div className=\"text-xs uppercase tracking-wider text-teal mb-2\">Operational Footprint</div>*/}\n-            {/*  <div className=\"text-2xl font-bold text-white\">Global Reach</div>*/}\n-            {/*  <p className=\"text-xs text-white/70 mt-2 leading-relaxed\">Supporting deployments across maritime fleets, air wings & armored divisions.</p>*/}\n-            {/*</div>*/}\n-          </motion.div>\n+        </div>\n+      </div>\n+\n+      {/* Navigation Controls */}\n+      <div className=\"absolute bottom-8 right-8 flex items-center gap-4 z-20\">\n+        {/* Slide Indicators */}\n+        <div className=\"flex gap-2\">\n+          {heroSlides.map((_, index) => (\n+            <button\n+              key={index}\n+              onClick={() => goToSlide(index)}\n+              className={cn(\n+                \"h-2 rounded-full transition-all duration-300 focus-ring\",\n+                currentSlide === index ? \"bg-teal w-8\" : \"bg-white/40 hover:bg-white/60 w-2\"\n+              )}\n+              aria-label={`Go to slide ${index + 1}`}\n+            />\n+          ))}\n+        </div>\n+\n+        {/* Arrow Controls */}\n+        <div className=\"flex gap-2\">\n+          <button\n+            onClick={prevSlide}\n+            className=\"bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-full p-2 text-white transition-all duration-300 focus-ring\"\n+            aria-label=\"Previous slide\"\n+          >\n+            <FaChevronLeft className=\"w-4 h-4\" />\n+          </button>\n+          <button\n+            onClick={nextSlide}\n+            className=\"bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-full p-2 text-white transition-all duration-300 focus-ring\"\n+            aria-label=\"Next slide\"\n+          >\n+            <FaChevronRight className=\"w-4 h-4\" />\n+          </button>\n         </div>\n       </div>\n     </section>",
+                    "refToolCallId": "toolu_vrtx_01AHqQRZHmPAqJ7nXirRZPAX"
+                },
+                {
+                    "type": "text",
+                    "text": "Now, let me start the development server to verify the changes work correctly:"
+                },
+                {
+                    "type": "toolCall",
+                    "toolCallId": "toolu_vrtx_01En4sscEPSdSk1KUmH2bhod",
+                    "status": "IN_PROGRESS",
+                    "isHidden": true,
+                    "localResult": "{\"status\":\"SUCCESS\",\"exitCode\":0,\"output\":\"\"}"
+                },
+                {
+                    "type": "codePatch",
+                    "diffs": [
+                        {
+                            "path": "client/src/components/home/HomeHero.tsx",
+                            "fsPath": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/components/home/HomeHero.tsx",
+                            "patch": "@@ -9,2513 +9,6105 @@\n eact\n- from 'react';%0Aimport %7B motion %7D from 'framer-motion';%0Aimport %7B Link %7D from 'wouter';%0Aimport %7B Button %7D from '@/components/ui/button';%0Aimport %7B HeroCarousel %7D from '@/components/HeroCarousel';%0Aimport %7B heroStats %7D from '@/data/home';%0Aimport %7B FaArrowRight, FaShieldAlt %7D from 'react-icons/fa';%0A%0Aconst fadeInUp = %7B%0A  hidden: %7B opacity: 0, y: 30 %7D,%0A  visible: %7B opacity: 1, y: 0, transition: %7B duration: 0.6, ease: 'easeOut' %7D %7D%0A%7D;%0A%0Aconst stagger = %7B%0A  hidden: %7B opacity: 0 %7D,%0A  visible: %7B opacity: 1, transition: %7B staggerChildren: 0.15, delayChildren: 0.1 %7D %7D%0A%7D;%0A%0Aexport function HomeHero() %7B%0A  return (%0A    %3Csection className=%22relative overflow-hidden%22 aria-label=%22Hero%22%3E%0A      %3Cdiv className=%22absolute inset-0 bg-gradient-to-br from-%5B#02150A%5D via-%5B#071F17%5D to-%5B#0D4114%5D%22%3E%0A        %3Cdiv className=%22absolute inset-0 opacity-20 bg-%5Bradial-gradient(circle_at_1px_1px,#ffffff0d,transparent_1.6px)%5D %5Bbackground-size:26px_26px%5D%22 /%3E%0A        %3Cdiv className=%22absolute top-1/3 left-1/4 w-%5B38rem%5D h-%5B38rem%5D bg-teal/40 rounded-full blur-%5B200px%5D%22 /%3E%0A        %3Cdiv className=%22absolute bottom-0 right-0 w-%5B28rem%5D h-%5B28rem%5D bg-forest/40 rounded-full blur-%5B180px%5D%22 /%3E%0A      %3C/div%3E%0A      %3Cdiv className=%22relative z-10 section-container px-4 sm:px-6 md:px-8 pt-28 pb-24 lg:pt-36 lg:pb-36%22%3E%0A        %3Cdiv className=%22grid lg:grid-cols-%5B1.05fr_0.95fr%5D gap-14 items-center%22%3E%0A          %7B/* Text */%7D%0A          %3Cmotion.div initial=%22hidden%22 animate=%22visible%22 variants=%7Bstagger%7D className=%22space-y-10 text-white%22%3E%0A            %3Cmotion.div variants=%7BfadeInUp%7D className=%22inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-5 py-2 border border-white/10%22%3E%0A              %3CFaShieldAlt className=%22text-teal mr-2%22 /%3E%0A              %3Cspan className=%22text-xs sm:text-sm font-medium tracking-wide uppercase%22%3EMission Proven Defense Engineering%3C/span%3E%0A            %3C/motion.div%3E%0A            %3Cmotion.h1 variants=%7BfadeInUp%7D className=%22text-4xl sm:text-5xl xl:text-6xl font-condensed font-bold leading-tight tracking-tight%22%3E%0A              Engineered Superiority for %3Cspan className=%22text-teal%22%3EMission Success%3C/span%3E%0A            %3C/motion.h1%3E%0A            %3Cmotion.p variants=%7BfadeInUp%7D className=%22text-lg sm:text-xl text-white/80 max-w-2xl leading-relaxed%22%3E%0A              Delivering ruggedized, cyber-resilient systems integrating compute, storage & edge intelligence for joint operations across land, sea, air & space.%0A            %3C/motion.p%3E%0A            %3Cmotion.div variants=%7BfadeInUp%7D className=%22grid grid-cols-2 sm:grid-cols-4 gap-5\n+, %7B useState, useEffect %7D from 'react';%0Aimport %7B motion, AnimatePresence %7D from 'framer-motion';%0Aimport %7B Link %7D from 'wouter';%0Aimport %7B Button %7D from '@/components/ui/button';%0Aimport %7B heroStats %7D from '@/data/home';%0Aimport %7B FaArrowRight, FaShieldAlt, FaChevronLeft, FaChevronRight %7D from 'react-icons/fa';%0Aimport %7B cn %7D from '@/lib/utils';%0A%0A// Hero carousel data%0Aconst heroSlides = %5B%0A  %7B%0A    image: %22/assets/carousel1.jpg%22,%0A    alt: %22Defense technology engineering visualization%22,%0A    title: %22Mission-Ready Technology%22,%0A    description: %22Rugged, secure and high-performance systems engineered for extreme environments.%22,%0A  %7D,%0A  %7B%0A    image: %22/assets/carousel2.png%22,%0A    alt: %22Edge compute and secure storage platforms showcase%22,%0A    title: %22Edge Compute & Secure Data%22,%0A    description: %22Enabling tactical superiority with modular AI inference and encrypted storage.%22,%0A  %7D,%0A%5D;%0A%0Aconst fadeInUp = %7B%0A  hidden: %7B opacity: 0, y: 30 %7D,%0A  visible: %7B opacity: 1, y: 0, transition: %7B duration: 0.6, ease: 'easeOut' %7D %7D%0A%7D;%0A%0Aconst stagger = %7B%0A  hidden: %7B opacity: 0 %7D,%0A  visible: %7B opacity: 1, transition: %7B staggerChildren: 0.15, delayChildren: 0.1 %7D %7D%0A%7D;%0A%0Aconst backgroundVariants = %7B%0A  enter: %7B opacity: 0, scale: 1.1 %7D,%0A  center: %7B opacity: 1, scale: 1, transition: %7B duration: 1.2, ease: 'easeOut' %7D %7D,%0A  exit: %7B opacity: 0, scale: 0.95, transition: %7B duration: 0.8 %7D %7D%0A%7D;%0A%0Aexport function HomeHero() %7B%0A  const %5BcurrentSlide, setCurrentSlide%5D = useState(0);%0A  const %5BisLoaded, setIsLoaded%5D = useState(false);%0A%0A  // Auto-advance slides%0A  useEffect(() =%3E %7B%0A    const interval = setInterval(() =%3E %7B%0A      setCurrentSlide((prev) =%3E (prev + 1) %25 heroSlides.length);%0A    %7D, 7000);%0A    return () =%3E clearInterval(interval);%0A  %7D, %5B%5D);%0A%0A  // Preload images%0A  useEffect(() =%3E %7B%0A    const preloadImages = async () =%3E %7B%0A      const imagePromises = heroSlides.map((slide) =%3E %7B%0A        return new Promise((resolve, reject) =%3E %7B%0A          const img = new Image();%0A          img.onload = resolve;%0A          img.onerror = reject;%0A          img.src = slide.image;%0A        %7D);%0A      %7D);%0A      %0A      try %7B%0A        await Promise.all(imagePromises);%0A        setIsLoaded(true);%0A      %7D catch (error) %7B%0A        console.warn('Some hero images failed to preload:', error);%0A        setIsLoaded(true); // Continue anyway%0A      %7D%0A    %7D;%0A%0A    preloadImages();%0A  %7D, %5B%5D);%0A%0A  const goToSlide = (index: number) =%3E setCurrentSlide(index);%0A  const nextSlide = () =%3E setCurrentSlide((prev) =%3E (prev + 1) %25 heroSlides.length);%0A  const prevSlide = () =%3E setCurrentSlide((prev) =%3E (prev - 1 + heroSlides.length) %25 heroSlides.length);%0A%0A  const currentSlideData = heroSlides%5BcurrentSlide%5D;%0A%0A  return (%0A    %3Csection className=%22relative overflow-hidden min-h-screen flex items-center%22 aria-label=%22Hero%22%3E%0A      %7B/* Background Images with AnimatePresence */%7D%0A      %3Cdiv className=%22absolute inset-0%22%3E%0A        %3CAnimatePresence mode=%22wait%22%3E%0A          %3Cmotion.div%0A            key=%7BcurrentSlide%7D%0A            variants=%7BbackgroundVariants%7D%0A            initial=%22enter%22%0A            animate=%22center%22%0A            exit=%22exit%22%0A            className=%22absolute inset-0%22%0A          %3E%0A            %3Cdiv %0A              className=%22absolute inset-0 bg-cover bg-center bg-no-repeat%22%0A              style=%7B%7B backgroundImage: %60url($%7BcurrentSlideData.image%7D)%60 %7D%7D%0A            /%3E%0A            %7B/* Multi-layered overlay for better text readability */%7D%0A            %3Cdiv className=%22absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40%22 /%3E%0A            %3Cdiv className=%22absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/60%22 /%3E%0A            %3Cdiv className=%22absolute inset-0 bg-gradient-to-br from-%5B#02150A%5D/60 via-%5B#071F17%5D/40 to-%5B#0D4114%5D/60%22 /%3E%0A          %3C/motion.div%3E%0A        %3C/AnimatePresence%3E%0A        %0A        %7B/* Decorative Elements */%7D%0A        %3Cdiv className=%22absolute inset-0 opacity-10 bg-%5Bradial-gradient(circle_at_1px_1px,#ffffff0d,transparent_1.6px)%5D %5Bbackground-size:26px_26px%5D%22 /%3E%0A        %3Cdiv className=%22absolute top-1/4 left-1/4 w-%5B30rem%5D h-%5B30rem%5D bg-teal/20 rounded-full blur-%5B180px%5D%22 /%3E%0A        %3Cdiv className=%22absolute bottom-0 right-0 w-%5B25rem%5D h-%5B25rem%5D bg-forest/20 rounded-full blur-%5B160px%5D%22 /%3E%0A      %3C/div%3E%0A%0A      %7B/* Content */%7D%0A      %3Cdiv className=%22relative z-10 section-container px-4 sm:px-6 md:px-8 pt-28 pb-24 lg:pt-36 lg:pb-36%22%3E%0A        %3Cdiv className=%22max-w-7xl mx-auto%22%3E%0A          %3Cmotion.div initial=%22hidden%22 animate=%22visible%22 variants=%7Bstagger%7D className=%22max-w-4xl space-y-10 text-white%22%3E%0A            %3Cmotion.div variants=%7BfadeInUp%7D className=%22inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-5 py-2 border border-white/10%22%3E%0A              %3CFaShieldAlt className=%22text-teal mr-2%22 /%3E%0A              %3Cspan className=%22text-xs sm:text-sm font-medium tracking-wide uppercase%22%3EMission Proven Defense Engineering%3C/span%3E%0A            %3C/motion.div%3E%0A%0A            %3Cmotion.h1 variants=%7BfadeInUp%7D className=%22text-4xl sm:text-5xl xl:text-7xl font-condensed font-bold leading-tight tracking-tight%22%3E%0A              Engineered Superiority for %3Cspan className=%22text-teal%22%3EMission Success%3C/span%3E%0A            %3C/motion.h1%3E%0A%0A            %3Cmotion.p variants=%7BfadeInUp%7D className=%22text-lg sm:text-xl xl:text-2xl text-white/90 max-w-3xl leading-relaxed%22%3E%0A              Delivering ruggedized, cyber-resilient systems integrating compute, storage & edge intelligence for joint operations across land, sea, air & space.%0A            %3C/motion.p%3E%0A%0A            %7B/* Dynamic slide description */%7D%0A            %3Cmotion.div %0A              key=%7BcurrentSlide%7D%0A              initial=%7B%7B opacity: 0, y: 20 %7D%7D%0A              animate=%7B%7B opacity: 1, y: 0 %7D%7D%0A              transition=%7B%7B duration: 0.6, delay: 0.2 %7D%7D%0A              className=%22bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 max-w-2xl%22%0A            %3E%0A              %3Ch3 className=%22text-xl font-bold text-teal mb-2%22%3E%7BcurrentSlideData.title%7D%3C/h3%3E%0A              %3Cp className=%22text-white/80%22%3E%7BcurrentSlideData.description%7D%3C/p%3E%0A            %3C/motion.div%3E%0A%0A            %3Cmotion.div variants=%7BfadeInUp%7D className=%22grid grid-cols-2 sm:grid-cols-4 gap-5 max-w-3xl\n %22%3E%0A \n@@ -6508,32 +6508,33 @@\n   %3C/motion.div%3E%0A\n+%0A\n             %3Cmot\n@@ -7462,958 +7462,1389 @@\n     \n-  %7B/* Carousel */%7D%0A          %3Cmotion.div initial=%7B%7B opacity: 0, x: 60 %7D%7D animate=%7B%7B opacity: 1, x: 0 %7D%7D transition=%7B%7B duration: 0.9, delay: 0.2 %7D%7D className=%22relative%22%3E%0A            %3Cdiv className=%22rounded-3xl overflow-hidden border border-white/10 shadow-%5B0_20px_80px_rgba(0,0,0,0.35)%5D%22%3E%0A              %3CHeroCarousel showIndicators showControls className=%22bg-black/50%22 /%3E%0A            %3C/div%3E%0A            %7B/*%3Cdiv className=%22absolute -bottom-8 -right-10 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 w-64 hidden lg:block%22%3E*/%7D%0A            %7B/*  %3Cdiv className=%22text-xs uppercase tracking-wider text-teal mb-2%22%3EOperational Footprint%3C/div%3E*/%7D%0A            %7B/*  %3Cdiv className=%22text-2xl font-bold text-white%22%3EGlobal Reach%3C/div%3E*/%7D%0A            %7B/*  %3Cp className=%22text-xs text-white/70 mt-2 leading-relaxed%22%3ESupporting deployments across maritime fleets, air wings & armored divisions.%3C/p%3E*/%7D%0A            %7B/*%3C/div%3E*/%7D%0A          %3C/motion.div\n+%3C/div%3E%0A      %3C/div%3E%0A%0A      %7B/* Navigation Controls */%7D%0A      %3Cdiv className=%22absolute bottom-8 right-8 flex items-center gap-4 z-20%22%3E%0A        %7B/* Slide Indicators */%7D%0A        %3Cdiv className=%22flex gap-2%22%3E%0A          %7BheroSlides.map((_, index) =%3E (%0A            %3Cbutton%0A              key=%7Bindex%7D%0A              onClick=%7B() =%3E goToSlide(index)%7D%0A              className=%7Bcn(%0A                %22h-2 rounded-full transition-all duration-300 focus-ring%22,%0A                currentSlide === index ? %22bg-teal w-8%22 : %22bg-white/40 hover:bg-white/60 w-2%22%0A              )%7D%0A              aria-label=%7B%60Go to slide $%7Bindex + 1%7D%60%7D%0A            /%3E%0A          ))%7D%0A        %3C/div%3E%0A%0A        %7B/* Arrow Controls */%7D%0A        %3Cdiv className=%22flex gap-2%22%3E%0A          %3Cbutton%0A            onClick=%7BprevSlide%7D%0A            className=%22bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-full p-2 text-white transition-all duration-300 focus-ring%22%0A            aria-label=%22Previous slide%22%0A          %3E%0A            %3CFaChevronLeft className=%22w-4 h-4%22 /%3E%0A          %3C/button%3E%0A          %3Cbutton%0A            onClick=%7BnextSlide%7D%0A            className=%22bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-full p-2 text-white transition-all duration-300 focus-ring%22%0A            aria-label=%22Next slide%22%0A          %3E%0A            %3CFaChevronRight className=%22w-4 h-4%22 /%3E%0A          %3C/button\n %3E%0A  \n",
+                            "isNew": false,
+                            "isApplied": true,
+                            "timestamp": 1759858421328
+                        }
+                    ]
+                },
+                {
+                    "type": "shellCommand",
+                    "command": "cd /Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3 && pkill -f \"vite\\|node.*dev\" || true",
+                    "id": "2d29d4a5-53c7-4b9a-a278-f0d50e2044a5",
+                    "status": "SUCCESS",
+                    "toolCallId": "toolu_vrtx_01En4sscEPSdSk1KUmH2bhod",
+                    "commandsRequiringConfirmation": [
+                        {
+                            "name": "pkill",
+                            "arguments": [
+                                "-f"
+                            ]
+                        },
+                        {
+                            "name": "true",
+                            "arguments": []
+                        }
+                    ],
+                    "exitCode": 0,
+                    "output": "",
+                    "outputPath": "/var/folders/g4/dy8bzfgj1db9j2y88mfz5vbm0000gn/T/Zencoder-63823882-f780-4e91-b3c9-731ecf0d3aef9282292249629799416.log",
+                    "isBackground": false,
+                    "maxWaitTimeInSeconds": 240
+                }
+            ],
+            "context": {
+                "author": "Web Dev agent",
+                "operationId": "675eb927-04b0-46fd-9233-38f21cf2f8b2"
+            },
+            "createdAt": 1759858212272,
+            "isInternal": false,
+            "isGhost": true
+        },
+        {
+            "id": "46f5232f-14c9-4c5a-8a60-e5b86393e05d",
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "toolCall",
+                    "toolCallId": "toolu_vrtx_01PpLZLV6iDRN8uXxVkYgRfM",
+                    "status": "IN_PROGRESS",
+                    "isHidden": true,
+                    "localResult": "{\"status\":\"SUCCESS\",\"exitCode\":0,\"output\":\"\"}"
+                },
+                {
+                    "type": "shellCommand",
+                    "command": "cd /Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3 && pnpm dev > server.log 2>&1 &",
+                    "id": "3b96eb04-11ba-47e7-8c81-67d640fdf95f",
+                    "status": "SUCCESS",
+                    "toolCallId": "toolu_vrtx_01PpLZLV6iDRN8uXxVkYgRfM",
+                    "commandsRequiringConfirmation": [
+                        {
+                            "name": "pnpm",
+                            "arguments": [
+                                "dev"
+                            ]
+                        }
+                    ],
+                    "exitCode": 0,
+                    "output": "",
+                    "outputPath": "/var/folders/g4/dy8bzfgj1db9j2y88mfz5vbm0000gn/T/Zencoder-7dd9ecf3-69a6-46d6-8de5-66f9af808bc9873521783823501373.log",
+                    "isBackground": false,
+                    "maxWaitTimeInSeconds": 240
+                }
+            ],
+            "context": {
+                "author": "Web Dev agent",
+                "operationId": "1c84f36c-22e8-423d-8251-dbca373e4ef8"
+            },
+            "createdAt": 1759896402342,
+            "isInternal": false,
+            "isGhost": true
+        },
+        {
+            "id": "f6cce2ab-c86c-493e-a644-6110b0eefc23",
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "toolCall",
+                    "toolCallId": "toolu_vrtx_01LknNGVMKnKNYqTEEadAT4D",
+                    "status": "IN_PROGRESS",
+                    "isHidden": true,
+                    "localResult": "{\"status\":\"SUCCESS\",\"exitCode\":0,\"output\":\"\\r\\n> rest-express@1.0.0 dev /Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3\\r\\n> NODE_ENV=development tsx server/index.ts\\r\\n\\r\\n(node:41904) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.\\r\\n(Use `node --trace-deprecation ...` to show where the warning was created)\\r\\n9:38:18 AM [express] Port 3000 is busy, trying port 3001...\\r\\n9:38:19 AM [express] Server started successfully on port 3000\\r\\n9:38:19 AM [express] Server started successfully on port 3001\\r\\n\"}"
+                },
+                {
+                    "type": "shellCommand",
+                    "command": "sleep 3 && tail -10 /Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/server.log",
+                    "id": "5c8d41ad-0e2f-4333-96e2-b0f462dc65ba",
+                    "status": "SUCCESS",
+                    "toolCallId": "toolu_vrtx_01LknNGVMKnKNYqTEEadAT4D",
+                    "commandsRequiringConfirmation": [
+                        {
+                            "name": "sleep",
+                            "arguments": []
+                        }
+                    ],
+                    "exitCode": 0,
+                    "output": "\r\n> rest-express@1.0.0 dev /Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3\r\n> NODE_ENV=development tsx server/index.ts\r\n\r\n(node:41904) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.\r\n(Use `node --trace-deprecation ...` to show where the warning was created)\r\n9:38:18 AM [express] Port 3000 is busy, trying port 3001...\r\n9:38:19 AM [express] Server started successfully on port 3000\r\n9:38:19 AM [express] Server started successfully on port 3001\r\n",
+                    "outputPath": "/var/folders/g4/dy8bzfgj1db9j2y88mfz5vbm0000gn/T/Zencoder-cf4e52e5-c3d8-41f6-8374-d487172f659c1625923295949228225.log",
+                    "isBackground": false,
+                    "maxWaitTimeInSeconds": 240
+                }
+            ],
+            "context": {
+                "author": "Web Dev agent",
+                "operationId": "f1eaa3bb-aab6-40d3-8e4a-79e5e1103363"
+            },
+            "createdAt": 1759896500190,
+            "isInternal": false,
+            "isGhost": true
+        },
+        {
+            "id": "e8f78127-e039-4d56-8df1-e96d9831645f",
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "Great! The server is running. Now let me open the browser to verify the new hero design:"
+                },
+                {
+                    "type": "toolCall",
+                    "toolCallId": "toolu_vrtx_01NTBj7GhBcpZ1cuTWF1d6jn",
+                    "title": "Browser navigate",
+                    "statusText": "Done",
+                    "status": "SUCCESS",
+                    "isHidden": false
+                },
+                {
+                    "type": "text",
+                    "text": "Perfect! The new hero design is working. I can see that the background images are now being used as full-screen backgrounds with the animated transitions. Let me take a screenshot to see the visual result:"
+                },
+                {
+                    "type": "toolCall",
+                    "toolCallId": "toolu_vrtx_014Brmnh4rwZyADzChEFDZBW",
+                    "title": "Browser take screenshot",
+                    "statusText": "Done",
+                    "status": "SUCCESS",
+                    "isHidden": false
+                }
+            ],
+            "context": {
+                "author": "Web Dev agent",
+                "operationId": "166eca96-99ed-4585-a932-e09988854c21"
+            },
+            "createdAt": 1759896514838,
+            "isInternal": false,
+            "isGhost": true
+        },
+        {
+            "id": "58212243-2744-4438-aa66-0515ff53ff88",
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "the images are not fitting properly in the viewports."
+                }
+            ],
+            "context": {
+                "currentFile": {
+                    "path": "client/src/components/HeroCarousel.tsx",
+                    "fsPath": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/components/HeroCarousel.tsx",
+                    "sources": [
+                        "opened_tab"
+                    ],
+                    "content": "import { useEffect, useState, useRef } from \"react\";\nimport {\n    Carousel,\n    CarouselContent,\n    CarouselItem,\n    CarouselNext,\n    CarouselPrevious,\n    type CarouselApi,\n} from \"@/components/ui/carousel\";\nimport { cn } from \"@/lib/utils\";\n\n// Sample carousel items with captions (could be externalized later)\nconst carouselItems = [\n    {\n        image: \"/assets/carousel1.jpg\",\n        alt: \"Defense technology engineering visualization\",\n        title: \"Mission-Ready Technology\",\n        description: \"Rugged, secure and high-performance systems engineered for extreme environments.\",\n    },\n    {\n        image: \"/assets/carousel2.png\",\n        alt: \"Edge compute and secure storage platforms showcase\",\n        title: \"Edge Compute & Secure Data\",\n        description: \"Enabling tactical superiority with modular AI inference and encrypted storage.\",\n    },\n];\n\ninterface HeroCarouselProps {\n    autoPlay?: boolean;\n    autoPlayInterval?: number;\n    showControls?: boolean;\n    showIndicators?: boolean;\n    showCaptions?: boolean;\n    className?: string;\n}\n\nexport function HeroCarousel({\n                                 autoPlay = true,\n                                 autoPlayInterval = 6000,\n                                 showControls = true,\n                                 showIndicators = true,\n                                 showCaptions = true,\n                                 className,\n                             }: HeroCarouselProps) {\n    const [api, setApi] = useState<CarouselApi>();\n    const [currentSlide, setCurrentSlide] = useState(0);\n    const prefersReducedMotion = usePrefersReducedMotion();\n    const intervalRef = useRef<number | null>(null);\n\n    // Auto-play logic respecting reduced motion\n    useEffect(() => {\n        if (!api || !autoPlay || prefersReducedMotion) return;\n        if (intervalRef.current) window.clearInterval(intervalRef.current);\n        intervalRef.current = window.setInterval(() => {\n            api.scrollNext();\n        }, autoPlayInterval);\n        return () => {\n            if (intervalRef.current) window.clearInterval(intervalRef.current);\n        };\n    }, [api, autoPlay, autoPlayInterval, prefersReducedMotion]);\n\n    // Track current slide\n    useEffect(() => {\n        if (!api) return;\n        const onSelect = () => setCurrentSlide(api.selectedScrollSnap());\n        api.on(\"select\", onSelect);\n        onSelect();\n        return () => { api.off(\"select\", onSelect); };\n    }, [api]);\n\n    const scrollToSlide = (index: number) => api?.scrollTo(index);\n\n    return (\n        <div\n            className={cn(\"relative\", className)}\n            role=\"region\"\n            aria-roledescription=\"carousel\"\n            aria-label=\"Featured technology solutions\"\n        >\n            <Carousel\n                className=\"w-full max-w-7xl mx-auto\"\n                setApi={setApi}\n                opts={{ align: \"center\", loop: true }}\n            >\n                <CarouselContent>\n                    {carouselItems.map((item, index) => (\n                        <CarouselItem key={index}>\n                            <div className=\"p-1\">\n                                <figure\n                                    className=\"relative aspect-[16/9] xs:aspect-[5/3] sm:aspect-[2/1] lg:aspect-[2.4/1] overflow-hidden rounded-xl group bg-gradient-to-br from-forest/40 via-navy/40 to-charcoal/30\"\n                                >\n                                    {/* Image with graceful loading */}\n                                    <ImageWithPlaceholder\n                                        src={item.image}\n                                        alt={item.alt}\n                                        priority={index === 0}\n                                    />\n                                    {showCaptions && (\n                                        <figcaption className=\"pointer-events-none absolute inset-0 flex flex-col justify-end p-6 sm:p-10 bg-gradient-to-t from-black/70 via-black/30 to-transparent text-white\">\n                                            <h2 className=\"heading-clamp-2 font-condensed font-bold mb-2 drop-shadow-sm text-balance\">\n                                                {item.title}\n                                            </h2>\n                                            <p className=\"max-w-2xl text-sm sm:text-base md:text-lg opacity-90 text-balance\">\n                                                {item.description}\n                                            </p>\n                                        </figcaption>\n                                    )}\n                                </figure>\n                            </div>\n                        </CarouselItem>\n                    ))}\n                </CarouselContent>\n\n                {showControls && (\n                    <>\n                        <CarouselPrevious className=\"hidden md:flex left-4 lg:left-6\" aria-label=\"Previous slide\" />\n                        <CarouselNext className=\"hidden md:flex right-4 lg:right-6\" aria-label=\"Next slide\" />\n                    </>\n                )}\n            </Carousel>\n\n            {/*{showIndicators && (*/}\n            {/*    <div className=\"flex justify-center gap-2 mt-4\" aria-label=\"Slide indicators\">*/}\n            {/*        {carouselItems.map((_, index) => {*/}\n            {/*            const active = currentSlide === index;*/}\n            {/*            return (*/}\n            {/*                <button*/}\n            {/*                    key={index}*/}\n            {/*                    onClick={() => scrollToSlide(index)}*/}\n            {/*                    className={cn(*/}\n            {/*                        \"h-2.5 rounded-full transition-all duration-300 focus-ring\",*/}\n            {/*                        active ? \"bg-teal w-6\" : \"bg-gray-300 hover:bg-gray-400 w-2.5\"*/}\n            {/*                    )}*/}\n            {/*                    aria-label={`Go to slide ${index + 1}`}*/}\n            {/*                    aria-current={active}*/}\n            {/*                />*/}\n            {/*            );*/}\n            {/*        })}*/}\n            {/*    </div>*/}\n            {/*)}*/}\n        </div>\n    );\n}\n\n/* Hook to detect prefers-reduced-motion */\nfunction usePrefersReducedMotion() {\n    const [prefers, setPrefers] = useState(false);\n    useEffect(() => {\n        const media = window.matchMedia('(prefers-reduced-motion: reduce)');\n        const update = () => setPrefers(media.matches);\n        update();\n        media.addEventListener('change', update);\n        return () => media.removeEventListener('change', update);\n    }, []);\n    return prefers;\n}\n\n/* Progressive image component */\ninterface ImgProps { src: string; alt: string; priority?: boolean; }\nfunction ImageWithPlaceholder({ src, alt, priority }: ImgProps) {\n    const [loaded, setLoaded] = useState(false);\n    return (\n        <>\n            <div className={cn(\"absolute inset-0 bg-cream/20 skeleton\", loaded && \"hidden\")}/>\n            <img\n                src={src}\n                alt={alt}\n                loading={priority ? 'eager' : 'lazy'}\n                onLoad={() => setLoaded(true)}\n                className={cn(\n                    \"w-full h-full object-cover transition-transform duration-[6000ms] ease-linear group-hover:scale-105\",\n                    loaded ? \"opacity-100\" : \"opacity-0\"\n                )}\n                draggable={false}\n            />\n        </>\n    );\n}",
+                    "language": "typescript jsx"
+                },
+                "codebaseEnabled": true,
+                "usedRules": [
+                    "zen-rules://repo/.zencoder/rules/repo.md"
+                ]
+            },
+            "createdAt": 1759896889018,
+            "isInternal": false,
+            "rawContent": {
+                "type": "doc",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": "the images are not fitting properly in the viewports. "
+                            }
+                        ]
+                    }
+                ]
+            },
+            "isGhost": true,
+            "autoAppliedRules": []
+        },
+        {
+            "id": "8ed7a870-2249-4944-aaef-278ed64ab96b",
+            "role": "system",
+            "content": [
+                {
+                    "type": "errorText",
+                    "text": "Internal server error. Please try again later.\nOperation ID: c25beef5-4701-40af-86de-caf375b3f89d\nUser ID: 5d0f0e1f-8481-431b-9350-f38791f2a886",
+                    "actions": [
+                        {
+                            "type": "externalAction",
+                            "title": "Regenerate",
+                            "action": "regenerateLastAnswer"
+                        }
+                    ]
+                }
+            ],
+            "createdAt": 1759896898232,
+            "isInternal": false,
+            "isGhost": true
+        }
+    ],
+    "isAgent": false,
+    "isNameGenerated": true,
+    "isCustomAgent": false,
+    "isUnitTestsAgent": false,
+    "isE2EAgent": false,
+    "isWebDevAgent": true,
+    "isQnaAgent": false,
+    "isRepoInfoAgent": false,
+    "autoApply": false,
+    "model": "default"
+}
+}

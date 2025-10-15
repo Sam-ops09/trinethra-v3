@@ -1,0 +1,103 @@
+{
+    "checksum": "a339e08a3483ca324e8c81effcd0375b3ddc9f71286c7db86d52b4fca796ec4a",
+    "data": {
+    "id": "88694d2e-38af-48d0-b038-de1660cc739a",
+    "createdAt": 1759647663947,
+    "updatedAt": 1759647663951,
+    "title": "redesign this page  @Home.tsx",
+    "messages": [
+        {
+            "id": "4fa14763-6e0e-49fb-957a-65b84e778f66",
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "redesign this page "
+                },
+                {
+                    "type": "fileMention",
+                    "fileName": "Home.tsx",
+                    "path": "client/src/pages/Home.tsx",
+                    "fsPath": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/pages/Home.tsx"
+                }
+            ],
+            "context": {
+                "attachedFiles": [
+                    {
+                        "path": "client/src/pages/Home.tsx",
+                        "fsPath": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/pages/Home.tsx"
+                    }
+                ],
+                "currentFile": {
+                    "path": "client/src/pages/Home.tsx",
+                    "fsPath": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/pages/Home.tsx",
+                    "sources": [
+                        "opened_tab"
+                    ],
+                    "content": "import React from \"react\";\nimport { Link } from \"wouter\";\nimport { Layout } from \"@/components/Layout\";\nimport { HeroCarousel } from \"@/components/HeroCarousel\";\nimport { motion } from \"framer-motion\";\nimport { Button } from \"@/components/ui/button\";\nimport { Card, CardContent } from \"@/components/ui/card\";\nimport {\n  FaMicrochip,\n  FaDatabase,\n  FaNetworkWired,\n  FaArrowRight,\n  FaShieldAlt,\n  FaCheckCircle,\n  FaDesktop\n} from \"react-icons/fa\";\nimport { TrustedPartners } from \"@/components/TrustedPartners\";\n\nconst fadeInUp = {\n  hidden: { opacity: 0, y: 20 },\n  visible: {\n    opacity: 1,\n    y: 0,\n    transition: { duration: 0.6 }\n  }\n};\n\nconst staggerContainer = {\n  hidden: { opacity: 0 },\n  visible: {\n    opacity: 1,\n    transition: {\n      staggerChildren: 0.2\n    }\n  }\n};\n\nexport default function Home() {\n  const trustedPartners = [\n    \"ADE-DRDO\", \"CABS-DRDO\", \"GTRE-DRDO\",\n    \"MTRDC-DRDO\", \"HAL\", \"ISRO\"\n  ];\n\n  // Enhanced SEO for home page with structured data\n  const homePageStructuredData = {\n    '@context': 'https://schema.org',\n    '@type': 'WebPage',\n    name: 'TRINETHRA DEFENTECH - Advanced Defense Technology Solutions',\n    description: 'Leading provider of military-grade defense technology including cable harness systems, rugged storage solutions, edge server platforms, and panel PCs for defense and security operations.',\n    keywords: 'TRINETHRA DEFENTECH, defense technology, cable harness, storage solutions, edge server, panel pc, military systems, tactical equipment',\n    inLanguage: 'en-US',\n    mainEntity: {\n      '@type': 'Organization',\n      name: 'TRINETHRA DEFENTECH',\n      url: 'https://trinethra-defentech.com',\n      logo: 'https://trinethra-defentech.com/logo.png',\n      description: 'Premier provider of advanced defense technology solutions engineered for mission-critical environments.',\n      sameAs: [\n        'https://linkedin.com/company/trinethra-defentech',\n        'https://twitter.com/trinethra_def'\n      ]\n    }\n  };\n\n  return (\n      <Layout\n          title=\"TRINETHRA DEFENTECH | Advanced Defense Technology Solutions\"\n          description=\"Leading provider of military-grade cable harness systems, rugged storage solutions, edge server compute platforms, and panel PCs for defense and security operations. Engineered for mission-critical environments.\"\n          ogType=\"website\"\n          keywords=\"TRINETHRA DEFENTECH, defense technology, cable harness, storage solutions, edge server, panel pc, defense-grade hardware\"\n          structuredData={JSON.stringify(homePageStructuredData)}\n      >\n        {/* Hero Section */}\n        <section className=\"pt-28 sm:pt-32 md:pt-40 lg:pt-28 pb-16 md:pb-24 lg:pb-28 relative\" aria-label=\"Hero\">\n          <HeroCarousel />\n          <div className=\"section-container px-4 sm:px-6 md:px-8 mt-10 md:mt-14\">\n            <motion.div\n                className=\"max-w-4xl\"\n                initial=\"hidden\"\n                animate=\"visible\"\n                variants={staggerContainer}\n            >\n              <motion.h1\n                  className=\"heading-clamp-1 font-condensed font-bold tracking-wide mb-4 text-[#0D4114] text-balance\"\n                  variants={fadeInUp}\n              >\n                TRINETHRA DEFENTECH\n              </motion.h1>\n              <motion.p\n                  className=\"text-lg sm:text-xl md:text-2xl font-medium mb-6 md:mb-8 text-[#0D4114] text-balance max-w-3xl\"\n                  variants={fadeInUp}\n              >\n                Tactical and strategic defense systems engineered for mission-critical environments\n              </motion.p>\n              <motion.div\n                  className=\"flex flex-col sm:flex-row gap-4\"\n                  variants={fadeInUp}\n              >\n                <Link href=\"/contact\">\n                  <Button\n                      className=\"bg-teal hover:bg-teal/90 text-white font-bold py-3 px-8 rounded shadow-lg transition-all duration-300 inline-flex items-center justify-center focus-ring\"\n                  >\n                    Request Consultation <FaArrowRight className=\"ml-2\" />\n                  </Button>\n                </Link>\n                <Link href=\"/solutions\">\n                  <Button\n                      variant=\"outline\"\n                      className=\"bg-transparent hover:bg-[#0D4114] border-2 border-[#0D4114] text-[#0D4114] font-bold py-3 px-8 rounded transition-all duration-300 inline-flex items-center justify-center focus-ring\"\n                  >\n                    Explore Solutions\n                  </Button>\n                </Link>\n              </motion.div>\n            </motion.div>\n          </div>\n        </section>\n\n        {/* Feature Section */}\n        <section className=\"bg-white\" aria-labelledby=\"mission-critical-heading\">\n          <div className=\"section-container px-4 sm:px-6 md:px-8\">\n            <motion.div\n                className=\"max-w-3xl mx-auto text-center mb-12\"\n                initial={{ opacity: 0, y: 20 }}\n                whileInView={{ opacity: 1, y: 0 }}\n                viewport={{ once: true, margin: '-40px' }}\n                transition={{ duration: 0.6 }}\n            >\n              <h2 id=\"mission-critical-heading\" className=\"heading-clamp-2 font-condensed font-bold mb-6 text-navy text-balance\">Mission-Critical Performance</h2>\n              <p className=\"text-lg text-charcoal/80 text-balance\">\n                We guarantee that our solutions meet your shock, vibration, EMI, power, and environmental specifications,\n                delivering reliable performance in the most challenging operational conditions.\n              </p>\n            </motion.div>\n\n            {/* Defense Capabilities Grid */}\n            <motion.div\n                className=\"grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 xl:gap-8 mt-6 md:mt-12\"\n                variants={staggerContainer}\n                initial=\"hidden\"\n                whileInView=\"visible\"\n                viewport={{ once: true, margin: '-40px' }}\n            >\n              {/* Card 1: Cable Harness */}\n              <motion.div variants={fadeInUp}>\n                <Card className=\"bg-white border border-gray-200 rounded-lg shadow-md p-6 card-hover h-full focus-within:ring-2 focus-within:ring-teal\">\n                  <CardContent className=\"p-0 flex flex-col h-full\">\n                    <div className=\"bg-forest/10 rounded-full w-16 h-16 flex items-center justify-center mb-6\">\n                      <FaNetworkWired className=\"text-2xl text-forest\" />\n                    </div>\n                    <h3 className=\"text-xl font-condensed font-bold mb-3 text-navy\">Cable Harness</h3>\n                    <p className=\"text-charcoal/80 mb-4 flex-grow text-balance\">\n                      Rugged interconnect and signal distribution assemblies enabling reliable data & power routing across harsh tactical platforms.\n                    </p>\n                    <div className=\"flex mt-auto\">\n                      <span className=\"text-sm font-medium bg-forest/10 text-forest px-3 py-1 rounded-full\">MIL-STD-461</span>\n                    </div>\n                  </CardContent>\n                </Card>\n              </motion.div>\n\n              {/* Card 2: Storage Solutions */}\n              <motion.div variants={fadeInUp}>\n                <Card className=\"bg-white border border-gray-200 rounded-lg shadow-md p-6 card-hover h-full\">\n                  <CardContent className=\"p-0 flex flex-col h-full\">\n                    <div className=\"bg-forest/10 rounded-full w-16 h-16 flex items-center justify-center mb-6\">\n                      <FaDatabase className=\"text-2xl text-forest\" />\n                    </div>\n                    <h3 className=\"text-xl font-condensed font-bold mb-3 text-navy\">Storage Solutions</h3>\n                    <p className=\"text-charcoal/80 mb-4 flex-grow text-balance\">\n                      Secure, high-capacity removable and fixed storage systems with hardware encryption engineered for extreme environments.\n                    </p>\n                    <div className=\"flex mt-auto\">\n                      <span className=\"text-sm font-medium bg-forest/10 text-forest px-3 py-1 rounded-full\">FIPS 140-2</span>\n                    </div>\n                  </CardContent>\n                </Card>\n              </motion.div>\n\n              {/* Card 3: Server */}\n              <motion.div variants={fadeInUp}>\n                <Card className=\"bg-white border border-gray-200 rounded-lg shadow-md p-6 card-hover h-full\">\n                  <CardContent className=\"p-0 flex flex-col h-full\">\n                    <div className=\"bg-forest/10 rounded-full w-16 h-16 flex items-center justify-center mb-6\">\n                      <FaMicrochip className=\"text-2xl text-forest\" />\n                    </div>\n                    <h3 className=\"text-xl font-condensed font-bold mb-3 text-navy\">Server</h3>\n                    <p className=\"text-charcoal/80 mb-4 flex-grow text-balance\">\n                      Edge-ready compute platforms delivering low-latency AI inference, secure processing and modular I/O for autonomous and ISR workloads.\n                    </p>\n                    <div className=\"flex mt-auto\">\n                      <span className=\"text-sm font-medium bg-forest/10 text-forest px-3 py-1 rounded-full\">MIL-STD-810</span>\n                    </div>\n                  </CardContent>\n                </Card>\n              </motion.div>\n\n              {/* Card 4: Panel PC */}\n              <motion.div variants={fadeInUp}>\n                <Card className=\"bg-white border border-gray-200 rounded-lg shadow-md p-6 card-hover h-full\">\n                  <CardContent className=\"p-0 flex flex-col h-full\">\n                    <div className=\"bg-forest/10 rounded-full w-16 h-16 flex items-center justify-center mb-6\">\n                      <FaDesktop className=\"text-2xl text-forest\" />\n                    </div>\n                    <h3 className=\"text-xl font-condensed font-bold mb-3 text-navy\">Panel PC</h3>\n                    <p className=\"text-charcoal/80 mb-4 flex-grow text-balance\">\n                      Rugged operator interface terminals with sunlight-readable sealed displays for vehicle and command environments.\n                    </p>\n                    <div className=\"flex mt-auto\">\n                      <span className=\"text-sm font-medium bg-forest/10 text-forest px-3 py-1 rounded-full\">IP65</span>\n                    </div>\n                  </CardContent>\n                </Card>\n              </motion.div>\n            </motion.div>\n          </div>\n        </section>\n\n        {/* Trusted Partners Section (refactored) */}\n        <TrustedPartners\n          partners={trustedPartners}\n          cta={(\n            <Link href=\"/about\">\n              <Button variant=\"outline\" className=\"bg-white hover:bg-teal/5 border-2 border-teal/20 text-navy focus-ring\">\n                Learn More About Our Partnerships <FaArrowRight className=\"ml-2\" />\n              </Button>\n            </Link>\n          )}\n        />\n      </Layout>\n  );\n}\n",
+                    "language": "typescript jsx"
+                },
+                "codebaseEnabled": true,
+                "usedRules": [
+                    "zen-rules://repo/.zencoder/rules/repo.md"
+                ]
+            },
+            "createdAt": 1759647663951,
+            "isInternal": false,
+            "rawContent": {
+                "type": "doc",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": "redesign this page "
+                            },
+                            {
+                                "type": "mention",
+                                "attrs": {
+                                    "label": "Home.tsx",
+                                    "summary": null,
+                                    "description": null,
+                                    "type": "file",
+                                    "path": "client/src/pages/Home.tsx",
+                                    "fsPath": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/pages/Home.tsx",
+                                    "contentType": null,
+                                    "name": null,
+                                    "uri": null
+                                }
+                            },
+                            {
+                                "type": "text",
+                                "text": " "
+                            }
+                        ]
+                    }
+                ]
+            },
+            "autoAppliedRules": [
+                {
+                    "name": "Repository Information Overview",
+                    "description": "Repository Information Overview",
+                    "uri": "zen-rules://repo/.zencoder/rules/repo.md",
+                    "mimeType": "text/markdown",
+                    "content": "# Defense Solutions Web Application Information\n\n## Summary\nA modern web application for defense solutions built with React, Express, and TypeScript. The application features a client-side React frontend and a server-side Express backend, with Supabase integration for database operations.\n\n## Structure\n- `/client` - React frontend application with components, pages, and assets\n- `/server` - Express backend server with API routes and database integration\n- `/shared` - Shared types and database schemas using Drizzle ORM\n- `/api` - API route handlers for serverless deployment\n\n## Language & Runtime\n**Language**: TypeScript/JavaScript\n**Version**: TypeScript 5.6.3\n**Build System**: Vite 5.4.19\n**Package Manager**: pnpm (inferred from build commands)\n\n## Dependencies\n**Main Dependencies**:\n- React 18.3.1 - Frontend UI library\n- Express 4.21.2 - Backend server framework\n- Supabase - Backend as a service for database operations\n- Drizzle ORM - Database ORM with PostgreSQL support\n- TailwindCSS - Utility-first CSS framework\n- Wouter - Routing library for React\n- Tanstack Query - Data fetching library\n- Zod - Schema validation library\n\n**Development Dependencies**:\n- Vite - Build tool and development server\n- TypeScript - Static type checking\n- ESBuild - JavaScript bundler\n- Drizzle Kit - Database migration tools\n\n## Build & Installation\n```bash\n# Install dependencies\npnpm install\n\n# Development mode\npnpm dev\n\n# Production build\npnpm build\n\n# Start production server\npnpm start\n\n# Database schema push\npnpm db:push\n```\n\n## Database\n**Type**: PostgreSQL (via Supabase)\n**ORM**: Drizzle ORM\n**Schema**: Defined in `shared/schema.ts`\n**Tables**:\n- users - User authentication\n- contact_submissions - Contact form submissions\n\n## Deployment\n**Platform**: Vercel (configured via vercel.json)\n**Build Command**: `pnpm build`\n**Output Directory**: `dist/public`\n**Environment Variables**:\n- PORT - Server port (default: 3000)\n- DATABASE_URL - PostgreSQL connection string\n- SUPABASE_URL - Supabase project URL\n- SUPABASE_ANON_KEY - Supabase anonymous key\n\n## Client Application\n**Framework**: React with TypeScript\n**Routing**: Wouter\n**State Management**: React Query\n**UI Components**: Custom components with Radix UI primitives\n**Styling**: TailwindCSS with SCSS\n**Entry Point**: `client/src/main.tsx`\n\n## Server Application\n**Framework**: Express\n**API Routes**: RESTful endpoints in `/api` directory\n**Database Access**: Supabase client\n**Entry Point**: `server/index.ts`\n**Static Serving**: Production build serves static files from `dist/public`",
+                    "alwaysApply": true
+                }
+            ]
+        }
+    ],
+    "isAgent": true,
+    "isNameGenerated": true,
+    "isCustomAgent": false,
+    "isUnitTestsAgent": false,
+    "isE2EAgent": false,
+    "isWebDevAgent": false,
+    "isQnaAgent": false,
+    "isRepoInfoAgent": false,
+    "autoApply": false,
+    "model": "gpt-5-high",
+    "agentsRuntime": "codex-cli"
+}
+}

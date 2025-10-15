@@ -87,3 +87,6 @@ pnpm db:push
 **Database Access**: Supabase client
 **Entry Point**: `server/index.ts`
 **Static Serving**: Production build serves static files from `dist/public`
+
+## Testing
+**Target Framework**: Playwright

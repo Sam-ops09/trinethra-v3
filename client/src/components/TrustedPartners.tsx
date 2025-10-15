@@ -1,102 +1,111 @@
-// filepath: /Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/components/TrustedPartners.tsx
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaShieldAlt, FaCheckCircle } from 'react-icons/fa';
 
 interface TrustedPartnersProps {
   partners?: string[];
   heading?: string;
-  cta?: React.ReactNode;
+  description?: string;
 }
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
 };
 
-const stagger = {
+const staggerChildren = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.12 } }
+  visible: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.1 } }
 };
 
 export function TrustedPartners({
   partners = ["ADE-DRDO", "CABS-DRDO", "GTRE-DRDO", "MTRDC-DRDO", "HAL", "ISRO"],
-  heading = "Trusted By India's Elite Defense Organizations",
-  cta
+  heading = "Strategic Partners",
+  description = "Collaborating with leading defense organizations"
 }: TrustedPartnersProps) {
   return (
-    <section className="bg-navy/5 section-spacing relative overflow-hidden">
-      <div className="absolute inset-0 bg-grid-white/10 bg-[size:20px_20px] opacity-20" aria-hidden="true" />
-      <div className="section-container px-4 sm:px-6 md:px-8 relative z-10">
+    <section className="py-16 sm:py-20 lg:py-32 bg-charcoal" aria-labelledby="partners-heading">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
         <motion.div
-          className="text-center max-w-3xl mx-auto mb-12 md:mb-20"
+          className="text-center mb-12 sm:mb-16"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: '-40px' }}
-          variants={stagger}
+          viewport={{ once: true, margin: '-100px' }}
+          variants={fadeInUp}
         >
-          <motion.h2 variants={fadeInUp} className="heading-clamp-2 font-condensed font-bold text-navy mb-4 text-balance">
+          <div className="inline-flex items-center gap-3 mb-6">
+            <div className="w-8 h-px bg-teal" />
+            <span className="text-xs font-semibold text-cream/60 tracking-[0.1em] uppercase">
+              Partnerships
+            </span>
+            <div className="w-8 h-px bg-teal" />
+          </div>
+          
+          <h2 id="partners-heading" className="text-3xl sm:text-4xl md:text-5xl font-light text-cream leading-tight mb-4 sm:mb-6">
             {heading}
-          </motion.h2>
-          <motion.div variants={fadeInUp} className="w-20 h-1 bg-teal mx-auto mb-6 rounded" />
-          <motion.p variants={fadeInUp} className="text-charcoal/70 max-w-2xl mx-auto text-lg text-balance">
-            Our solutions are deployed across premier defense and research institutions, supporting critical missions and strategic capabilities.
-          </motion.p>
+          </h2>
+          <p className="text-base sm:text-lg text-steel max-w-2xl mx-auto leading-relaxed font-light">
+            {description}
+          </p>
         </motion.div>
 
-        {/* Desktop / Tablet Grid */}
+        {/* Partners Grid */}
         <motion.div
-          className="hidden sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 sm:gap-8 items-stretch"
-          variants={stagger}
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-px bg-steel/20"
+          variants={staggerChildren}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: '-40px' }}
+          viewport={{ once: true }}
         >
-          {partners.map((partner) => (
-            <motion.div key={partner} variants={fadeInUp} className="group">
-              <div className="bg-white rounded-xl shadow-lg p-6 h-full flex flex-col items-center justify-center transform transition-all duration-300 hover:scale-105 hover:shadow-xl border border-gray-100">
-                <div className="w-12 h-12 rounded-full bg-teal/10 flex items-center justify-center mb-4">
-                  <FaShieldAlt className="text-xl text-teal" />
-                </div>
-                <div className="font-condensed font-bold text-lg text-navy text-center group-hover:text-teal transition-colors duration-300">
+          {partners.map((partner, index) => (
+            <motion.div 
+              key={partner} 
+              variants={fadeInUp} 
+              className="group"
+            >
+              <div className="bg-charcoal hover:bg-navy/50 border-none p-4 sm:p-6 lg:p-8 h-20 sm:h-24 flex items-center justify-center text-center transition-all duration-500 relative overflow-hidden">
+                {/* Background Effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-teal/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                {/* Partner Name */}
+                <div className="text-cream/80 group-hover:text-cream font-medium text-xs sm:text-sm transition-all duration-300 relative z-10 tracking-wide">
                   {partner}
                 </div>
-                <div className="mt-3 flex items-center gap-2 text-xs text-forest/70">
-                  <FaCheckCircle className="text-teal" />
-                  <span>Verified</span>
-                </div>
+                
+                {/* Decorative Corner */}
+                <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-teal/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-teal/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
             </motion.div>
           ))}
         </motion.div>
-
-        {/* Mobile Marquee */}
-        <div className="sm:hidden partner-marquee-wrapper mt-4" aria-label="Partner marquee">
-          <div className="partner-marquee-track gap-4 pr-8">
-            {[...partners, ...partners].map((p, i) => (
-              <div key={i} className="min-w-[160px] bg-white rounded-lg shadow-sm px-4 py-3 flex flex-col items-center justify-center border border-gray-100">
-                <FaShieldAlt className="text-teal mb-2" />
-                <span className="text-sm font-semibold text-navy text-center">{p}</span>
-              </div>
-            ))}
+        
+        {/* Trust Indicators */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+          className="mt-12 sm:mt-16 text-center"
+        >
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8 text-steel">
+            <div className="flex items-center gap-3">
+              <div className="w-2 h-2 bg-teal" />
+              <span className="text-sm font-light tracking-wide">Certified Partnerships</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="w-2 h-2 bg-forest" />
+              <span className="text-sm font-light tracking-wide">Mission Proven</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="w-2 h-2 bg-signal" />
+              <span className="text-sm font-light tracking-wide">Combat Ready</span>
+            </div>
           </div>
-        </div>
-
-        {cta && (
-          <motion.div
-            className="mt-14 text-center"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-          >
-            {cta}
-          </motion.div>
-        )}
+        </motion.div>
       </div>
     </section>
   );
 }
 
 export default TrustedPartners;
-

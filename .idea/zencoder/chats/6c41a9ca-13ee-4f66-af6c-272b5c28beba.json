@@ -1,0 +1,62 @@
+{
+    "checksum": "11fb6a6415cf9acef06d487c61bf97aab093ec89aff18c72f478eb308a19c9a1",
+    "data": {
+    "id": "6c41a9ca-13ee-4f66-af6c-272b5c28beba",
+    "createdAt": 1760175208794,
+    "updatedAt": 1760177125417,
+    "title": "redesign the homepage",
+    "messages": [
+        {
+            "id": "1a0c7731-9d99-43ac-8e12-be35c16e15c6",
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "redesign the homepage. keep in mind the color theory."
+                }
+            ],
+            "context": {
+                "usedRules": [
+                    "zen-rules://repo/.zencoder/rules/repo.md"
+                ]
+            },
+            "createdAt": 1760177125416,
+            "isInternal": false,
+            "rawContent": {
+                "type": "doc",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": "redesign the homepage. keep in mind the color theory. "
+                            }
+                        ]
+                    }
+                ]
+            },
+            "autoAppliedRules": [
+                {
+                    "name": "Repository Information Overview",
+                    "description": "Repository Information Overview",
+                    "uri": "zen-rules://repo/.zencoder/rules/repo.md",
+                    "mimeType": "text/markdown",
+                    "content": "# Defense Solutions Web Application Information\n\n## Summary\nA modern web application for defense solutions built with React, Express, and TypeScript. The application features a client-side React frontend and a server-side Express backend, with Supabase integration for database operations.\n\n## Structure\n- `/client` - React frontend application with components, pages, and assets\n- `/server` - Express backend server with API routes and database integration\n- `/shared` - Shared types and database schemas using Drizzle ORM\n- `/api` - API route handlers for serverless deployment\n\n## Language & Runtime\n**Language**: TypeScript/JavaScript\n**Version**: TypeScript 5.6.3\n**Build System**: Vite 5.4.19\n**Package Manager**: pnpm (inferred from build commands)\n\n## Dependencies\n**Main Dependencies**:\n- React 18.3.1 - Frontend UI library\n- Express 4.21.2 - Backend server framework\n- Supabase - Backend as a service for database operations\n- Drizzle ORM - Database ORM with PostgreSQL support\n- TailwindCSS - Utility-first CSS framework\n- Wouter - Routing library for React\n- Tanstack Query - Data fetching library\n- Zod - Schema validation library\n\n**Development Dependencies**:\n- Vite - Build tool and development server\n- TypeScript - Static type checking\n- ESBuild - JavaScript bundler\n- Drizzle Kit - Database migration tools\n\n## Build & Installation\n```bash\n# Install dependencies\npnpm install\n\n# Development mode\npnpm dev\n\n# Production build\npnpm build\n\n# Start production server\npnpm start\n\n# Database schema push\npnpm db:push\n```\n\n## Database\n**Type**: PostgreSQL (via Supabase)\n**ORM**: Drizzle ORM\n**Schema**: Defined in `shared/schema.ts`\n**Tables**:\n- users - User authentication\n- contact_submissions - Contact form submissions\n\n## Deployment\n**Platform**: Vercel (configured via vercel.json)\n**Build Command**: `pnpm build`\n**Output Directory**: `dist/public`\n**Environment Variables**:\n- PORT - Server port (default: 3000)\n- DATABASE_URL - PostgreSQL connection string\n- SUPABASE_URL - Supabase project URL\n- SUPABASE_ANON_KEY - Supabase anonymous key\n\n## Client Application\n**Framework**: React with TypeScript\n**Routing**: Wouter\n**State Management**: React Query\n**UI Components**: Custom components with Radix UI primitives\n**Styling**: TailwindCSS with SCSS\n**Entry Point**: `client/src/main.tsx`\n\n## Server Application\n**Framework**: Express\n**API Routes**: RESTful endpoints in `/api` directory\n**Database Access**: Supabase client\n**Entry Point**: `server/index.ts`\n**Static Serving**: Production build serves static files from `dist/public`\n\n## Testing\n**Target Framework**: Playwright",
+                    "alwaysApply": true
+                }
+            ]
+        }
+    ],
+    "isAgent": true,
+    "isNameGenerated": true,
+    "isCustomAgent": false,
+    "isUnitTestsAgent": false,
+    "isE2EAgent": false,
+    "isWebDevAgent": false,
+    "isQnaAgent": false,
+    "isRepoInfoAgent": false,
+    "autoApply": false,
+    "model": "sonnet-4"
+}
+}
