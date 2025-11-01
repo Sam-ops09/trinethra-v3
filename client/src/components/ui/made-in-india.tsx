@@ -16,7 +16,7 @@ export function MadeInIndia() {
                         cy="50"
                         r="45"
                         fill="white"
-                        stroke="#000080"
+                        stroke="hsl(218 48% 21%)"
                         strokeWidth="6"
                     />
                     {/* 24 spokes */}
@@ -27,13 +27,13 @@ export function MadeInIndia() {
                             y1="50"
                             x2="50"
                             y2="5"
-                            stroke="#000080"
+                            stroke="hsl(218 48% 21%)"
                             strokeWidth="2.4"
                             transform={`rotate(${i * 15} 50 50)`}
                         />
                     ))}
                     {/* Central hub */}
-                    <circle cx="50" cy="50" r="5" fill="#000080" />
+                    <circle cx="50" cy="50" r="5" fill="hsl(218 48% 21%)" />
                 </svg>
 
                 <span className="text-sm font-medium text-gray-900 whitespace-nowrap">
