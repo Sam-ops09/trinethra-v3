@@ -1,204 +1,363 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+"use client";
 
-interface HeroCarouselProps {
-  showIndicators?: boolean;
-  showControls?: boolean;
-  showCaptions?: boolean;
-  className?: string;
-  autoPlay?: boolean;
-  autoPlayInterval?: number;
+import React, { useState, useRef } from "react";
+import {
+    motion,
+    useMotionValue,
+    useSpring,
+    useTransform,
+    useReducedMotion,
+} from "framer-motion";
+import { FaCheckCircle, FaArrowRight, FaTimes, FaShieldAlt } from "react-icons/fa";
+
+interface ProductDisplayProps {
+    className?: string;
 }
 
-const carouselData = [
-  {
-    image: '/assets/products/edge-server.jpg',
-    title: 'Advanced Tactical Computing',
-    description: 'Ruggedized edge servers delivering real-time processing in demanding environments',
-    specs: ['MIL-STD-810H Certified', 'IP67 Rating', 'EMI/EMC Compliant']
-  },
-  {
-    image: '/assets/carousel1.jpg',
-    title: 'Defense Communication Systems',
-    description: 'Secure, high-bandwidth communication platforms for mission-critical operations',
-    specs: ['FIPS 140-2 Encryption', 'Multi-band Support', 'Mesh Networking']
-  },
-  {
-    image: '/assets/products/panel-pc.png',
-    title: 'Aerospace Integration',
-    description: 'Lightweight, high-performance systems designed for aerospace applications',
-    specs: ['DO-178C Compliant', 'Vibration Resistant', 'Temperature Hardened']
-  }
+/* ----------------------------------------------------------------------------
+   DATA
+----------------------------------------------------------------------------- */
+const productData = [
+    {
+        id: 1,
+        image: "/assets/products/edge-server.jpg",
+        title: "Advanced Tactical Computing",
+        description:
+            "Ruggedized edge servers delivering real-time processing in demanding environments",
+        specs: ["MIL-STD-810H Certified", "IP67 Rating", "EMI/EMC Compliant"],
+        readiness: "98.7",
+        category: "TACTICAL EDGE",
+        accentColor: "#14b8a6",
+    },
+    {
+        id: 2,
+        image: "/assets/carousel1.jpg",
+        title: "Defense Communication Systems",
+        description:
+            "Secure, high-bandwidth communication platforms for mission-critical operations",
+        specs: ["FIPS 140-2 Encryption", "Multi-band Support", "Mesh Networking"],
+        readiness: "99.9",
+        category: "COMMUNICATIONS",
+        accentColor: "#10b981",
+    },
+    {
+        id: 3,
+        image: "/assets/products/panel-pc.png",
+        title: "Aerospace Integration",
+        description: "Lightweight, high-performance systems designed for aerospace applications",
+        specs: ["DO-178C Compliant", "Vibration Resistant", "Temperature Hardened"],
+        readiness: "100",
+        category: "AEROSPACE",
+        accentColor: "#06b6d4",
+    },
+    {
+        id: 4,
+        image: "/assets/products/panel-pc.png",
+        title: "Aerospace Integration",
+        description: "Lightweight, high-performance systems designed for aerospace applications",
+        specs: ["DO-178C Compliant", "Vibration Resistant", "Temperature Hardened"],
+        readiness: "100",
+        category: "AEROSPACE",
+        accentColor: "#06b6d4",
+    },
 ];
 
-export function HeroCarousel({
-  showIndicators = true,
-  showControls = true,
-  showCaptions = true,
-  className = '',
-  autoPlay = false,
-  autoPlayInterval = 5000
-}: HeroCarouselProps) {
-  const [currentIndex, setCurrentIndex] = useState(0);
+/* ----------------------------------------------------------------------------
+   IMAGE TILE (RESPONSIVE + MOTION-SAFE)
+----------------------------------------------------------------------------- */
+function ImageTile({
+                       product,
+                       index,
+                       onOpen,
+                   }: {
+    product: (typeof productData)[number];
+    index: number;
+    onOpen: () => void;
+}) {
+    const prefersReduced = useReducedMotion();
+    const cardRef = useRef<HTMLDivElement>(null);
+    const [isHovered, setIsHovered] = useState(false);
 
-  // Auto-play functionality
-  useEffect(() => {
-    if (!autoPlay) return;
-    
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % carouselData.length);
-    }, autoPlayInterval);
+    const mx = useMotionValue(0);
+    const my = useMotionValue(0);
 
-    return () => clearInterval(interval);
-  }, [autoPlay, autoPlayInterval]);
+    const rotateX = useSpring(
+        prefersReduced ? 0 : useTransform(my, [-0.5, 0.5], [6, -6]),
+        { stiffness: 100, damping: 15 }
+    );
+    const rotateY = useSpring(
+        prefersReduced ? 0 : useTransform(mx, [-0.5, 0.5], [-6, 6]),
+        { stiffness: 100, damping: 15 }
+    );
 
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % carouselData.length);
-  };
+    const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (prefersReduced || !cardRef.current) return;
+        const rect = cardRef.current.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        mx.set(x);
+        my.set(y);
+    };
 
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + carouselData.length) % carouselData.length);
-  };
+    const handleLeave = () => {
+        mx.set(0);
+        my.set(0);
+        setIsHovered(false);
+    };
 
-  const goToSlide = (index: number) => {
-    setCurrentIndex(index);
-  };
+    return (
+        <motion.div
+            ref={cardRef}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, delay: index * 0.08, ease: "easeOut" }}
+            onMouseMove={handleMove}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={handleLeave}
+            onClick={onOpen}
+            style={{
+                rotateX,
+                rotateY,
+                transformStyle: "preserve-3d",
+            }}
+            className="relative w-full overflow-hidden rounded-2xl border border-[#0f172a] bg-slate-950/5 shadow-[0_20px_40px_rgba(0,0,0,0.04)] transition-all duration-300 hover:border-teal-400/45 focus:outline-none focus:ring-2 focus:ring-teal-400/80"
+        >
+            {/* force aspect so all look uniform across breakpoints */}
+            <div className="aspect-[4/3] w-full min-h-[180px] sm:min-h-[200px] md:min-h-[220px]">
+                {/* IMAGE */}
+                <motion.img
+                    src={product.image}
+                    alt={product.title}
+                    className="h-full w-full object-cover"
+                    animate={{ scale: isHovered && !prefersReduced ? 1.06 : 1 }}
+                    transition={{ duration: 0.4 }}
+                    loading="lazy"
+                    decoding="async"
+                />
 
-  return (
-    <div className={`relative bg-white overflow-hidden ${className}`} aria-label="Hero Carousel">
-      {/* Main Image Container */}
-      <div className="relative w-full h-full">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0, scale: 1.1 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.7, ease: 'easeInOut' }}
-            className="absolute inset-0"
-          >
-            {/* Background Image */}
-            <div className="relative w-full h-full">
-              <img
-                src={carouselData[currentIndex].image}
-                alt={carouselData[currentIndex].title}
-                className="w-full h-full object-cover sm:object-center object-top"
-                style={{ filter: 'grayscale(20%) brightness(1.1)' }}
-              />
-              
-              {/* Image Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/60 via-transparent to-transparent sm:bg-gradient-to-r sm:from-charcoal/40 sm:via-transparent sm:to-transparent" />
-              
-              {/* Geometric Accent Lines - Hidden on mobile, visible on larger screens */}
-              <div className="hidden sm:block absolute top-4 left-4 w-8 lg:w-16 h-px bg-teal" />
-              <div className="hidden sm:block absolute top-4 left-4 w-px h-8 lg:h-16 bg-teal" />
-              <div className="hidden sm:block absolute bottom-4 right-4 w-8 lg:w-16 h-px bg-forest" />
-              <div className="hidden sm:block absolute bottom-4 right-4 w-px h-8 lg:h-16 bg-forest" />
-            </div>
-
-            {/* Data Overlay Points - Responsive positioning and sizing */}
-            <div className="absolute top-3 right-3 sm:top-6 sm:right-6 bg-white/90 backdrop-blur-sm border border-teal/20 p-2 sm:p-3 min-w-[100px] sm:min-w-[120px]">
-              <div className="text-xs text-steel uppercase tracking-wider mb-1">System Status</div>
-              <div className="flex items-center gap-1 sm:gap-2">
-                <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-teal animate-pulse" />
-                <span className="text-xs sm:text-sm font-semibold text-charcoal">OPERATIONAL</span>
-              </div>
-            </div>
-
-            <div className="absolute bottom-16 sm:bottom-20 md:bottom-24 left-3 sm:left-6 bg-cream/95 backdrop-blur-sm border border-forest/20 p-2 sm:p-3 min-w-[110px] sm:min-w-[140px]">
-              <div className="text-xs text-steel uppercase tracking-wider mb-1">Mission Ready</div>
-              <div className="text-base sm:text-lg font-semibold text-charcoal">
-                {currentIndex === 0 && '98.7%'}
-                {currentIndex === 1 && '99.9%'}
-                {currentIndex === 2 && '100%'}
-              </div>
-            </div>
-
-            {/* Caption Overlay - Fully responsive */}
-            {showCaptions && (
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 30 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-t border-steel/10 p-3 sm:p-4 md:p-6"
-              >
-                <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-charcoal mb-1 sm:mb-2 leading-tight">
-                  {carouselData[currentIndex].title}
-                </h3>
-                <p className="text-steel text-xs sm:text-sm md:text-base mb-3 sm:mb-4 font-light max-w-full sm:max-w-md lg:max-w-lg">
-                  {carouselData[currentIndex].description}
-                </p>
-                
-                {/* Specifications - Responsive layout */}
-                <div className="flex flex-wrap gap-2 sm:gap-3">
-                  {carouselData[currentIndex].specs.map((spec) => (
-                    <div key={spec} className="flex items-center gap-1 sm:gap-2">
-                      <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-teal flex-shrink-0" />
-                      <span className="text-xs sm:text-xs md:text-sm text-charcoal font-medium">{spec}</span>
+                {/* TOP BAR (CATEGORY + READINESS) */}
+                <div className="pointer-events-none absolute top-2 left-2 flex gap-1 sm:top-3 sm:left-3">
+                    <div
+                        className="rounded-md bg-slate-950/65 px-2 py-1 text-[0.55rem] font-semibold uppercase tracking-[0.14em] text-white/85 backdrop-blur-sm sm:text-[0.6rem]"
+                        style={{ transform: "translateZ(15px)" }}
+                    >
+                        {product.category}
                     </div>
-                  ))}
                 </div>
-              </motion.div>
-            )}
-          </motion.div>
-        </AnimatePresence>
+                <div
+                    className="pointer-events-none absolute top-2 right-2 rounded-md bg-slate-950/65 px-2 py-1 text-[0.55rem] font-bold text-white/90 backdrop-blur-sm sm:top-3 sm:right-3 sm:text-[0.6rem]"
+                    style={{ transform: "translateZ(15px)" }}
+                >
+                    <span style={{ color: product.accentColor }}>{product.readiness}%</span>
+                </div>
 
-        {/* Navigation Controls - Touch-friendly on mobile */}
-        {showControls && (
-          <>
-            <button
-              onClick={prevSlide}
-              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 bg-white/90 hover:bg-white border border-steel/20 hover:border-teal/40 flex items-center justify-center transition-all duration-200 group z-10 touch-manipulation"
-              aria-label="Previous image"
-            >
-              <FaChevronLeft className="text-charcoal group-hover:text-teal text-xs sm:text-sm" />
-            </button>
-            <button
-              onClick={nextSlide}
-              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 bg-white/90 hover:bg-white border border-steel/20 hover:border-teal/40 flex items-center justify-center transition-all duration-200 group z-10 touch-manipulation"
-              aria-label="Next image"
-            >
-              <FaChevronRight className="text-charcoal group-hover:text-teal text-xs sm:text-sm" />
-            </button>
-          </>
-        )}
+                {/* BOTTOM HOVER LABEL — small, non-intrusive */}
+                <motion.div
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{
+                        opacity: isHovered ? 1 : 0,
+                        y: isHovered ? 0 : 12,
+                    }}
+                    transition={{ duration: 0.18 }}
+                    className="pointer-events-none absolute inset-x-2 bottom-2 rounded-xl bg-slate-950/55 px-3 py-2 text-xs text-white/90 backdrop-blur-md"
+                    style={{ transform: "translateZ(15px)" }}
+                >
+                    <div className="flex items-center justify-between gap-3">
+                        <p className="line-clamp-1 text-[0.6rem] font-medium tracking-wide sm:text-[0.65rem]">
+                            {product.title}
+                        </p>
+                        <span className="text-[0.55rem] uppercase text-teal-200/90">View</span>
+                    </div>
+                </motion.div>
 
-        {/* Indicators - Responsive sizing and positioning */}
-        {showIndicators && (
-          <div className="absolute bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 flex gap-2 sm:gap-3 z-10">
-            {carouselData.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToSlide(index)}
-                className={`w-8 sm:w-12 h-1 transition-all duration-300 touch-manipulation ${
-                  index === currentIndex
-                    ? 'bg-teal'
-                    : 'bg-white/50 hover:bg-white/80'
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
-          </div>
-        )}
+                {/* SHINE — desktop only, motion safe */}
+                {!prefersReduced && (
+                    <motion.div
+                        className="pointer-events-none absolute inset-0 hidden md:block"
+                        style={{
+                            background: `radial-gradient(circle at ${(mx.get() + 0.5) * 100}% ${
+                                (my.get() + 0.5) * 100
+                            }%, rgba(255,255,255,0.28) 0%, transparent 55%)`,
+                        }}
+                        animate={{ opacity: isHovered ? 1 : 0 }}
+                        transition={{ duration: 0.2 }}
+                    />
+                )}
+            </div>
+        </motion.div>
+    );
+}
 
-        {/* Progress Bar - Responsive height */}
-        {autoPlay && (
-          <div className="absolute bottom-0 left-0 right-0 h-0.5 sm:h-1 bg-white/20">
+/* ----------------------------------------------------------------------------
+   MODAL (SCROLLABLE, MOBILE-SAFE)
+----------------------------------------------------------------------------- */
+function ProductModal({
+                          product,
+                          onClose,
+                      }: {
+    product: (typeof productData)[number] | null;
+    onClose: () => void;
+}) {
+    const prefersReduced = useReducedMotion();
+    if (!product) return null;
+
+    return (
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="fixed inset-0 z-[120] flex items-center justify-center bg-slate-950/90 p-3 sm:p-4 md:p-6 backdrop-blur-xl"
+            onClick={onClose}
+        >
             <motion.div
-              className="h-full bg-teal"
-              initial={{ width: '0%' }}
-              animate={{ width: '100%' }}
-              transition={{
-                duration: autoPlayInterval / 1000,
-                ease: 'linear',
-                repeat: Infinity
-              }}
-            />
-          </div>
-        )}
-      </div>
-    </div>
-  );
+                initial={{ scale: prefersReduced ? 1 : 0.94, opacity: 0, y: prefersReduced ? 0 : 16 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                transition={{ type: "spring", duration: prefersReduced ? 0.2 : 0.45 }}
+                className="relative flex max-h-[92vh] w-full max-w-5xl overflow-hidden rounded-2xl bg-white shadow-2xl sm:rounded-3xl"
+                onClick={(e) => e.stopPropagation()}
+                role="dialog"
+                aria-modal="true"
+                aria-label={product.title}
+            >
+                {/* close (44x44 min) */}
+                <button
+                    onClick={onClose}
+                    className="group absolute right-3 top-3 z-10 flex h-11 w-11 items-center justify-center rounded-lg bg-white shadow-lg transition-all duration-200 hover:bg-slate-100 sm:right-4 sm:top-4"
+                    aria-label="Close"
+                >
+                    <FaTimes className="text-base text-slate-700 transition-transform duration-200 group-hover:rotate-90" />
+                </button>
+
+                {/* scrollable container */}
+                <div className="grid max-h-[92vh] w-full grid-cols-1 overflow-y-auto md:grid-cols-5">
+                    {/* image side */}
+                    <div className="relative h-52 min-h-[210px] md:col-span-2 md:h-auto md:min-h-[420px]">
+                        <img
+                            src={product.image}
+                            alt={product.title}
+                            className="h-full w-full object-cover"
+                            loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/45 to-transparent" />
+
+                        {/* floating status */}
+                        <div className="absolute bottom-4 left-4 right-4">
+                            <div className="rounded-xl bg-white/95 p-3 backdrop-blur-md shadow-xl">
+                                <div className="flex items-center justify-between gap-3">
+                                    <div>
+                                        <p className="text-[0.6rem] uppercase tracking-[0.14em] text-slate-500">
+                                            System Status
+                                        </p>
+                                        <div className="mt-1 flex items-center gap-1.5">
+                                            <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
+                                            <span className="text-xs font-semibold text-slate-900">OPERATIONAL</span>
+                                        </div>
+                                    </div>
+                                    <div className="text-right">
+                                        <p
+                                            className="text-2xl font-bold leading-none"
+                                            style={{ color: product.accentColor }}
+                                        >
+                                            {product.readiness}%
+                                        </p>
+                                        <p className="text-[0.6rem] text-slate-500">Readiness</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* content side */}
+                    <div className="flex flex-col gap-4 p-6 xs:p-7 sm:p-8 md:col-span-3 md:p-10 lg:p-12">
+                        {/* badge */}
+                        <div className="inline-flex items-center gap-2 self-start rounded-lg bg-slate-100 px-3 py-1.5 text-[0.6rem] font-bold uppercase tracking-[0.14em] text-slate-800 sm:text-xs">
+                            <FaShieldAlt className="text-xs" style={{ color: product.accentColor }} />
+                            {product.category}
+                        </div>
+
+                        <h3 className="text-xl font-bold leading-tight text-slate-900 xs:text-2xl sm:text-3xl md:text-4xl">
+                            {product.title}
+                        </h3>
+                        <p className="text-sm leading-relaxed text-slate-600 sm:text-base md:text-lg">
+                            {product.description}
+                        </p>
+
+                        <div>
+                            <p className="mb-3 text-[0.65rem] font-bold uppercase tracking-[0.14em] text-slate-500 sm:text-xs">
+                                Technical Specifications
+                            </p>
+                            <div className="grid gap-2 sm:gap-3">
+                                {product.specs.map((spec, idx) => (
+                                    <motion.div
+                                        key={spec}
+                                        initial={{ opacity: 0, x: prefersReduced ? 0 : -15 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: 0.05 + idx * 0.05 }}
+                                        className="flex items-center gap-3 rounded-lg bg-slate-50 p-2.5 sm:rounded-xl sm:p-3"
+                                    >
+                                        <div
+                                            className="flex h-9 w-9 items-center justify-center rounded-lg sm:h-10 sm:w-10"
+                                            style={{ backgroundColor: `${product.accentColor}22` }}
+                                        >
+                                            <FaCheckCircle className="text-sm" style={{ color: product.accentColor }} />
+                                        </div>
+                                        <span className="text-sm font-medium text-slate-800">{spec}</span>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* CTAs */}
+                        <div className="flex flex-col gap-2.5 sm:flex-row sm:gap-3">
+                            <a
+                                href="/contact"
+                                className="flex w-full items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold text-white shadow-md transition-all hover:shadow-lg sm:rounded-xl sm:py-3.5"
+                                style={{ backgroundColor: product.accentColor }}
+                            >
+                                Request Information
+                                <FaArrowRight className="text-xs" />
+                            </a>
+                            <button
+                                className="w-full rounded-lg border-2 px-5 py-3 text-sm font-semibold transition-all hover:bg-slate-100 sm:rounded-xl sm:py-3.5"
+                                style={{ borderColor: "product.accentColor", color: product.accentColor }}
+                            >
+                                Download Specs
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </motion.div>
+        </motion.div>
+    );
+}
+
+/* ----------------------------------------------------------------------------
+   EXPORTED COMPONENT
+   - 1 col: phones
+   - 2 col: small tablets / big phones
+   - 3 col: normal desktops
+   - 4 col: wide monitors
+----------------------------------------------------------------------------- */
+export function HeroCarousel({ className = "" }: ProductDisplayProps) {
+    const [activeProduct, setActiveProduct] = useState<(typeof productData)[number] | null>(null);
+
+    return (
+        <div className={`relative ${className}`}>
+            {/* responsive container */}
+            <div className="grid grid-cols-1 gap-4 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+                {productData.map((product, index) => (
+                    <ImageTile
+                        key={product.id}
+                        product={product}
+                        index={index}
+                        onOpen={() => setActiveProduct(product)}
+                    />
+                ))}
+            </div>
+
+            {/* modal */}
+            {activeProduct && (
+                <ProductModal product={activeProduct} onClose={() => setActiveProduct(null)} />
+            )}
+        </div>
+    );
 }

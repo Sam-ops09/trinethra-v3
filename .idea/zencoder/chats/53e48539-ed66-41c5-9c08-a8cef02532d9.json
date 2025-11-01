@@ -1,0 +1,568 @@
+{
+    "checksum": "df1be7e967bc0b9d7341d01382dc53733fe9bdd0e58bdb85129a731251289157",
+    "data": {
+    "id": "53e48539-ed66-41c5-9c08-a8cef02532d9",
+    "createdAt": 1761670569990,
+    "updatedAt": 1761672505754,
+    "title": "Dynamic Professional Redesign Flow",
+    "messages": [
+        {
+            "id": "ab04c62f-7478-4b9a-8779-ab5ee3b278b3",
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "redesign this entirely including all the components. but use the same colors. When someone looks at it, it should have a proper flow, professional and dynamic. "
+                },
+                {
+                    "type": "fileMention",
+                    "fileName": "index.tsx",
+                    "path": "client/src/pages/home/index.tsx",
+                    "fsPath": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/pages/home/index.tsx"
+                }
+            ],
+            "context": {
+                "currentFile": {
+                    "path": "client/src/pages/home/index.tsx",
+                    "fsPath": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/pages/home/index.tsx",
+                    "sources": [
+                        "opened_tab"
+                    ],
+                    "content": "import React from 'react';\nimport { Layout } from '@/components/Layout';\nimport { HomeHero } from './sections/HomeHero';\nimport { HomeSolutions } from './sections/HomeSolutions';\nimport { HomeCapabilities } from './sections/HomeCapabilities';\nimport { HomeProcess } from './sections/HomeProcess';\nimport { HomeAssurance } from './sections/HomeAssurance';\nimport { HomeCTA } from './sections/HomeCTA';\nimport { TrustedPartners } from '@/components/TrustedPartners';\nimport {\n  homeSeo,\n  homeStructuredData,\n  partners\n} from '@/content/home';\n\nexport default function HomePage() {\n  return (\n    <Layout\n      title={homeSeo.title}\n      description={homeSeo.description}\n      ogType={homeSeo.ogType}\n      keywords={homeSeo.keywords}\n      structuredData={JSON.stringify(homeStructuredData)}\n    >\n      <div className=\"min-h-screen bg-white\">\n        {/* Hero Section */}\n        <HomeHero />\n\n        {/* Solutions Section */}\n        <HomeSolutions />\n\n        {/* Capabilities Section */}\n        <HomeCapabilities />\n\n        {/* Partners Section */}\n        <TrustedPartners\n          partners={partners}\n          heading=\"Strategic Partners\"\n          description=\"Collaborating with leading defense organizations\"\n        />\n\n        {/* Process Section */}\n        <HomeProcess />\n\n        {/* Assurance Section */}\n        <HomeAssurance />\n\n        {/* CTA Section */}\n        <HomeCTA />\n      </div>\n    </Layout>\n  );\n}",
+                    "language": "typescript jsx"
+                },
+                "usedRules": [
+                    "zen-rules://user/custom",
+                    "zen-rules://repo/.zencoder/rules/repo.md"
+                ]
+            },
+            "createdAt": 1761672369243,
+            "isInternal": false,
+            "rawContent": {
+                "type": "doc",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": "redesign this entirely including all the components. but use the same colors. When someone looks at it, it should have a proper flow, professional and dynamic. "
+                            },
+                            {
+                                "type": "mention",
+                                "attrs": {
+                                    "label": "index.tsx",
+                                    "summary": null,
+                                    "description": null,
+                                    "type": "file",
+                                    "path": "client/src/pages/home/index.tsx",
+                                    "fsPath": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/pages/home/index.tsx",
+                                    "contentType": null,
+                                    "name": null,
+                                    "uri": null,
+                                    "tooltip": null,
+                                    "sessionId": null,
+                                    "timestamp": null,
+                                    "content": null
+                                }
+                            },
+                            {
+                                "type": "text",
+                                "text": " "
+                            }
+                        ]
+                    }
+                ]
+            },
+            "autoAppliedRules": [
+                {
+                    "name": "User AI Instruction",
+                    "description": "User AI Instruction",
+                    "uri": "zen-rules://user/custom",
+                    "content": "•\tAlways provide original, creative website ideas with suggestions for distinguishing features, design concepts, and user experience improvements.\n\t•\tWhen asked for website code, give fully functional, modular, and well-commented code examples. Include suggestions for structuring files, libraries/frameworks to use, and explain why.\n\t•\tFor machine learning questions, summarize the key concepts, explain the logic/intuition behind algorithms, and when relevant, show well-documented code (preferably in Python, using popular frameworks like scikit-learn, TensorFlow, or PyTorch).\n\t•\tWhen requested, create small, complete project blueprints—detailing features, architectures, and step-by-step development plans.\n\t•\tOffer best practices, optimization tips, pros and cons, and potential pitfalls for any code or approach. Cite up-to-date resources when possible.\n\t•\tWhen asked about algorithms, clearly explain their time and space complexity, use cases, and potential improvements. Support explanations with pseudocode and real code.\n\t•\tNever generate generic or repetitive ideas; always provide at least one unique angle, novel feature, or application.\n\t•\tBefore giving any solution, clarify assumptions and suggest ideas for possible extensions or creative improvements.\n\t•\tGently point out edge cases and encourage testing and validation.\n\t•\tWhere helpful, summarize with bullet points or tables for clarity.\n\n Be innovative and think outside the box.",
+                    "alwaysApply": true
+                },
+                {
+                    "name": "Repository Information Overview",
+                    "description": "Repository Information Overview",
+                    "uri": "zen-rules://repo/.zencoder/rules/repo.md",
+                    "mimeType": "text/markdown",
+                    "content": "# Defense Solutions Web Application Information\n\n## Summary\nA modern web application for defense solutions built with React, Express, and TypeScript. The application features a client-side React frontend and a server-side Express backend, with Supabase integration for database operations.\n\n## Structure\n- `/client` - React frontend application with components, pages, and assets\n- `/server` - Express backend server with API routes and database integration\n- `/shared` - Shared types and database schemas using Drizzle ORM\n- `/api` - API route handlers for serverless deployment\n\n## Language & Runtime\n**Language**: TypeScript/JavaScript\n**Version**: TypeScript 5.6.3\n**Build System**: Vite 5.4.19\n**Package Manager**: pnpm (inferred from build commands)\n\n## Dependencies\n**Main Dependencies**:\n- React 18.3.1 - Frontend UI library\n- Express 4.21.2 - Backend server framework\n- Supabase - Backend as a service for database operations\n- Drizzle ORM - Database ORM with PostgreSQL support\n- TailwindCSS - Utility-first CSS framework\n- Wouter - Routing library for React\n- Tanstack Query - Data fetching library\n- Zod - Schema validation library\n\n**Development Dependencies**:\n- Vite - Build tool and development server\n- TypeScript - Static type checking\n- ESBuild - JavaScript bundler\n- Drizzle Kit - Database migration tools\n\n## Build & Installation\n```bash\n# Install dependencies\npnpm install\n\n# Development mode\npnpm dev\n\n# Production build\npnpm build\n\n# Start production server\npnpm start\n\n# Database schema push\npnpm db:push\n```\n\n## Database\n**Type**: PostgreSQL (via Supabase)\n**ORM**: Drizzle ORM\n**Schema**: Defined in `shared/schema.ts`\n**Tables**:\n- users - User authentication\n- contact_submissions - Contact form submissions\n\n## Deployment\n**Platform**: Vercel (configured via vercel.json)\n**Build Command**: `pnpm build`\n**Output Directory**: `dist/public`\n**Environment Variables**:\n- PORT - Server port (default: 3000)\n- DATABASE_URL - PostgreSQL connection string\n- SUPABASE_URL - Supabase project URL\n- SUPABASE_ANON_KEY - Supabase anonymous key\n\n## Client Application\n**Framework**: React with TypeScript\n**Routing**: Wouter\n**State Management**: React Query\n**UI Components**: Custom components with Radix UI primitives\n**Styling**: TailwindCSS with SCSS\n**Entry Point**: `client/src/main.tsx`\n\n## Server Application\n**Framework**: Express\n**API Routes**: RESTful endpoints in `/api` directory\n**Database Access**: Supabase client\n**Entry Point**: `server/index.ts`\n**Static Serving**: Production build serves static files from `dist/public`\n\n## Testing\n**Target Framework**: Playwright",
+                    "alwaysApply": true
+                }
+            ]
+        },
+        {
+            "id": "resp_0982ff941ff3772a016900fcb759a88195aa1167ccf96c345e",
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "thought",
+                    "text": "**Organizing redesign tasks**\n\nI need to plan the home page redesign by breaking it into multiple component tasks using TodoWrite, while keeping the output minimal and formatted."
+                },
+                {
+                    "type": "cliToolCall",
+                    "toolCallId": "call_PBQpvlZVU1UMwmvDYH4QyY8o",
+                    "toolName": "TodoWrite",
+                    "status": "SUCCESS",
+                    "input": {
+                        "todos": [
+                            {
+                                "id": "1",
+                                "content": "Review existing home page sections and gather color palette references",
+                                "status": "pending"
+                            },
+                            {
+                                "id": "2",
+                                "content": "Redesign home page layout and update section components with new structure",
+                                "status": "pending"
+                            },
+                            {
+                                "id": "3",
+                                "content": "Ensure redesigned page maintains color scheme and cohesive flow",
+                                "status": "pending"
+                            }
+                        ]
+                    },
+                    "output": "[{\"id\":\"1\",\"content\":\"Review existing home page sections and gather color palette references\",\"status\":\"pending\"},{\"id\":\"2\",\"content\":\"Redesign home page layout and update section components with new structure\",\"status\":\"pending\"},{\"id\":\"3\",\"content\":\"Ensure redesigned page maintains color scheme and cohesive flow\",\"status\":\"pending\"}]"
+                }
+            ],
+            "context": {
+                "author": "Code agent",
+                "operationId": "4fe617d3-82b7-4e19-98a4-0c43f19869f4",
+                "cliSessionId": "93f4cdce-a39f-4894-b44e-fc4768026bed"
+            },
+            "createdAt": 1761672384896,
+            "isInternal": false
+        },
+        {
+            "id": "resp_0982ff941ff3772a016900fcc6c51c81959b7b517b8ebdfb37",
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "thought",
+                    "text": "**Marking task in progress**"
+                },
+                {
+                    "type": "cliToolCall",
+                    "toolCallId": "call_kReujqrM2HqeCSmoCs2O4bQ4",
+                    "toolName": "TodoWrite",
+                    "status": "SUCCESS",
+                    "input": {
+                        "todos": [
+                            {
+                                "id": "1",
+                                "content": "Review existing home page sections and gather color palette references",
+                                "status": "in_progress"
+                            },
+                            {
+                                "id": "2",
+                                "content": "Redesign home page layout and update section components with new structure",
+                                "status": "pending"
+                            },
+                            {
+                                "id": "3",
+                                "content": "Ensure redesigned page maintains color scheme and cohesive flow",
+                                "status": "pending"
+                            }
+                        ]
+                    },
+                    "output": "[{\"id\":\"1\",\"content\":\"Review existing home page sections and gather color palette references\",\"status\":\"in_progress\"},{\"id\":\"2\",\"content\":\"Redesign home page layout and update section components with new structure\",\"status\":\"pending\"},{\"id\":\"3\",\"content\":\"Ensure redesigned page maintains color scheme and cohesive flow\",\"status\":\"pending\"}]"
+                }
+            ],
+            "context": {
+                "author": "Code agent",
+                "operationId": "4fe617d3-82b7-4e19-98a4-0c43f19869f4",
+                "cliSessionId": "93f4cdce-a39f-4894-b44e-fc4768026bed"
+            },
+            "createdAt": 1761672392707,
+            "isInternal": false
+        },
+        {
+            "id": "resp_0982ff941ff3772a016900fcca77e4819596e389cfa0ffbfa5",
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "thought",
+                    "text": "**Reviewing color scheme and page sections**"
+                },
+                {
+                    "type": "cliToolCall",
+                    "toolCallId": "call_O740IHbvSK6oby66lH0LF9mt",
+                    "toolName": "Read",
+                    "status": "ERROR",
+                    "input": {
+                        "file_path": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/tailwind.config.ts",
+                        "offset": 1,
+                        "limit": 400
+                    },
+                    "output": "Error reading file /Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/tailwind.config.ts: File not found"
+                }
+            ],
+            "context": {
+                "author": "Code agent",
+                "operationId": "4fe617d3-82b7-4e19-98a4-0c43f19869f4",
+                "cliSessionId": "93f4cdce-a39f-4894-b44e-fc4768026bed"
+            },
+            "createdAt": 1761672399607,
+            "isInternal": false
+        },
+        {
+            "id": "resp_0982ff941ff3772a016900fcd10844819594fe9b3969a1623d",
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "thought",
+                    "text": "**Checking project root for Tailwind config**"
+                },
+                {
+                    "type": "cliToolCall",
+                    "toolCallId": "call_A5p5ujS6ADzytcvmoxtAVFGO",
+                    "toolName": "LS",
+                    "status": "SUCCESS",
+                    "input": {
+                        "path": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client",
+                        "depth": 2
+                    },
+                    "output": "- /Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/\n  - public/\n    - assets/\n      - ...\n  - src/\n    - assets/\n      - ...\n    - components/\n      - ...\n    - content/\n      - ...\n    - hooks/\n      - ...\n    - lib/\n      - ...\n    - pages/\n      - ...\n    - styles/\n      - ...\n    - App.tsx (1.26 KB)\n    - index.css (9.41 KB)\n    - main.tsx (157 B)\n  - index.html (527 B)\n\n(2 items were git-ignored)"
+                }
+            ],
+            "context": {
+                "author": "Code agent",
+                "operationId": "4fe617d3-82b7-4e19-98a4-0c43f19869f4",
+                "cliSessionId": "93f4cdce-a39f-4894-b44e-fc4768026bed"
+            },
+            "createdAt": 1761672403556,
+            "isInternal": false
+        },
+        {
+            "id": "resp_0982ff941ff3772a016900fcd50bb88195a136b444521fe691",
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "thought",
+                    "text": "**Searching for Tailwind config**"
+                },
+                {
+                    "type": "cliToolCall",
+                    "toolCallId": "call_eawS9sIgesxemqctqNf4tsJT",
+                    "toolName": "Glob",
+                    "status": "SUCCESS",
+                    "input": {
+                        "path": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3",
+                        "pattern": "**/tailwind.config.*"
+                    },
+                    "output": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/tailwind.config.ts"
+                }
+            ],
+            "context": {
+                "author": "Code agent",
+                "operationId": "4fe617d3-82b7-4e19-98a4-0c43f19869f4",
+                "cliSessionId": "93f4cdce-a39f-4894-b44e-fc4768026bed"
+            },
+            "createdAt": 1761672407337,
+            "isInternal": false
+        },
+        {
+            "id": "resp_0982ff941ff3772a016900fcd8bd3c81958aad9af85f4b5bc1",
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "thought",
+                    "text": "**Requesting more content**"
+                },
+                {
+                    "type": "cliToolCall",
+                    "toolCallId": "call_t4xscUpGhtg8RD3hyYRKXbTc",
+                    "toolName": "Read",
+                    "status": "SUCCESS",
+                    "input": {
+                        "file_path": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/tailwind.config.ts",
+                        "offset": 1,
+                        "limit": 400
+                    },
+                    "output": "Lines 2-92 of 92 from /Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/tailwind.config.ts:\n\nexport default {\n  darkMode: [\"class\"],\n  content: [\"./client/index.html\", \"./client/src/**/*.{js,jsx,ts,tsx}\"],\n  theme: {\n    extend: {\n      screens: {\n        xs: '480px', // added for finer mobile responsiveness\n      },\n      fontFamily: {\n        sans: ['Inter', 'sans-serif'],\n        condensed: ['Barlow Condensed', 'sans-serif'],\n      },\n      borderRadius: {\n        lg: \"var(--radius)\",\n        md: \"calc(var(--radius) - 2px)\",\n        sm: \"calc(var(--radius) - 4px)\",\n      },\n      colors: {\n        background: \"hsl(var(--background))\",\n        foreground: \"hsl(var(--foreground))\",\n        forest: \"hsl(var(--forest))\",\n        cream: \"hsl(var(--cream))\",\n        navy: \"hsl(var(--navy))\",\n        steel: \"hsl(var(--steel))\",\n        charcoal: \"hsl(var(--charcoal))\",\n        alert: \"hsl(var(--alert))\",\n        signal: \"hsl(var(--signal))\",\n        teal: \"hsl(var(--teal))\",\n        card: {\n          DEFAULT: \"hsl(var(--card))\",\n          foreground: \"hsl(var(--card-foreground))\",\n        },\n        popover: {\n          DEFAULT: \"hsl(var(--popover))\",\n          foreground: \"hsl(var(--popover-foreground))\",\n        },\n        primary: {\n          DEFAULT: \"hsl(var(--primary))\",\n          foreground: \"hsl(var(--primary-foreground))\",\n        },\n        secondary: {\n          DEFAULT: \"hsl(var(--secondary))\",\n          foreground: \"hsl(var(--secondary-foreground))\",\n        },\n        muted: {\n          DEFAULT: \"hsl(var(--muted))\",\n          foreground: \"hsl(var(--muted-foreground))\",\n        },\n        accent: {\n          DEFAULT: \"hsl(var(--accent))\",\n          foreground: \"hsl(var(--accent-foreground))\",\n        },\n        destructive: {\n          DEFAULT: \"hsl(var(--destructive))\",\n          foreground: \"hsl(var(--destructive-foreground))\",\n        },\n        border: \"hsl(var(--border))\",\n        input: \"hsl(var(--input))\",\n        ring: \"hsl(var(--ring))\",\n        chart: {\n          \"1\": \"hsl(var(--chart-1))\",\n          \"2\": \"hsl(var(--chart-2))\",\n          \"3\": \"hsl(var(--chart-3))\",\n          \"4\": \"hsl(var(--chart-4))\",\n          \"5\": \"hsl(var(--chart-5))\",\n        },\n        sidebar: {\n          DEFAULT: \"hsl(var(--sidebar-background))\",\n            foreground: \"hsl(var(--sidebar-foreground))\",\n            primary: \"hsl(var(--sidebar-primary))\",\n            \"primary-foreground\": \"hsl(var(--sidebar-primary-foreground))\",\n            accent: \"hsl(var(--sidebar-accent))\",\n            \"accent-foreground\": \"hsl(var(--sidebar-accent-foreground))\",\n            border: \"hsl(var(--sidebar-border))\",\n            ring: \"hsl(var(--sidebar-ring))\",\n        },\n      },\n      keyframes: {\n        \"accordion-down\": { from: { height: \"0\" }, to: { height: \"var(--radix-accordion-content-height)\" } },\n        \"accordion-up\": { from: { height: \"var(--radix-accordion-content-height)\" }, to: { height: \"0\" } },\n      },\n      animation: {\n        \"accordion-down\": \"accordion-down 0.2s ease-out\",\n        \"accordion-up\": \"accordion-up 0.2s ease-out\",\n      },\n    },\n  },\n  plugins: [require(\"tailwindcss-animate\"), require(\"@tailwindcss/typography\")],\n} satisfies Config;\n"
+                }
+            ],
+            "context": {
+                "author": "Code agent",
+                "operationId": "4fe617d3-82b7-4e19-98a4-0c43f19869f4",
+                "cliSessionId": "93f4cdce-a39f-4894-b44e-fc4768026bed"
+            },
+            "createdAt": 1761672412278,
+            "isInternal": false
+        },
+        {
+            "id": "resp_0982ff941ff3772a016900fce2aab88195bb80771fa3550940",
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "thought",
+                    "text": "**Reviewing color palette usage**"
+                },
+                {
+                    "type": "cliToolCall",
+                    "toolCallId": "call_7els1D652NbCxrKdLd0Hn5rD",
+                    "toolName": "LS",
+                    "status": "SUCCESS",
+                    "input": {
+                        "path": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/pages/home",
+                        "depth": 2
+                    },
+                    "output": "- /Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/pages/home/\n  - sections/\n    - HomeAssurance.tsx (7.65 KB)\n    - HomeCapabilities.tsx (5.28 KB)\n    - HomeCTA.tsx (6.13 KB)\n    - HomeHero.tsx (6.25 KB)\n    - HomeProcess.tsx (7.24 KB)\n    - HomeSolutions.tsx (5.09 KB)\n  - index.tsx (1.4 KB)\n  - motion-presets.ts (2.09 KB)"
+                }
+            ],
+            "context": {
+                "author": "Code agent",
+                "operationId": "4fe617d3-82b7-4e19-98a4-0c43f19869f4",
+                "cliSessionId": "93f4cdce-a39f-4894-b44e-fc4768026bed"
+            },
+            "createdAt": 1761672421996,
+            "isInternal": false
+        },
+        {
+            "id": "resp_0982ff941ff3772a016900fce836c48195a41b8863c777e0e5",
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "thought",
+                    "text": "**Planning full redesign approach**"
+                },
+                {
+                    "type": "cliToolCall",
+                    "toolCallId": "call_j2331AQgcBwikXgtzBVkNmTH",
+                    "toolName": "Read",
+                    "status": "SUCCESS",
+                    "input": {
+                        "file_path": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/pages/home/sections/HomeHero.tsx"
+                    },
+                    "output": "Lines 1-139 of 139 from /Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/pages/home/sections/HomeHero.tsx:\nimport React from 'react';\nimport { motion } from 'framer-motion';\nimport { Link } from 'wouter';\nimport { Button } from '@/components/ui/button';\nimport { HeroCarousel } from '@/components/HeroCarousel';\nimport { heroStats } from '@/content/home';\nimport { FaArrowRight } from 'react-icons/fa';\nimport { fadeInUp, staggerChildren } from '../motion-presets';\n\nexport function HomeHero() {\n  return (\n    <section className=\"relative min-h-screen bg-white overflow-hidden\" aria-label=\"Hero Section\">\n      {/* Background Elements */}\n      <div className=\"absolute inset-0 opacity-[0.02]\">\n        <div className=\"absolute inset-0\" style={{\n          backgroundImage: `linear-gradient(to right, hsl(var(--navy)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--navy)) 1px, transparent 1px)`,\n          backgroundSize: '120px 120px'\n        }} />\n      </div>\n      \n      <div className=\"relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 lg:pt-32 pb-12 sm:pb-16\">\n        <div className=\"grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center\">\n          \n          {/* Left Content */}\n          <motion.div \n            initial=\"hidden\" \n            animate=\"visible\" \n            variants={staggerChildren}\n            className=\"text-left order-2 lg:order-1\"\n          >\n            {/* Badge */}\n            <motion.div variants={fadeInUp} className=\"mb-8\">\n              <div className=\"inline-flex items-center gap-3 bg-cream px-5 py-2 border border-forest/10\">\n                <div className=\"w-2 h-2 bg-teal\" />\n                <span className=\"text-xs font-semibold text-charcoal tracking-[0.1em] uppercase\">\n                  Defense Technology Leader\n                </span>\n              </div>\n            </motion.div>\n            \n            {/* Main Heading */}\n            <motion.h1 \n              variants={fadeInUp}\n              className=\"text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-charcoal leading-[0.9] mb-6 sm:mb-8 tracking-tight\"\n            >\n              Advanced\n              <span className=\"block font-semibold\">Defense Systems</span>\n            </motion.h1>\n            \n            {/* Description */}\n            <motion.p \n              variants={fadeInUp}\n              className=\"text-base sm:text-lg text-steel leading-relaxed mb-8 sm:mb-10 lg:mb-12 max-w-xl font-light\"\n            >\n              Engineering mission-critical solutions for over a decade. \n              Specialized in aerospace systems, tactical computing, \n              and defense-grade hardware platforms.\n            </motion.p>\n            \n            {/* CTA Buttons */}\n            <motion.div \n              variants={fadeInUp}\n              className=\"flex flex-col sm:flex-row gap-3 sm:gap-4 mb-12 sm:mb-16\"\n            >\n              <Link href=\"/solutions\">\n                <Button className=\"bg-forest hover:bg-forest/90 text-cream px-10 py-6 text-sm font-medium transition-all duration-200 inline-flex items-center group border-none tracking-wide\">\n                  EXPLORE SOLUTIONS\n                  <FaArrowRight className=\"ml-3 text-xs group-hover:translate-x-1 transition-transform\" />\n                </Button>\n              </Link>\n              <Link href=\"/contact\">\n                <Button \n                  variant=\"outline\" \n                  className=\"bg-transparent hover:bg-charcoal hover:text-cream border border-charcoal/20 hover:border-charcoal text-charcoal px-10 py-6 text-sm font-medium transition-all duration-200 inline-flex items-center tracking-wide\"\n                >\n                  GET CONSULTATION\n                </Button>\n              </Link>\n            </motion.div>\n            \n            {/* Stats */}\n            <motion.div \n              variants={fadeInUp}\n              className=\"grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6 sm:gap-8 pt-6 sm:pt-8 border-t border-steel/10\"\n            >\n              {heroStats.map((stat, index) => (\n                <div key={stat.label} className=\"text-left\">\n                  <div className=\"text-2xl sm:text-3xl lg:text-4xl font-light text-teal mb-2\">\n                    {stat.value}\n                  </div>\n                  <div className=\"text-xs text-steel uppercase tracking-wider font-medium leading-tight\">\n                    {stat.label}\n                  </div>\n                </div>\n              ))}\n            </motion.div>\n          </motion.div>\n          \n          {/* Right Content - Carousel */}\n          <motion.div\n            initial={{ opacity: 0, x: 50 }}\n            animate={{ opacity: 1, x: 0 }}\n            transition={{ duration: 1, delay: 0.3 }}\n            className=\"relative order-1 lg:order-2\"\n          >\n            <div className=\"relative\">\n              {/* Decorative frame - Hidden on mobile */}\n              <div className=\"absolute -top-4 -left-4 w-full h-full border-2 border-teal/20 z-0 hidden sm:block\" />\n              <div className=\"absolute -bottom-4 -right-4 w-full h-full border border-forest/20 z-0 hidden sm:block\" />\n              \n              {/* Carousel Container */}\n              <div className=\"relative bg-white border border-steel/10 overflow-hidden z-10\">\n                <HeroCarousel \n                  showIndicators={true}\n                  showControls={false}\n                  showCaptions={true}\n                  className=\"aspect-[4/3] sm:aspect-[4/3]\"\n                  autoPlay={true}\n                  autoPlayInterval={6000}\n                />\n              </div>\n              \n              {/* Floating Data Points - Responsive positioning */}\n              <div className=\"absolute -top-4 sm:-top-8 -right-4 sm:-right-8 bg-cream border border-teal/20 p-3 sm:p-4 z-20\">\n                <div className=\"text-xs text-steel uppercase tracking-wider mb-1\">Mission Ready</div>\n                <div className=\"text-sm sm:text-lg font-semibold text-charcoal\">100%</div>\n              </div>\n              \n              <div className=\"absolute -bottom-4 sm:-bottom-8 -left-4 sm:-left-8 bg-white border border-forest/20 p-3 sm:p-4 z-20\">\n                <div className=\"text-xs text-steel uppercase tracking-wider mb-1\">Systems Deployed</div>\n                <div className=\"text-sm sm:text-lg font-semibold text-charcoal\">250+</div>\n              </div>\n            </div>\n          </motion.div>\n        </div>\n      </div>\n    </section>\n  );\n}"
+                }
+            ],
+            "context": {
+                "author": "Code agent",
+                "operationId": "4fe617d3-82b7-4e19-98a4-0c43f19869f4",
+                "cliSessionId": "93f4cdce-a39f-4894-b44e-fc4768026bed"
+            },
+            "createdAt": 1761672428832,
+            "isInternal": false
+        },
+        {
+            "id": "resp_0982ff941ff3772a016900fcee4bbc8195ac8225ae7f799908",
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "thought",
+                    "text": "**Identifying need for redesign**"
+                },
+                {
+                    "type": "cliToolCall",
+                    "toolCallId": "call_xB6Wvc9v36OmncGfntjexXPJ",
+                    "toolName": "Read",
+                    "status": "SUCCESS",
+                    "input": {
+                        "file_path": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/pages/home/sections/HomeSolutions.tsx"
+                    },
+                    "output": "Lines 1-119 of 119 from /Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/pages/home/sections/HomeSolutions.tsx:\nimport React from 'react';\nimport { motion } from 'framer-motion';\nimport { Link } from 'wouter';\nimport { integratedSolutions } from '@/content/home';\nimport { fadeInUp, staggerChildren } from '../motion-presets';\nimport { FaArrowRight } from 'react-icons/fa';\n\nexport function HomeSolutions() {\n  return (\n    <section className=\"py-16 sm:py-20 lg:py-32 bg-cream/30\" aria-labelledby=\"solutions-heading\">\n      <div className=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8\">\n        {/* Section Header */}\n        <motion.div\n          initial=\"hidden\"\n          whileInView=\"visible\"\n          viewport={{ once: true, margin: '-100px' }}\n          variants={staggerChildren}\n          className=\"text-center mb-12 sm:mb-16 lg:mb-20\"\n        >\n          <motion.div variants={fadeInUp} className=\"mb-6\">\n            <div className=\"inline-flex items-center gap-3\">\n              <div className=\"w-8 h-px bg-teal\" />\n              <span className=\"text-xs font-semibold text-steel tracking-[0.1em] uppercase\">\n                Integrated Solutions\n              </span>\n              <div className=\"w-8 h-px bg-teal\" />\n            </div>\n          </motion.div>\n          \n          <motion.h2 \n            variants={fadeInUp}\n            id=\"solutions-heading\" \n            className=\"text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-charcoal leading-tight mb-4 sm:mb-6\"\n          >\n            Mission-Critical\n            <span className=\"block font-semibold\">Technology Platforms</span>\n          </motion.h2>\n          \n          <motion.p \n            variants={fadeInUp}\n            className=\"text-base sm:text-lg text-steel max-w-3xl mx-auto leading-relaxed font-light\"\n          >\n            Engineered for the most demanding operational environments, our solutions \n            deliver uncompromising performance when failure is not an option.\n          </motion.p>\n        </motion.div>\n\n        {/* Solutions Grid */}\n        <motion.div\n          className=\"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-steel/10\"\n          initial=\"hidden\"\n          whileInView=\"visible\"\n          viewport={{ once: true, margin: '-100px' }}\n          variants={staggerChildren}\n        >\n          {integratedSolutions.map((solution, index) => {\n            const Icon = solution.icon;\n            return (\n              <motion.div\n                key={solution.title}\n                variants={fadeInUp}\n                className=\"bg-white p-6 sm:p-8 lg:p-12 group hover:bg-cream/50 transition-all duration-500 relative overflow-hidden\"\n              >\n                {/* Index Number */}\n                <div className=\"absolute top-4 sm:top-6 right-4 sm:right-6 text-4xl sm:text-6xl font-light text-teal/5 leading-none\">\n                  {String(index + 1).padStart(2, '0')}\n                </div>\n\n                {/* Icon */}\n                <div className=\"mb-6 sm:mb-8 relative z-10\">\n                  <div className=\"w-12 h-12 sm:w-16 sm:h-16 border-2 border-forest/10 flex items-center justify-center group-hover:border-teal/30 transition-colors\">\n                    <Icon className=\"text-lg sm:text-2xl text-forest group-hover:text-teal transition-colors\" />\n                  </div>\n                </div>\n\n                {/* Content */}\n                <div className=\"relative z-10\">\n                  <h3 className=\"text-lg sm:text-xl font-semibold text-charcoal mb-3 sm:mb-4 leading-tight\">\n                    {solution.title}\n                  </h3>\n                  \n                  <p className=\"text-steel text-sm leading-relaxed mb-6 sm:mb-8 font-light\">\n                    {solution.description}\n                  </p>\n\n                  {/* Capabilities */}\n                  <div className=\"mb-6 sm:mb-8\">\n                    <div className=\"text-xs uppercase tracking-wider text-steel mb-3 sm:mb-4 font-semibold\">\n                      Key Capabilities\n                    </div>\n                    <div className=\"space-y-2\">\n                      {solution.capabilities.map((capability) => (\n                        <div key={capability} className=\"flex items-center gap-3\">\n                          <div className=\"w-1.5 h-1.5 bg-teal flex-shrink-0\" />\n                          <span className=\"text-xs text-charcoal font-light\">{capability}</span>\n                        </div>\n                      ))}\n                    </div>\n                  </div>\n\n                  {/* Learn More Link */}\n                  <Link href={solution.link}>\n                    <button className=\"inline-flex items-center gap-2 text-xs font-semibold text-forest hover:text-teal transition-colors tracking-wider uppercase group\">\n                      Learn More\n                      <FaArrowRight className=\"text-xs group-hover:translate-x-1 transition-transform\" />\n                    </button>\n                  </Link>\n                </div>\n\n                {/* Hover Effect */}\n                <div className=\"absolute inset-0 bg-gradient-to-br from-teal/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500\" />\n              </motion.div>\n            );\n          })}\n        </motion.div>\n      </div>\n    </section>\n  );\n}"
+                }
+            ],
+            "context": {
+                "author": "Code agent",
+                "operationId": "4fe617d3-82b7-4e19-98a4-0c43f19869f4",
+                "cliSessionId": "93f4cdce-a39f-4894-b44e-fc4768026bed"
+            },
+            "createdAt": 1761672432821,
+            "isInternal": false
+        },
+        {
+            "id": "resp_0982ff941ff3772a016900fcf27b1c81958ba0110970598990",
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "thought",
+                    "text": "**Considering next steps**"
+                },
+                {
+                    "type": "cliToolCall",
+                    "toolCallId": "call_LvLAdO7ncfhB0DHuDfIBiOna",
+                    "toolName": "Read",
+                    "status": "SUCCESS",
+                    "input": {
+                        "file_path": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/pages/home/sections/HomeCapabilities.tsx"
+                    },
+                    "output": "Lines 1-127 of 127 from /Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/pages/home/sections/HomeCapabilities.tsx:\nimport React from 'react';\nimport { motion } from 'framer-motion';\nimport { capabilities } from '@/content/home';\nimport { fadeInUp, staggerChildren } from '../motion-presets';\n\nexport function HomeCapabilities() {\n  return (\n    <section className=\"py-16 sm:py-20 lg:py-32 bg-white\" aria-labelledby=\"capabilities-heading\">\n      <div className=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8\">\n        {/* Section Header */}\n        <motion.div\n          initial=\"hidden\"\n          whileInView=\"visible\"\n          viewport={{ once: true, margin: '-100px' }}\n          variants={staggerChildren}\n          className=\"text-center mb-12 sm:mb-16 lg:mb-20\"\n        >\n          <motion.div variants={fadeInUp} className=\"mb-6\">\n            <div className=\"inline-flex items-center gap-3\">\n              <div className=\"w-8 h-px bg-forest\" />\n              <span className=\"text-xs font-semibold text-steel tracking-[0.1em] uppercase\">\n                Core Capabilities\n              </span>\n              <div className=\"w-8 h-px bg-forest\" />\n            </div>\n          </motion.div>\n          \n          <motion.h2 \n            variants={fadeInUp}\n            id=\"capabilities-heading\" \n            className=\"text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-charcoal leading-tight\"\n          >\n            Engineering\n            <span className=\"block font-semibold\">Excellence</span>\n          </motion.h2>\n        </motion.div>\n\n        {/* Capabilities Grid */}\n        <motion.div\n          className=\"grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 lg:gap-16\"\n          initial=\"hidden\"\n          whileInView=\"visible\"\n          viewport={{ once: true, margin: '-100px' }}\n          variants={staggerChildren}\n        >\n          {capabilities.map((capability, index) => {\n            const Icon = capability.icon;\n            return (\n              <motion.div\n                key={capability.title}\n                variants={fadeInUp}\n                className=\"group\"\n              >\n                <div className=\"flex items-start gap-4 sm:gap-6\">\n                  {/* Icon Container */}\n                  <div className=\"flex-shrink-0 relative\">\n                    <div className=\"w-16 h-16 sm:w-20 sm:h-20 border border-steel/20 flex items-center justify-center group-hover:border-teal/40 transition-all duration-500\">\n                      <Icon className=\"text-xl sm:text-2xl text-forest group-hover:text-teal transition-colors duration-500\" />\n                    </div>\n                    \n                    {/* Number Badge */}\n                    <div className=\"absolute -top-2 -right-2 sm:-top-3 sm:-right-3 w-6 h-6 sm:w-8 sm:h-8 bg-cream border border-teal/20 flex items-center justify-center\">\n                      <span className=\"text-xs font-semibold text-charcoal\">\n                        {String(index + 1).padStart(2, '0')}\n                      </span>\n                    </div>\n                  </div>\n\n                  {/* Content */}\n                  <div className=\"flex-1 pt-1 sm:pt-2\">\n                    <h3 className=\"text-lg sm:text-xl font-semibold text-charcoal mb-3 sm:mb-4 leading-tight\">\n                      {capability.title}\n                    </h3>\n                    \n                    <p className=\"text-sm sm:text-base text-steel leading-relaxed font-light\">\n                      {capability.description}\n                    </p>\n\n                    {/* Progress Bar */}\n                    <div className=\"mt-4 sm:mt-6\">\n                      <div className=\"h-px bg-steel/10 relative overflow-hidden\">\n                        <motion.div \n                          className=\"absolute top-0 left-0 h-full bg-teal\"\n                          initial={{ width: 0 }}\n                          whileInView={{ width: '90%' }}\n                          viewport={{ once: true }}\n                          transition={{ duration: 1.5, delay: index * 0.2 }}\n                        />\n                      </div>\n                    </div>\n                  </div>\n                </div>\n              </motion.div>\n            );\n          })}\n        </motion.div>\n\n        {/* Bottom CTA */}\n        <motion.div\n          initial=\"hidden\"\n          whileInView=\"visible\"\n          viewport={{ once: true }}\n          variants={fadeInUp}\n          className=\"text-center mt-12 sm:mt-16 lg:mt-20 pt-12 sm:pt-16 border-t border-steel/10\"\n        >\n          <p className=\"text-sm sm:text-base text-steel font-light mb-6 sm:mb-8\">\n            Experience the difference that precision engineering makes\n          </p>\n          <div className=\"flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-xs uppercase tracking-wider\">\n            <div className=\"flex items-center gap-2\">\n              <div className=\"w-2 h-2 bg-teal\" />\n              <span className=\"text-charcoal font-semibold\">MIL-STD Compliant</span>\n            </div>\n            <div className=\"flex items-center gap-2\">\n              <div className=\"w-2 h-2 bg-forest\" />\n              <span className=\"text-charcoal font-semibold\">NATO Compatible</span>\n            </div>\n            <div className=\"flex items-center gap-2\">\n              <div className=\"w-2 h-2 bg-signal\" />\n              <span className=\"text-charcoal font-semibold\">FIPS Certified</span>\n            </div>\n          </div>\n        </motion.div>\n      </div>\n    </section>\n  );\n}"
+                },
+                {
+                    "type": "cliToolCall",
+                    "toolCallId": "call_3Wl39JY6MHwOYucHRERK76qm",
+                    "toolName": "Read",
+                    "status": "SUCCESS",
+                    "input": {
+                        "file_path": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/pages/home/sections/HomeProcess.tsx"
+                    },
+                    "output": "Lines 1-163 of 163 from /Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/pages/home/sections/HomeProcess.tsx:\nimport React from 'react';\nimport { motion } from 'framer-motion';\nimport { processSteps } from '@/content/home';\nimport { fadeInUp, staggerChildren } from '../motion-presets';\n\nexport function HomeProcess() {\n  return (\n    <section className=\"py-16 sm:py-20 lg:py-32 bg-cream/20\" aria-labelledby=\"process-heading\">\n      <div className=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8\">\n        {/* Section Header */}\n        <motion.div\n          initial=\"hidden\"\n          whileInView=\"visible\"\n          viewport={{ once: true, margin: '-100px' }}\n          variants={staggerChildren}\n          className=\"text-center mb-12 sm:mb-16 lg:mb-20\"\n        >\n          <motion.div variants={fadeInUp} className=\"mb-6\">\n            <div className=\"inline-flex items-center gap-3\">\n              <div className=\"w-8 h-px bg-signal\" />\n              <span className=\"text-xs font-semibold text-steel tracking-[0.1em] uppercase\">\n                Our Process\n              </span>\n              <div className=\"w-8 h-px bg-signal\" />\n            </div>\n          </motion.div>\n          \n          <motion.h2 \n            variants={fadeInUp}\n            id=\"process-heading\" \n            className=\"text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-charcoal leading-tight\"\n          >\n            Precision\n            <span className=\"block font-semibold\">Engineering Process</span>\n          </motion.h2>\n        </motion.div>\n\n        {/* Process Timeline */}\n        <div className=\"relative\">\n          {/* Timeline Line */}\n          <div className=\"absolute left-6 sm:left-8 md:left-1/2 top-0 bottom-0 w-px bg-steel/20 md:transform md:-translate-x-0.5\" />\n\n          <motion.div\n            className=\"space-y-12 sm:space-y-16\"\n            initial=\"hidden\"\n            whileInView=\"visible\"\n            viewport={{ once: true, margin: '-100px' }}\n            variants={staggerChildren}\n          >\n            {processSteps.map((step, index) => {\n              const Icon = step.icon;\n              const isEven = index % 2 === 0;\n              \n              return (\n                <motion.div\n                  key={step.title}\n                  variants={fadeInUp}\n                  className={`relative flex items-center ${\n                    isEven ? 'md:flex-row' : 'md:flex-row-reverse'\n                  }`}\n                >\n                  {/* Timeline Dot */}\n                  <div className=\"absolute left-6 sm:left-8 md:left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-white border-2 sm:border-4 border-teal transform -translate-x-1.5 sm:-translate-x-2 md:-translate-x-2 z-10\">\n                    <div className=\"absolute inset-0.5 bg-teal\" />\n                  </div>\n\n                  {/* Step Number - Mobile */}\n                  <div className={`absolute left-16 sm:left-20 md:hidden text-4xl sm:text-6xl font-light text-teal/10 leading-none`}>\n                    {String(index + 1).padStart(2, '0')}\n                  </div>\n\n                  {/* Content */}\n                  <div className={`w-full md:w-1/2 pl-16 sm:pl-24 md:pl-0 ${\n                    isEven ? 'md:pr-12' : 'md:pl-12'\n                  }`}>\n                    <div className=\"bg-white border border-steel/10 p-4 sm:p-6 lg:p-8 group hover:border-teal/30 transition-all duration-500 relative overflow-hidden\">\n                      {/* Large Step Number (Desktop) */}\n                      <div className={`hidden md:block absolute top-4 text-4xl lg:text-6xl font-light text-teal/5 leading-none ${\n                        isEven ? 'right-4' : 'left-4'\n                      }`}>\n                        {String(index + 1).padStart(2, '0')}\n                      </div>\n\n                      {/* Icon */}\n                      <div className=\"mb-4 sm:mb-6 relative z-10\">\n                        <div className=\"w-12 h-12 sm:w-16 sm:h-16 border border-forest/20 flex items-center justify-center group-hover:border-signal/40 transition-colors\">\n                          <Icon className=\"text-lg sm:text-2xl text-forest group-hover:text-signal transition-colors\" />\n                        </div>\n                      </div>\n\n                      {/* Content */}\n                      <div className=\"relative z-10\">\n                        <h3 className=\"text-lg sm:text-xl font-semibold text-charcoal mb-3 sm:mb-4 leading-tight\">\n                          {step.title}\n                        </h3>\n                        \n                        <p className=\"text-sm sm:text-base text-steel leading-relaxed font-light\">\n                          {step.description}\n                        </p>\n\n                        {/* Phase Indicator */}\n                        <div className=\"mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-steel/10\">\n                          <div className=\"flex items-center gap-2\">\n                            <div className=\"text-xs uppercase tracking-wider text-steel font-semibold\">\n                              Phase {index + 1}\n                            </div>\n                            <div className=\"flex-1 h-px bg-steel/10\">\n                              <motion.div \n                                className=\"h-full bg-signal\"\n                                initial={{ width: 0 }}\n                                whileInView={{ width: `${(index + 1) * 25}%` }}\n                                viewport={{ once: true }}\n                                transition={{ duration: 1, delay: index * 0.2 }}\n                              />\n                            </div>\n                          </div>\n                        </div>\n                      </div>\n\n                      {/* Hover Effect */}\n                      <div className=\"absolute inset-0 bg-gradient-to-br from-signal/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500\" />\n                    </div>\n                  </div>\n\n                  {/* Empty space for opposite side on desktop */}\n                  <div className=\"hidden md:block w-1/2\" />\n                </motion.div>\n              );\n            })}\n          </motion.div>\n        </div>\n\n        {/* Bottom Summary */}\n        <motion.div\n          initial=\"hidden\"\n          whileInView=\"visible\"\n          viewport={{ once: true }}\n          variants={fadeInUp}\n          className=\"text-center mt-20 pt-16 border-t border-steel/10\"\n        >\n          <p className=\"text-steel font-light mb-8 max-w-2xl mx-auto\">\n            From initial concept to deployment and sustainment, we ensure every system \n            meets the highest standards of military precision and reliability.\n          </p>\n          <div className=\"flex items-center justify-center gap-8 text-xs uppercase tracking-wider\">\n            <div className=\"flex items-center gap-2\">\n              <div className=\"w-2 h-2 bg-forest\" />\n              <span className=\"text-charcoal font-semibold\">Requirements Analysis</span>\n            </div>\n            <div className=\"flex items-center gap-2\">\n              <div className=\"w-2 h-2 bg-teal\" />\n              <span className=\"text-charcoal font-semibold\">Systems Integration</span>\n            </div>\n            <div className=\"flex items-center gap-2\">\n              <div className=\"w-2 h-2 bg-signal\" />\n              <span className=\"text-charcoal font-semibold\">Lifecycle Support</span>\n            </div>\n          </div>\n        </motion.div>\n      </div>\n    </section>\n  );\n}"
+                },
+                {
+                    "type": "cliToolCall",
+                    "toolCallId": "call_hsbZbm4jKJ0ujudDQQyTIGWz",
+                    "toolName": "Read",
+                    "status": "SUCCESS",
+                    "input": {
+                        "file_path": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/pages/home/sections/HomeAssurance.tsx"
+                    },
+                    "output": "Lines 1-182 of 182 from /Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/pages/home/sections/HomeAssurance.tsx:\nimport React from 'react';\nimport { motion } from 'framer-motion';\nimport { assuranceHighlights, certificationStandards } from '@/content/home';\nimport { fadeInUp, staggerChildren } from '../motion-presets';\n\nexport function HomeAssurance() {\n  return (\n    <section className=\"py-16 sm:py-20 lg:py-32 bg-white\" aria-labelledby=\"assurance-heading\">\n      <div className=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8\">\n        {/* Section Header */}\n        <motion.div\n          initial=\"hidden\"\n          whileInView=\"visible\"\n          viewport={{ once: true, margin: '-100px' }}\n          variants={staggerChildren}\n          className=\"text-center mb-12 sm:mb-16 lg:mb-20\"\n        >\n          <motion.div variants={fadeInUp} className=\"mb-6\">\n            <div className=\"inline-flex items-center gap-3\">\n              <div className=\"w-8 h-px bg-forest\" />\n              <span className=\"text-xs font-semibold text-steel tracking-[0.1em] uppercase\">\n                Quality Assurance\n              </span>\n              <div className=\"w-8 h-px bg-forest\" />\n            </div>\n          </motion.div>\n          \n          <motion.h2 \n            variants={fadeInUp}\n            id=\"assurance-heading\" \n            className=\"text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-charcoal leading-tight mb-4 sm:mb-6\"\n          >\n            Uncompromising\n            <span className=\"block font-semibold\">Standards</span>\n          </motion.h2>\n          \n          <motion.p \n            variants={fadeInUp}\n            className=\"text-base sm:text-lg text-steel max-w-3xl mx-auto leading-relaxed font-light\"\n          >\n            Every system undergoes rigorous testing and validation to ensure mission success \n            in the most challenging operational environments.\n          </motion.p>\n        </motion.div>\n\n        {/* Assurance Grid */}\n        <motion.div\n          className=\"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-steel/5 mb-12 sm:mb-16 lg:mb-20\"\n          initial=\"hidden\"\n          whileInView=\"visible\"\n          viewport={{ once: true, margin: '-100px' }}\n          variants={staggerChildren}\n        >\n          {assuranceHighlights.map((highlight, index) => {\n            const Icon = highlight.icon;\n            return (\n              <motion.div\n                key={highlight.title}\n                variants={fadeInUp}\n                className=\"bg-white p-6 sm:p-8 lg:p-10 group hover:bg-cream/30 transition-all duration-500 relative overflow-hidden\"\n              >\n                {/* Background Pattern */}\n                <div className=\"absolute top-0 right-0 w-20 h-20 sm:w-24 sm:h-24 opacity-5\">\n                  <Icon className=\"w-full h-full text-teal\" />\n                </div>\n\n                {/* Icon */}\n                <div className=\"mb-6 sm:mb-8 relative z-10\">\n                  <div className=\"w-12 h-12 sm:w-16 sm:h-16 border border-teal/20 flex items-center justify-center group-hover:border-teal/40 transition-colors\">\n                    <Icon className=\"text-xl sm:text-2xl text-teal\" />\n                  </div>\n                </div>\n\n                {/* Content */}\n                <div className=\"relative z-10\">\n                  <h3 className=\"text-base sm:text-lg font-semibold text-charcoal mb-3 sm:mb-4 leading-tight\">\n                    {highlight.title}\n                  </h3>\n                  \n                  <p className=\"text-steel text-sm sm:text-base leading-relaxed font-light\">\n                    {highlight.description}\n                  </p>\n\n                  {/* Progress Indicator */}\n                  <div className=\"mt-4 sm:mt-6\">\n                    <div className=\"flex items-center justify-between mb-2\">\n                      <span className=\"text-xs font-semibold text-charcoal uppercase tracking-wider\">\n                        Compliance Level\n                      </span>\n                      <span className=\"text-xs font-semibold text-teal\">100%</span>\n                    </div>\n                    <div className=\"h-1 bg-steel/10 relative overflow-hidden\">\n                      <motion.div \n                        className=\"absolute top-0 left-0 h-full bg-teal\"\n                        initial={{ width: 0 }}\n                        whileInView={{ width: '100%' }}\n                        viewport={{ once: true }}\n                        transition={{ duration: 1.5, delay: index * 0.3 }}\n                      />\n                    </div>\n                  </div>\n                </div>\n              </motion.div>\n            );\n          })}\n        </motion.div>\n\n        {/* Certifications */}\n        <motion.div\n          initial=\"hidden\"\n          whileInView=\"visible\"\n          viewport={{ once: true, margin: '-100px' }}\n          variants={staggerChildren}\n          className=\"bg-charcoal text-cream p-6 sm:p-8 lg:p-12 relative overflow-hidden\"\n        >\n          {/* Background Grid */}\n          <div className=\"absolute inset-0 opacity-5\">\n            <div className=\"absolute inset-0\" style={{\n              backgroundImage: `linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)`,\n              backgroundSize: '40px 40px'\n            }} />\n          </div>\n\n          <div className=\"relative z-10\">\n            <motion.div variants={fadeInUp} className=\"text-center mb-8 sm:mb-12\">\n              <h3 className=\"text-xl sm:text-2xl font-light text-cream mb-3 sm:mb-4\">\n                Industry <span className=\"font-semibold\">Certifications</span>\n              </h3>\n              <p className=\"text-sm sm:text-base text-steel font-light\">\n                Adherence to the most stringent defense and quality standards\n              </p>\n            </motion.div>\n\n            <motion.div\n              variants={staggerChildren}\n              className=\"grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6 lg:gap-8\"\n            >\n              {certificationStandards.map((standard, index) => (\n                <motion.div\n                  key={standard}\n                  variants={fadeInUp}\n                  className=\"text-center group\"\n                >\n                  <div className=\"border border-steel/30 hover:border-teal/50 p-3 sm:p-4 transition-all duration-300 bg-white/5 hover:bg-white/10\">\n                    <div className=\"text-xs sm:text-sm font-semibold text-cream group-hover:text-teal transition-colors\">\n                      {standard}\n                    </div>\n                  </div>\n                </motion.div>\n              ))}\n            </motion.div>\n\n            {/* Stats */}\n            <motion.div \n              variants={fadeInUp}\n              className=\"grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 mt-12 sm:mt-16 pt-8 sm:pt-12 border-t border-steel/20\"\n            >\n              <div className=\"text-center\">\n                <div className=\"text-2xl sm:text-3xl font-light text-teal mb-2\">100%</div>\n                <div className=\"text-xs uppercase tracking-wider text-steel\">\n                  Compliance Rate\n                </div>\n              </div>\n              <div className=\"text-center\">\n                <div className=\"text-2xl sm:text-3xl font-light text-teal mb-2\">15+</div>\n                <div className=\"text-xs uppercase tracking-wider text-steel\">\n                  Years Experience\n                </div>\n              </div>\n              <div className=\"text-center\">\n                <div className=\"text-2xl sm:text-3xl font-light text-teal mb-2\">Zero</div>\n                <div className=\"text-xs uppercase tracking-wider text-steel\">\n                  Mission Failures\n                </div>\n              </div>\n            </motion.div>\n          </div>\n        </motion.div>\n      </div>\n    </section>\n  );\n}"
+                },
+                {
+                    "type": "cliToolCall",
+                    "toolCallId": "call_2lWB8stKCVinABvKMdX1bvO9",
+                    "toolName": "Read",
+                    "status": "SUCCESS",
+                    "input": {
+                        "file_path": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/pages/home/sections/HomeCTA.tsx"
+                    },
+                    "output": "Lines 1-128 of 128 from /Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/pages/home/sections/HomeCTA.tsx:\nimport React from 'react';\nimport { motion } from 'framer-motion';\nimport { Link } from 'wouter';\nimport { Button } from '@/components/ui/button';\nimport { FaArrowRight, FaEnvelope, FaPhone } from 'react-icons/fa';\nimport { fadeInUp, staggerChildren } from '../motion-presets';\n\nexport function HomeCTA() {\n  return (\n    <section className=\"relative py-16 sm:py-20 lg:py-32 overflow-hidden bg-navy\" aria-label=\"Call to Action\">\n      {/* Minimal grid background */}\n      <div className=\"absolute inset-0 opacity-[0.02]\">\n        <div className=\"absolute inset-0\" style={{\n          backgroundImage: `linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)`,\n          backgroundSize: '120px 120px'\n        }} />\n      </div>\n\n      <div className=\"relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8\">\n        <motion.div\n          className=\"max-w-4xl mx-auto\"\n          initial=\"hidden\"\n          whileInView=\"visible\"\n          viewport={{ once: true, margin: '-100px' }}\n          variants={staggerChildren}\n        >\n          {/* Main Content */}\n          <div className=\"text-center mb-12 sm:mb-16\">\n            {/* Badge */}\n            <motion.div variants={fadeInUp} className=\"mb-8\">\n              <div className=\"inline-flex items-center gap-3 bg-white/5 px-5 py-2 border border-white/10\">\n                <div className=\"w-2 h-2 bg-teal\" />\n                <span className=\"text-xs font-semibold text-white/80 tracking-[0.1em] uppercase\">\n                  Ready to Deploy\n                </span>\n              </div>\n            </motion.div>\n\n            {/* Heading */}\n            <motion.h2 \n              variants={fadeInUp}\n              className=\"text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight tracking-tight mb-6 sm:mb-8\"\n            >\n              Mission-Critical\n              <span className=\"block font-semibold mt-1 sm:mt-2\">Systems Await</span>\n            </motion.h2>\n\n            {/* Description */}\n            <motion.p \n              variants={fadeInUp}\n              className=\"text-base sm:text-lg text-white/60 mb-8 sm:mb-12 leading-relaxed max-w-2xl mx-auto font-light\"\n            >\n              Partner with TRINETHRA DEFENTECH for defense-grade technology solutions \n              engineered for operational superiority and mission success.\n            </motion.p>\n\n            {/* CTA Buttons */}\n            <motion.div \n              variants={fadeInUp}\n              className=\"flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-12 sm:mb-16\"\n            >\n              <Link href=\"/contact\">\n                <Button className=\"bg-teal hover:bg-teal/90 text-white font-medium px-6 py-4 sm:px-10 sm:py-6 transition-all duration-200 inline-flex items-center text-xs sm:text-sm tracking-wide group border-none w-full sm:w-auto\">\n                  START YOUR PROJECT\n                  <FaArrowRight className=\"ml-3 text-xs group-hover:translate-x-1 transition-transform\" />\n                </Button>\n              </Link>\n              <Link href=\"/solutions\">\n                <Button\n                  variant=\"outline\"\n                  className=\"bg-transparent hover:bg-white hover:text-navy border border-white/20 hover:border-white text-white font-medium px-6 py-4 sm:px-10 sm:py-6 transition-all duration-200 inline-flex items-center text-xs sm:text-sm tracking-wide w-full sm:w-auto\"\n                >\n                  VIEW SOLUTIONS\n                </Button>\n              </Link>\n            </motion.div>\n          </div>\n\n          {/* Contact Info */}\n          <motion.div \n            variants={fadeInUp}\n            className=\"grid grid-cols-1 sm:grid-cols-2 gap-px bg-white/5\"\n          >\n            <div className=\"bg-navy/30 backdrop-blur-sm border border-white/10 p-6 sm:p-8 flex items-center gap-4 group hover:bg-navy/50 transition-colors\">\n              <div className=\"w-12 h-12 sm:w-14 sm:h-14 border border-white/20 flex items-center justify-center flex-shrink-0 group-hover:border-teal/40 transition-colors\">\n                <FaEnvelope className=\"text-teal text-base sm:text-lg\" />\n              </div>\n              <div>\n                <div className=\"text-xs text-white/40 uppercase tracking-wider mb-1 sm:mb-2 font-semibold\">Direct Email</div>\n                <div className=\"text-xs sm:text-sm text-white font-light\">info@trinethra-defentech.com</div>\n              </div>\n            </div>\n            <div className=\"bg-navy/30 backdrop-blur-sm border border-white/10 p-6 sm:p-8 flex items-center gap-4 group hover:bg-navy/50 transition-colors\">\n              <div className=\"w-12 h-12 sm:w-14 sm:h-14 border border-white/20 flex items-center justify-center flex-shrink-0 group-hover:border-teal/40 transition-colors\">\n                <FaPhone className=\"text-teal text-base sm:text-lg\" />\n              </div>\n              <div>\n                <div className=\"text-xs text-white/40 uppercase tracking-wider mb-1 sm:mb-2 font-semibold\">24/7 Support</div>\n                <div className=\"text-xs sm:text-sm text-white font-light\">Technical Assistance</div>\n              </div>\n            </div>\n          </motion.div>\n\n          {/* Trust Indicators */}\n          <motion.div \n            variants={fadeInUp}\n            className=\"mt-12 sm:mt-16 pt-8 sm:pt-12 border-t border-white/10 text-center\"\n          >\n            <div className=\"grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8\">\n              <div>\n                <div className=\"text-2xl sm:text-3xl font-light text-teal mb-2\">15+</div>\n                <div className=\"text-xs uppercase tracking-wider text-white/60\">Years Experience</div>\n              </div>\n              <div>\n                <div className=\"text-2xl sm:text-3xl font-light text-teal mb-2\">100%</div>\n                <div className=\"text-xs uppercase tracking-wider text-white/60\">Mission Success</div>\n              </div>\n              <div>\n                <div className=\"text-2xl sm:text-3xl font-light text-teal mb-2\">24/7</div>\n                <div className=\"text-xs uppercase tracking-wider text-white/60\">Support Available</div>\n              </div>\n            </div>\n          </motion.div>\n        </motion.div>\n      </div>\n    </section>\n  );\n}"
+                }
+            ],
+            "context": {
+                "author": "Code agent",
+                "operationId": "4fe617d3-82b7-4e19-98a4-0c43f19869f4",
+                "cliSessionId": "93f4cdce-a39f-4894-b44e-fc4768026bed"
+            },
+            "createdAt": 1761672443196,
+            "isInternal": false
+        },
+        {
+            "id": "resp_0982ff941ff3772a016900fcffb5fc8195b57aab19f41c9fbe",
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "thought",
+                    "text": "**Marking todo item as completed**"
+                },
+                {
+                    "type": "cliToolCall",
+                    "toolCallId": "call_iuFWB93AlPBjD3DbvLFxIPgh",
+                    "toolName": "TodoWrite",
+                    "status": "SUCCESS",
+                    "input": {
+                        "todos": [
+                            {
+                                "id": "1",
+                                "content": "Review existing home page sections and gather color palette references",
+                                "status": "completed"
+                            },
+                            {
+                                "id": "2",
+                                "content": "Redesign home page layout and update section components with new structure",
+                                "status": "pending"
+                            },
+                            {
+                                "id": "3",
+                                "content": "Ensure redesigned page maintains color scheme and cohesive flow",
+                                "status": "pending"
+                            }
+                        ]
+                    },
+                    "output": "[{\"id\":\"1\",\"content\":\"Review existing home page sections and gather color palette references\",\"status\":\"completed\"},{\"id\":\"2\",\"content\":\"Redesign home page layout and update section components with new structure\",\"status\":\"pending\"},{\"id\":\"3\",\"content\":\"Ensure redesigned page maintains color scheme and cohesive flow\",\"status\":\"pending\"}]"
+                }
+            ],
+            "context": {
+                "author": "Code agent",
+                "operationId": "4fe617d3-82b7-4e19-98a4-0c43f19869f4",
+                "cliSessionId": "93f4cdce-a39f-4894-b44e-fc4768026bed"
+            },
+            "createdAt": 1761672451207,
+            "isInternal": false
+        },
+        {
+            "id": "resp_0982ff941ff3772a016900fd04876c8195aa149486bb20d330",
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "thought",
+                    "text": "**Planning homepage redesign**"
+                },
+                {
+                    "type": "cliToolCall",
+                    "toolCallId": "call_gzrVfFtfzRpCDfH9BDiakZ2r",
+                    "toolName": "TodoWrite",
+                    "status": "SUCCESS",
+                    "input": {
+                        "todos": [
+                            {
+                                "id": "1",
+                                "content": "Review existing home page sections and gather color palette references",
+                                "status": "completed"
+                            },
+                            {
+                                "id": "2",
+                                "content": "Redesign home page layout and update section components with new structure",
+                                "status": "in_progress"
+                            },
+                            {
+                                "id": "3",
+                                "content": "Ensure redesigned page maintains color scheme and cohesive flow",
+                                "status": "pending"
+                            }
+                        ]
+                    },
+                    "output": "[{\"id\":\"1\",\"content\":\"Review existing home page sections and gather color palette references\",\"status\":\"completed\"},{\"id\":\"2\",\"content\":\"Redesign home page layout and update section components with new structure\",\"status\":\"in_progress\"},{\"id\":\"3\",\"content\":\"Ensure redesigned page maintains color scheme and cohesive flow\",\"status\":\"pending\"}]"
+                }
+            ],
+            "context": {
+                "author": "Code agent",
+                "operationId": "4fe617d3-82b7-4e19-98a4-0c43f19869f4",
+                "cliSessionId": "93f4cdce-a39f-4894-b44e-fc4768026bed"
+            },
+            "createdAt": 1761672476670,
+            "isInternal": false
+        },
+        {
+            "id": "resp_0982ff941ff3772a016900fd1f14708195b509d6ec946fa5fb",
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "thought",
+                    "text": "**Planning component redesign and layout**\n\nI'm outlining a full redesign for all main sections, aiming to restructure layouts and content flow while keeping original colors and data sources consistent. I'll create modular updates for each component, starting with HomeHero featuring a split layout with vertical strapline and a right collage area, maintaining animations and carefully arranging stats to fit the new grid-based design. The goal is to revamp each file’s JSX thoroughly with minimal extraneous comments and organized structure, ensuring accessibility and proper imports."
+                },
+                {
+                    "type": "cliToolCall",
+                    "toolCallId": "call_1RyEp073YZ0zv3S8sP0okdac",
+                    "toolName": "Edit",
+                    "status": "CANCELLED",
+                    "input": {
+                        "file_path": "/Users/samanyu/Desktop/TRINETHRA-DEFENTECH-v3/client/src/pages/home/sections/HomeHero.tsx",
+                        "old_string": "import React from 'react';\nimport { motion } from 'framer-motion';\nimport { Link } from 'wouter';\nimport { Button } from '@/components/ui/button';\nimport { HeroCarousel } from '@/components/HeroCarousel';\nimport { heroStats } from '@/content/home';\nimport { FaArrowRight } from 'react-icons/fa';\nimport { fadeInUp, staggerChildren } from '../motion-presets';\n\nexport function HomeHero() {\n  return (\n    <section className=\"relative min-h-screen bg-white overflow-hidden\" aria-label=\"Hero Section\">\n      {/* Background Elements */}\n      <div className=\"absolute inset-0 opacity-[0.02]\">\n        <div className=\"absolute inset-0\" style={{\n          backgroundImage: `linear-gradient(to right, hsl(var(--navy)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--navy)) 1px, transparent 1px)`,\n          backgroundSize: '120px 120px'\n        }} />\n      </div>\n      \n      <div className=\"relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 lg:pt-32 pb-12 sm:pb-16\">\n        <div className=\"grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center\">\n          \n          {/* Left Content */}\n          <motion.div \n            initial=\"hidden\" \n            animate=\"visible\" \n            variants={staggerChildren}\n            className=\"text-left order-2 lg:order-1\"\n          >\n            {/* Badge */}\n            <motion.div variants={fadeInUp} className=\"mb-8\">\n              <div className=\"inline-flex items-center gap-3 bg-cream px-5 py-2 border border-forest/10\">\n                <div className=\"w-2 h-2 bg-teal\" />\n                <span className=\"text-xs font-semibold text-charcoal tracking-[0.1em] uppercase\">\n                  Defense Technology Leader\n                </span>\n              </div>\n            </motion.div>\n            \n            {/* Main Heading */}\n            <motion.h1 \n              variants={fadeInUp}\n              className=\"text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-charcoal leading-[0.9] mb-6 sm:mb-8 tracking-tight\"\n            >\n              Advanced\n              <span className=\"block font-semibold\">Defense Systems</span>\n            </motion.h1>\n            \n            {/* Description */}\n            <motion.p \n              variants={fadeInUp}\n              className=\"text-base sm:text-lg text-steel leading-relaxed mb-8 sm:mb-10 lg:mb-12 max-w-xl font-light\"\n            >\n              Engineering mission-critical solutions for over a decade. \n              Specialized in aerospace systems, tactical computing, \n              and defense-grade hardware platforms.\n            </motion.p>\n            \n            {/* CTA Buttons */}\n            <motion.div \n              variants={fadeInUp}\n              className=\"flex flex-col sm:flex-row gap-3 sm:gap-4 mb-12 sm:mb-16\"\n            >\n              <Link href=\"/solutions\">\n                <Button className=\"bg-forest hover:bg-forest/90 text-cream px-10 py-6 text-sm font-medium transition-all duration-200 inline-flex items-center group border-none tracking-wide\">\n                  EXPLORE SOLUTIONS\n                  <FaArrowRight className=\"ml-3 text-xs group-hover:translate-x-1 transition-transform\" />\n                </Button>\n              </Link>\n              <Link href=\"/contact\">\n                <Button \n                  variant=\"outline\" \n                  className=\"bg-transparent hover:bg-charcoal hover:text-cream border border-charcoal/20 hover:border-charcoal text-charcoal px-10 py-6 text-sm font-medium transition-all duration-200 inline-flex items-center tracking-wide\"\n                >\n                  GET CONSULTATION\n                </Button>\n              </Link>\n            </motion.div>\n            \n            {/* Stats */}\n            <motion.div \n              variants={fadeInUp}\n              className=\"grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6 sm:gap-8 pt-6 sm:pt-8 border-t border-steel/10\"\n            >\n              {heroStats.map((stat, index) => (\n                <div key={stat.label} className=\"text-left\">\n                  <div className=\"text-2xl sm:text-3xl lg:text-4xl font-light text-teal mb-2\">\n                    {stat.value}\n                  </div>\n                  <div className=\"text-xs text-steel uppercase tracking-wider font-medium leading-tight\">\n                    {stat.label}\n                  </div>\n                </div>\n              ))}\n            </motion.div>\n          </motion.div>\n          \n          {/* Right Content - Carousel */}\n          <motion.div\n            initial={{ opacity: 0, x: 50 }}\n            animate={{ opacity: 1, x: 0 }}\n            transition={{ duration: 1, delay: 0.3 }}\n            className=\"relative order-1 lg:order-2\"\n          >\n            <div className=\"relative\">\n              {/* Decorative frame - Hidden on mobile */}\n              <div className=\"absolute -top-4 -left-4 w-full h-full border-2 border-teal/20 z-0 hidden sm:block\" />\n              <div className=\"absolute -bottom-4 -right-4 w-full h-full border border-forest/20 z-0 hidden sm:block\" />\n              \n              {/* Carousel Container */}\n              <div className=\"relative bg-white border border-steel/10 overflow-hidden z-10\">\n                <HeroCarousel \n                  showIndicators={true}\n                  showControls={false}\n                  showCaptions={true}\n                  className=\"aspect-[4/3] sm:aspect-[4/3]\"\n                  autoPlay={true}\n                  autoPlayInterval={6000}\n                />\n              </div>\n              \n              {/* Floating Data Points - Responsive positioning */}\n              <div className=\"absolute -top-4 sm:-top-8 -right-4 sm:-right-8 bg-cream border border-teal/20 p-3 sm:p-4 z-20\">\n                <div className=\"text-xs text-steel uppercase tracking-wider mb-1\">Mission Ready</div>\n                <div className=\"text-sm sm:text-lg font-semibold text-charcoal\">100%</div>\n              </div>\n              \n              <div className=\"absolute -bottom-4 sm:-bottom-8 -left-4 sm:-left-8 bg-white border border-forest/20 p-3 sm:p-4 z-20\">\n                <div className=\"text-xs text-steel uppercase tracking-wider mb-1\">Systems Deployed</div>\n                <div className=\"text-sm sm:text-lg font-semibold text-charcoal\">250+</div>\n              </div>\n            </div>\n          </motion.div>\n        </div>\n      </div>\n    </section>\n  );\n}\n",
+                        "new_string": "import React from 'react';\nimport { motion } from 'framer-motion';\nimport { Link } from 'wouter';\nimport { Button } from '@/components/ui/button';\nimport { HeroCarousel } from '@/components/HeroCarousel';\nimport { heroStats } from '@/content/home';\nimport { FaArrowRight } from 'react-icons/fa';\nimport { fadeInUp, staggerChildren } from '../motion-presets';\n\nconst heroHighlights = [\n  'Next-gen command and control platforms',\n  'AI-augmented threat identification',\n  'Ruggedized aerospace integrations',\n];\n\nexport function HomeHero() {\n  const primaryStat = heroStats.slice(0, 2);\n  const secondaryStat = heroStats.slice(2);\n\n  return (\n    <section className=\"relative min-h-screen bg-white overflow-hidden\" aria-label=\"Hero Section\">\n      <div className=\"absolute inset-0\">\n        <div className=\"absolute inset-[10%] rounded-[80px] bg-gradient-to-br from-cream/40 via-white to-teal/5 blur-3xl\" />\n        <div className=\"absolute inset-0 opacity-[0.03]\" style={{\n          backgroundImage: `linear-gradient(to right, hsl(var(--navy)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--navy)) 1px, transparent 1px)` ,\n          backgroundSize: '120px 140px'\n        }} />\n      </div>\n\n      <div className=\"relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 lg:pt-36 pb-16\">\n        <div className=\"grid lg:grid-cols-[minmax(0,1fr)_420px] gap-10 lg:gap-16 items-start\">\n          <motion.div\n            initial=\"hidden\"\n            animate=\"visible\"\n            variants={staggerChildren}\n            className=\"flex flex-col\"\n          >\n            <motion.div variants={fadeInUp} className=\"flex items-center gap-4 mb-10\">\n              <div className=\"h-10 w-px bg-forest\" />\n              <div className=\"uppercase tracking-[0.3em] text-xs font-semibold text-steel\">Mission Architecture</div>\n            </motion.div>\n\n            <motion.h1\n              variants={fadeInUp}\n              className=\"text-4xl sm:text-5xl md:text-6xl lg:text-[70px] leading-[0.9] font-light text-charcoal\"\n            >\n              Orchestrate decisive advantage with\n              <span className=\"block font-semibold text-forest\">integrated defense intelligence</span>\n            </motion.h1>\n\n            <motion.p\n              variants={fadeInUp}\n              className=\"mt-8 max-w-2xl text-base sm:text-lg text-steel leading-relaxed font-light\"\n            >\n              Designed for commanders who require certainty. Our platforms synchronize aerial, maritime, and ground systems with zero-compromise reliability across volatile theaters.\n            </motion.p>\n\n            <motion.div variants={fadeInUp} className=\"mt-10 grid sm:grid-cols-3 gap-4\">\n              {heroHighlights.map(item => (\n                <div key={item} className=\"bg-cream/40 border border-forest/10 px-5 py-4 text-xs uppercase tracking-widest text-charcoal/80 font-semibold\">\n                  {item}\n                </div>\n              ))}\n            </motion.div>\n\n            <motion.div\n              variants={fadeInUp}\n              className=\"mt-12 flex flex-col sm:flex-row gap-3 sm:gap-4\"\n            >\n              <Link href=\"/solutions\">\n                <Button className=\"bg-forest hover:bg-forest/80 text-cream px-10 py-6 text-xs sm:text-sm font-semibold tracking-[0.2em] inline-flex items-center gap-3 uppercase\">\n                  Explore Solutions\n                  <FaArrowRight className=\"text-xs\" />\n                </Button>\n              </Link>\n              <Link href=\"/contact\">\n                <Button\n                  variant=\"outline\"\n                  className=\"border border-charcoal/15 text-charcoal hover:bg-charcoal hover:text-cream px-10 py-6 text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase\"\n                >\n                  Schedule Briefing\n                </Button>\n              </Link>\n            </motion.div>\n\n            <motion.div variants={fadeInUp} className=\"mt-14 grid gap-6\">\n              <div className=\"grid grid-cols-2 gap-4\">\n                {primaryStat.map(stat => (\n                  <div key={stat.label} className=\"bg-white border border-steel/15 px-6 py-6\">\n                    <div className=\"text-4xl sm:text-5xl font-light text-forest\">{stat.value}</div>\n                    <div className=\"mt-3 text-xs uppercase tracking-[0.25em] text-steel font-semibold\">{stat.label}</div>\n                  </div>\n                ))}\n              </div>\n              <div className=\"flex flex-wrap gap-4\">\n                {secondaryStat.map(stat => (\n                  <div key={stat.label} className=\"flex-1 min-w-[160px] border-t border-steel/15 pt-4\">\n                    <div className=\"text-2xl font-semibold text-teal\">{stat.value}</div>\n                    <div className=\"mt-1 text-[10px] uppercase tracking-[0.3em] text-steel\">{stat.label}</div>\n                  </div>\n                ))}\n              </div>\n            </motion.div>\n          </motion.div>\n\n          <motion.div\n            initial={{ opacity: 0, y: 40 }}\n            animate={{ opacity: 1, y: 0 }}\n            transition={{ duration: 0.8, delay: 0.2 }}\n            className=\"relative\"\n          >\n            <div className=\"absolute -inset-6 bg-gradient-to-br from-teal/10 via-cream/20 to-transparent blur-xl\" />\n            <div className=\"relative border border-steel/20 bg-white/80 backdrop-blur-xl\">\n              <div className=\"p-6 border-b border-steel/15\">\n                <div className=\"text-xs uppercase tracking-[0.28em] text-steel font-semibold\">Live Operational Theater</div>\n                <div className=\"mt-2 text-sm text-charcoal/80\">Simulated ISR feed aligned to NATO protocols</div>\n              </div>\n              <HeroCarousel\n                showIndicators\n                showControls={false}\n                showCaptions\n                className=\"aspect-[4/3]\"\n                autoPlay\n                autoPlayInterval={5000}\n              />\n              <div className=\"grid grid-cols-2 border-t border-steel/15\">\n                <div className=\"p-5 border-r border-steel/15\">\n                  <div className=\"text-[10px] uppercase tracking-[0.3em] text-steel font-semibold\">Mission Certainty</div>\n                  <div className=\"mt-2 text-2xl font-semibold text-forest\">100%</div>\n                </div>\n                <div className=\"p-5\">\n                  <div className=\"text-[10px] uppercase tracking-[0.3em] text-steel font-semibold\">Deployments Secured</div>\n                  <div className=\"mt-2 text-2xl font-semibold text-forest\">250+</div>\n                </div>\n              </div>\n            </div>\n            <div className=\"absolute -left-10 lg:-left-12 bottom-10 w-28 h-28 bg-cream border border-forest/20 grid place-content-center text-[10px] uppercase tracking-[0.4em] text-charcoal\">\n              Nato Grade\n            </div>\n          </motion.div>\n        </div>\n      </div>\n    </section>\n  );\n}\n"
+                    },
+                    "output": "User rejected changes"
+                }
+            ],
+            "context": {
+                "author": "Code agent",
+                "operationId": "4fe617d3-82b7-4e19-98a4-0c43f19869f4",
+                "cliSessionId": "93f4cdce-a39f-4894-b44e-fc4768026bed",
+                "usageStatistics": {
+                    "llmCallsUsedForAnswer": 1.0,
+                    "llmCallsUsedTotal": 23.0,
+                    "llmCallsLimit": 30.0,
+                    "limitRenewalMillisecondTimestamp": 1761717600000
+                }
+            },
+            "createdAt": 1761672505754,
+            "isInternal": false
+        }
+    ],
+    "isAgent": true,
+    "isNameGenerated": true,
+    "isCustomAgent": false,
+    "isUnitTestsAgent": false,
+    "isE2EAgent": false,
+    "isWebDevAgent": false,
+    "isQnaAgent": false,
+    "isRepoInfoAgent": false,
+    "autoApply": false,
+    "model": "gpt-5-codex-medium",
+    "agentsRuntime": "zen-cli"
+}
+}

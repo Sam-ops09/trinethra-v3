@@ -32,7 +32,7 @@ function MobileCollapsible({ title, children }: FooterSectionProps) {
 
 export function Footer() {
   return (
-      <footer className="bg-[#0D4114] text-cream mt-auto" role="contentinfo">
+      <footer className="bg-forest text-cream mt-auto" role="contentinfo">
         <div className="section-container px-4 sm:px-6 md:px-8 pt-12 sm:pt-16 pb-6 sm:pb-8">
           {/* Desktop Grid */}
           <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-10 mb-12">

@@ -62,7 +62,7 @@ export function ContactForm() {
   }
 
   return (
-    <section id="contact" className="bg-[#0D4114] text-cream py-12 sm:py-16 md:py-20 responsive-px">
+    <section id="contact" className="bg-forest text-cream py-12 sm:py-16 md:py-20 responsive-px">
       <div className="container mx-auto">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8 sm:mb-12">
